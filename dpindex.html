@@ -1,0 +1,849 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0A0A0F;
+  --ink2:#1C1C2E;
+  --gold:#C9A84C;
+  --gold2:#E8C97A;
+  --cream:#F5F0E8;
+  --cream2:#FAF7F2;
+  --muted:#8A8A9A;
+  --border:rgba(201,168,76,0.2);
+  --border2:rgba(10,10,15,0.1);
+  --red:#C84B31;
+  --green:#2A7A4B;
+  --blue:#1A4B8C;
+  --display:'Playfair Display',serif;
+  --body:'DM Sans',sans-serif;
+}
+
+body{font-family:var(--body);background:#ECEEF0;display:flex;justify-content:center;padding:20px 12px 40px;min-height:100vh}
+.root{display:flex;gap:20px;max-width:1200px;width:100%;align-items:flex-start}
+
+/* NAV */
+.sidenav{width:180px;flex-shrink:0;background:#fff;border-radius:16px;border:1px solid var(--border2);overflow:hidden;position:sticky;top:20px}
+.nav-brand{background:var(--ink);padding:20px 16px}
+.nav-logo{font-family:var(--display);font-size:16px;font-weight:900;color:var(--gold);letter-spacing:-0.3px;line-height:1.2}
+.nav-tagline{font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+.nav-section{padding:8px}
+.nav-label{font-size:9px;font-weight:500;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:10px 8px 6px}
+.nav-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:8px;border:none;background:none;font-family:var(--body);font-size:12px;font-weight:500;color:#444;cursor:pointer;text-align:left;transition:all .15s}
+.nav-btn:hover{background:var(--cream2)}
+.nav-btn.on{background:var(--ink);color:#fff}
+.nav-btn.on .nav-dot{background:var(--gold)}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:#ccc;flex-shrink:0}
+.nav-divider{height:1px;background:var(--border2);margin:4px 8px}
+.nav-badge{margin-left:auto;font-size:9px;font-weight:700;background:var(--red);color:#fff;padding:2px 6px;border-radius:100px}
+.nav-badge-g{background:var(--gold);color:var(--ink)}
+
+/* MAIN */
+.main{flex:1;min-width:0;display:flex;flex-direction:column;gap:0}
+.pg{display:none;flex-direction:column;gap:0}
+.pg.on{display:flex}
+
+/* ── SCREEN: LOGIN ── */
+.login-wrap{min-height:600px;display:flex}
+.login-left{width:52%;background:var(--ink);padding:48px 44px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;border-radius:16px 0 0 16px}
+.login-bg-circle{position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid var(--border);top:-80px;right:-80px}
+.login-bg-circle2{position:absolute;width:200px;height:200px;border-radius:50%;border:1px solid var(--border);bottom:-40px;left:-40px}
+.login-logo-lg{font-family:var(--display);font-size:34px;font-weight:900;color:var(--gold);letter-spacing:-1px;line-height:1}
+.login-sub{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-top:6px}
+.login-tagline{font-size:22px;font-family:var(--display);color:#fff;font-weight:400;line-height:1.4;margin-top:auto}
+.login-tagline em{color:var(--gold);font-style:normal}
+.login-right{flex:1;background:var(--cream2);padding:48px 40px;border-radius:0 16px 16px 0;display:flex;flex-direction:column;justify-content:center}
+.login-title{font-family:var(--display);font-size:26px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.login-desc{font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+.form-lbl{font-size:11px;font-weight:500;color:#555;letter-spacing:.3px;margin-bottom:5px}
+.form-field{width:100%;padding:11px 14px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:14px;color:var(--ink);font-family:var(--body);outline:none;margin-bottom:16px;transition:border-color .2s}
+.form-field:focus{border-color:var(--gold)}
+.otp-row{display:flex;gap:8px;margin-bottom:20px}
+.otp-b{flex:1;height:52px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;text-align:center;font-size:20px;font-weight:700;color:var(--ink);font-family:var(--display);outline:none}
+.otp-b.on{border-color:var(--gold);background:#FFFDF7}
+.btn-gold{width:100%;padding:13px;background:var(--ink);color:var(--gold);border:none;border-radius:8px;font-family:var(--display);font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.5px;transition:all .2s}
+.btn-gold:hover{background:var(--gold);color:var(--ink)}
+.form-link{font-size:12px;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--body);margin-top:12px;display:block;text-align:center}
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:24px 0}
+.pdot{width:20px;height:20px;border-radius:50%;border:2px solid #CCC;background:#fff}
+.pdot.on{background:var(--ink);border-color:var(--ink)}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:240px;margin:0 auto 20px}
+.nk{padding:14px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:18px;font-weight:600;color:var(--ink);cursor:pointer;text-align:center;font-family:var(--display);transition:all .15s}
+.nk:hover{background:var(--ink);color:var(--gold)}
+.nk-empty{border:none;background:none}
+
+/* ── SHARED HEADER ── */
+.page-header{background:var(--ink);padding:20px 28px;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between}
+.ph-title{font-family:var(--display);font-size:20px;font-weight:700;color:#fff}
+.ph-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px}
+.ph-right{display:flex;align-items:center;gap:10px}
+.ph-badge{padding:5px 12px;border-radius:100px;background:rgba(201,168,76,0.15);border:1px solid var(--border);font-size:11px;color:var(--gold);font-weight:500}
+.page-body{background:#fff;border-radius:0 0 16px 16px;padding:24px 28px}
+
+/* ── SCREEN: DASHBOARD ── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-card{background:var(--cream2);border-radius:12px;padding:18px;border:1px solid var(--border2)}
+.stat-card.accent{background:var(--ink);border-color:var(--ink)}
+.stat-lbl{font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.stat-card.accent .stat-lbl{color:rgba(255,255,255,0.45)}
+.stat-val{font-family:var(--display);font-size:26px;font-weight:700;color:var(--ink)}
+.stat-card.accent .stat-val{color:var(--gold)}
+.stat-chg{font-size:11px;color:var(--muted);margin-top:4px}
+.stat-chg.up{color:var(--green)}
+.stat-chg.warn{color:#C84B31}
+.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.section-title{font-family:var(--display);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.see-all{font-size:11px;font-weight:500;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--body)}
+.order-table{width:100%;border-collapse:collapse}
+.order-table th{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border2)}
+.order-table td{font-size:12px;color:var(--ink);padding:10px 12px;border-bottom:1px solid #F5F5F5}
+.order-table tr:last-child td{border:none}
+.order-table tr:hover td{background:var(--cream2)}
+.sp{display:inline-block;padding:3px 9px;border-radius:100px;font-size:10px;font-weight:700}
+.sp-p{background:#FFF7E6;color:#C17900}
+.sp-a{background:#E8F5EE;color:#1A6B3A}
+.sp-t{background:#E8F0FB;color:#1A3F8C}
+.sp-d{background:#F0ECFB;color:#4A2B8C}
+.sp-r{background:#FEF0EE;color:#A83020}
+.quick-btn{padding:10px 16px;background:var(--ink);color:var(--gold);border:none;border-radius:8px;font-family:var(--display);font-weight:700;font-size:12px;cursor:pointer;letter-spacing:.3px;white-space:nowrap}
+.alert-box{background:#FFFBF0;border:1px solid #F0D88A;border-radius:10px;padding:12px 16px;display:flex;gap:10px;margin-bottom:14px}
+.al-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.al-text{font-size:12px;color:#8A6500;line-height:1.6}
+
+/* ── SCREEN: CATALOGUE ── */
+.cat-filters{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--cream2);border:1px solid var(--border2);border-radius:8px;padding:9px 14px;flex:1}
+.sb-ph{font-size:13px;color:var(--muted)}
+.filter-chip{padding:7px 14px;border-radius:100px;font-size:11px;font-weight:500;border:1.5px solid var(--border2);background:#fff;color:#555;cursor:pointer}
+.filter-chip.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.prod-card{background:var(--cream2);border-radius:12px;border:1px solid var(--border2);overflow:hidden;cursor:pointer;transition:transform .2s}
+.prod-card:hover{transform:translateY(-2px)}
+.pc-img{height:110px;display:flex;align-items:center;justify-content:center;font-size:42px;border-bottom:1px solid var(--border2)}
+.pc-body{padding:14px}
+.pc-name{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.pc-cat{font-size:10px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.pc-price{font-family:var(--display);font-size:18px;font-weight:700;color:var(--ink)}
+.pc-unit{font-size:10px;color:var(--muted)}
+.pc-moq{font-size:10px;color:var(--muted);margin-top:2px}
+.pc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.in-stock{font-size:9px;font-weight:700;color:var(--green);background:#E8F5EE;padding:3px 8px;border-radius:100px}
+.low-stock{font-size:9px;font-weight:700;color:#C17900;background:#FFF7E6;padding:3px 8px;border-radius:100px}
+.add-btn{width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--gold);border:none;font-size:20px;font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.add-btn:hover{background:var(--gold);color:var(--ink)}
+
+/* ── SCREEN: PRODUCT DETAIL ── */
+.pd-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:24px}
+.pd-img-box{background:var(--cream2);border-radius:12px;height:240px;display:flex;align-items:center;justify-content:center;font-size:80px;border:1px solid var(--border2)}
+.pd-specs{background:var(--cream2);border-radius:10px;padding:14px;margin-top:14px}
+.spec-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border2);font-size:12px}
+.spec-row:last-child{border:none}
+.spec-key{color:var(--muted)}
+.spec-val{color:var(--ink);font-weight:500}
+.pd-name{font-family:var(--display);font-size:24px;font-weight:900;color:var(--ink);line-height:1.2;margin-bottom:4px}
+.pd-sub{font-size:12px;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+.tier-box{background:var(--ink);border-radius:10px;padding:14px;margin-bottom:16px}
+.tier-title{font-size:10px;font-weight:500;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.tier-row-d{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.tier-col{text-align:center;padding:10px 6px;border-radius:8px;background:rgba(255,255,255,0.06)}
+.tier-col.best{background:rgba(201,168,76,0.2);border:1px solid var(--border)}
+.tier-range{font-size:10px;color:rgba(255,255,255,0.45)}
+.tier-price{font-family:var(--display);font-size:16px;font-weight:700;color:#fff;margin:3px 0}
+.tier-col.best .tier-price{color:var(--gold)}
+.tier-disc{font-size:9px;color:rgba(255,255,255,0.4);font-weight:600}
+.tier-col.best .tier-disc{color:var(--gold2)}
+.size-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.sz{padding:7px 14px;border-radius:7px;border:1.5px solid var(--border2);font-size:12px;font-weight:500;color:#444;cursor:pointer;background:#fff;transition:all .15s}
+.sz.on{border-color:var(--ink);background:var(--ink);color:var(--gold)}
+.qty-row{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.qty-lbl{font-size:12px;font-weight:500;color:var(--muted)}
+.qty-ctrl{display:flex;align-items:center;gap:12px}
+.qb{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--display)}
+.qn{font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);min-width:32px;text-align:center}
+.disc-banner{background:#E8F5EE;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--green);font-weight:500;margin-bottom:16px}
+.btn-add{width:100%;padding:14px;background:var(--ink);color:var(--gold);border:none;border-radius:9px;font-family:var(--display);font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.5px;transition:all .2s}
+.btn-add:hover{background:var(--gold);color:var(--ink)}
+
+/* ── SCREEN: CART ── */
+.cart-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+.cart-items{display:flex;flex-direction:column;gap:12px}
+.cart-item{background:var(--cream2);border-radius:10px;padding:14px;display:flex;gap:12px;border:1px solid var(--border2)}
+.ci-img{width:56px;height:56px;border-radius:8px;background:#fff;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.ci-info{flex:1}
+.ci-name{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink)}
+.ci-spec{font-size:11px;color:var(--muted);margin:2px 0 8px}
+.ci-foot{display:flex;align-items:center;justify-content:space-between}
+.ci-qty{display:flex;align-items:center;gap:8px}
+.cqb{width:26px;height:26px;border-radius:6px;border:1.5px solid var(--border2);background:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cqn{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink)}
+.ci-price{font-family:var(--display);font-size:16px;font-weight:700;color:var(--ink)}
+.cart-summary-box{background:var(--ink);border-radius:12px;padding:20px}
+.cs-title{font-family:var(--display);font-size:16px;font-weight:700;color:#fff;margin-bottom:16px}
+.cs-row{display:flex;justify-content:space-between;margin-bottom:10px;font-size:12px}
+.cs-key{color:rgba(255,255,255,0.5)}
+.cs-val{color:#fff;font-weight:500}
+.cs-divider{border:none;border-top:1px solid rgba(255,255,255,0.1);margin:12px 0}
+.cs-total-row{display:flex;justify-content:space-between;align-items:baseline}
+.cs-total-lbl{font-size:13px;color:rgba(255,255,255,0.6);font-weight:600}
+.cs-total-amt{font-family:var(--display);font-size:26px;font-weight:900;color:var(--gold)}
+.cs-note{font-size:10px;color:rgba(255,255,255,0.3);margin-top:6px;margin-bottom:16px;line-height:1.5}
+.place-btn{width:100%;padding:14px;background:var(--gold);color:var(--ink);border:none;border-radius:9px;font-family:var(--display);font-weight:900;font-size:15px;cursor:pointer;letter-spacing:.5px;transition:all .2s}
+.place-btn:hover{background:var(--gold2)}
+.addr-box{background:rgba(255,255,255,0.06);border-radius:8px;padding:12px;margin-top:12px}
+.addr-lbl{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px}
+.addr-val{font-size:12px;color:#fff;line-height:1.5}
+
+/* ── SCREEN: ORDER CONFIRM ── */
+.confirm-hero{background:var(--green);border-radius:12px;padding:32px;text-align:center;margin-bottom:20px}
+.confirm-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px}
+.confirm-title{font-family:var(--display);font-size:24px;font-weight:900;color:#fff;margin-bottom:4px}
+.confirm-sub{font-size:13px;color:rgba(255,255,255,0.7)}
+.confirm-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.confirm-card{background:var(--cream2);border-radius:10px;padding:16px;border:1px solid var(--border2)}
+.cc-title{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.cc-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}
+.cc-key{color:var(--muted)}
+.cc-val{color:var(--ink);font-weight:500}
+.confirm-btns{display:flex;gap:10px;margin-top:16px}
+.btn-dark{flex:1;padding:12px;background:var(--ink);color:var(--gold);border:none;border-radius:8px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer}
+.btn-outline{flex:1;padding:12px;background:#fff;color:var(--ink);border:1.5px solid var(--border2);border-radius:8px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer}
+
+/* ── SCREEN: MY ORDERS ── */
+.orders-tabs{display:flex;gap:0;background:var(--cream2);border-radius:8px;padding:3px;margin-bottom:18px;border:1px solid var(--border2)}
+.otab{flex:1;text-align:center;padding:7px;font-size:11px;font-weight:600;border-radius:6px;cursor:pointer;color:var(--muted);background:none;border:none;font-family:var(--body)}
+.otab.on{background:var(--ink);color:var(--gold)}
+.orders-table{width:100%;border-collapse:collapse}
+.orders-table th{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;padding:8px 14px;text-align:left;border-bottom:1px solid var(--border2)}
+.orders-table td{font-size:12px;color:var(--ink);padding:12px 14px;border-bottom:1px solid #F5F5F5}
+.orders-table tr:hover td{background:var(--cream2);cursor:pointer}
+.orders-table tr:last-child td{border:none}
+.ot-id{font-family:var(--display);font-weight:700}
+.track-lnk{font-size:11px;font-weight:700;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--body)}
+
+/* ── SCREEN: TRACKING ── */
+.track-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.milestone-wrap{display:flex;flex-direction:column;gap:0}
+.ms{display:flex;gap:14px;align-items:flex-start}
+.ms-col{display:flex;flex-direction:column;align-items:center}
+.ms-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.ms-line{width:2px;flex:1;min-height:32px}
+.ms-done .ms-dot{background:var(--ink)}
+.ms-done .ms-line{background:var(--ink)}
+.ms-active .ms-dot{background:var(--gold);border:3px solid #FFF7E0;outline:2.5px solid var(--gold)}
+.ms-active .ms-line{background:var(--border2)}
+.ms-todo .ms-dot{background:#D1D5DB}
+.ms-todo .ms-line{background:#F0F0F0}
+.ms-lbl{font-family:var(--display);font-size:13px;font-weight:700;color:var(--ink);padding-bottom:3px}
+.ms-sub{font-size:11px;color:var(--muted)}
+.ms-active .ms-lbl{color:var(--gold)}
+.ms-todo .ms-lbl{color:var(--muted);font-family:var(--body)}
+.ms-content{padding-bottom:20px}
+.track-cards{display:flex;flex-direction:column;gap:12px}
+.tcard{background:var(--cream2);border-radius:10px;padding:14px;border:1px solid var(--border2)}
+.tc-title{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.tc-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}
+.tc-key{color:var(--muted)}
+.tc-val{color:var(--ink);font-weight:500}
+.dl-link{font-size:12px;font-weight:700;color:var(--gold);cursor:pointer}
+
+/* ── ADMIN SCREENS ── */
+.admin-bar{background:#2D1B69;border-radius:12px 12px 0 0;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.ab-logo{font-family:var(--display);font-size:18px;font-weight:900;color:var(--gold)}
+.ab-role{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.admin-body{background:#fff;border-radius:0 0 12px 12px;padding:22px 24px}
+
+.adm-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.adm-sc{background:var(--cream2);border-radius:10px;padding:14px;border:1px solid var(--border2)}
+.adm-lbl{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.3px;text-transform:uppercase;margin-bottom:4px}
+.adm-val{font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink)}
+.adm-chg{font-size:10px;color:var(--muted);margin-top:2px}
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.qa-card{background:var(--cream2);border-radius:10px;padding:14px;cursor:pointer;border:1px solid var(--border2);transition:all .15s}
+.qa-card:hover{border-color:var(--gold);background:#FFFDF7}
+.qa-icon{font-size:20px;margin-bottom:6px}
+.qa-lbl{font-size:12px;font-weight:700;color:var(--ink);font-family:var(--display)}
+.qa-sub{font-size:10px;color:var(--muted);margin-top:2px}
+
+.prod-mgmt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.pm-card{background:var(--cream2);border-radius:10px;border:1px solid var(--border2);overflow:hidden}
+.pm-img{height:80px;display:flex;align-items:center;justify-content:center;font-size:32px;border-bottom:1px solid var(--border2)}
+.pm-body{padding:12px}
+.pm-name{font-family:var(--display);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.pm-cat{font-size:10px;color:var(--muted);margin-bottom:6px}
+.pm-row{display:flex;justify-content:space-between;align-items:center}
+.pm-price{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink)}
+.pm-actions{display:flex;gap:5px;margin-top:8px}
+.pm-btn{padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:var(--body)}
+.pm-edit{background:var(--ink);color:var(--gold)}
+.pm-hide{background:#F3F4F6;color:#555;border:1px solid #E5E7EB}
+.pm-pub{background:#E8F5EE;color:var(--green);border:1px solid #BBF7D0}
+.pm-low{background:#FFF7E6;color:#C17900;border:1px solid #FDE68A}
+
+.add-form{background:var(--cream2);border-radius:12px;padding:20px;border:1px solid var(--border2)}
+.af-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border2)}
+.af-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.af-lbl{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:4px;letter-spacing:.3px}
+.af-field{width:100%;padding:9px 12px;border-radius:7px;border:1.5px solid var(--border2);background:#fff;font-size:13px;color:var(--ink);font-family:var(--body);outline:none}
+.af-field:focus{border-color:var(--gold)}
+.tier-grid{display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;margin-bottom:8px;align-items:center}
+.tier-in{padding:8px 10px;border-radius:6px;border:1.5px solid var(--border2);background:#fff;font-size:12px;color:var(--ink);font-family:var(--body);width:100%}
+.tdel{width:24px;height:24px;border-radius:6px;background:#FEF2F2;border:none;color:#991B1B;cursor:pointer;font-size:14px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border2)}
+.tgl-lbl{font-size:12px;font-weight:500;color:var(--ink)}
+.tgl-sub{font-size:10px;color:var(--muted)}
+.tgl{width:38px;height:22px;border-radius:100px;background:var(--ink);position:relative;cursor:pointer}
+.tgl-off{background:#D1D5DB}
+.tgl::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;right:3px}
+.tgl-off::after{right:auto;left:3px}
+.save-row{display:flex;gap:10px;margin-top:16px}
+.btn-save{flex:1;padding:11px;background:var(--ink);color:var(--gold);border:none;border-radius:8px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer}
+.btn-draft{padding:11px 18px;background:#fff;color:var(--ink);border:1.5px solid var(--border2);border-radius:8px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer}
+.upload-box{border:2px dashed var(--border);border-radius:10px;padding:18px;text-align:center;background:#FFFDF7;cursor:pointer;margin-bottom:14px}
+.ub-icon{font-size:24px;margin-bottom:4px}
+.ub-lbl{font-size:12px;font-weight:600;color:var(--gold)}
+.ub-sub{font-size:10px;color:var(--muted);margin-top:2px}
+
+.orders-approve{display:flex;flex-direction:column;gap:10px}
+.oa-card{background:var(--cream2);border-radius:10px;border:1px solid var(--border2);overflow:hidden}
+.oa-top{padding:12px 16px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:flex-start}
+.oa-id{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink)}
+.oa-company{font-size:11px;color:var(--muted);margin-top:1px}
+.oa-mid{padding:10px 16px;font-size:12px;color:var(--ink);border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center}
+.oa-products{color:var(--muted)}
+.oa-amt{font-family:var(--display);font-size:15px;font-weight:700;color:var(--ink)}
+.oa-bot{padding:10px 16px;display:flex;gap:8px;align-items:center}
+.btn-approve{padding:7px 14px;background:#E8F5EE;color:var(--green);border:1px solid #BBF7D0;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--body)}
+.btn-reject{padding:7px 14px;background:#FEF2F2;color:#991B1B;border:1px solid #FECACA;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--body)}
+.btn-revise{padding:7px 14px;background:#FFF7E6;color:#C17900;border:1px solid #FDE68A;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--body)}
+.ml-auto{margin-left:auto}
+</style>
+
+<div class="root">
+
+<!-- SIDENAV -->
+<div class="sidenav">
+  <div class="nav-brand">
+    <div class="nav-logo">Dee Pee<br>Inks</div>
+    <div class="nav-tagline">B2B Portal</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Customer</div>
+    <button class="nav-btn on" onclick="go('dashboard')"><div class="nav-dot"></div>Dashboard</button>
+    <button class="nav-btn" onclick="go('catalogue')"><div class="nav-dot"></div>Products</button>
+    <button class="nav-btn" onclick="go('product')"><div class="nav-dot"></div>Product Detail</button>
+    <button class="nav-btn" onclick="go('cart')"><div class="nav-dot"></div>Cart</button>
+    <button class="nav-btn" onclick="go('confirm')"><div class="nav-dot"></div>Order Placed</button>
+    <button class="nav-btn" onclick="go('orders')"><div class="nav-dot"></div>My Orders</button>
+    <button class="nav-btn" onclick="go('tracking')"><div class="nav-dot"></div>Tracking</button>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-section">
+    <div class="nav-label">Admin</div>
+    <button class="nav-btn" onclick="go('adash')"><div class="nav-dot"></div>Admin Home</button>
+    <button class="nav-btn" onclick="go('aprod')"><div class="nav-dot"></div>Manage Products</button>
+    <button class="nav-btn" onclick="go('aadd')"><div class="nav-dot"></div>Add Product</button>
+    <button class="nav-btn" onclick="go('aorders')"><div class="nav-dot"></div>Approve Orders <span class="nav-badge">3</span></button>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-section">
+    <div class="nav-label">Auth</div>
+    <button class="nav-btn" onclick="go('login')"><div class="nav-dot"></div>Login / OTP</button>
+    <button class="nav-btn" onclick="go('pin')"><div class="nav-dot"></div>Set PIN</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- LOGIN -->
+  <div class="pg" id="pg-login">
+    <div class="login-wrap">
+      <div class="login-left">
+        <div class="login-bg-circle"></div>
+        <div class="login-bg-circle2"></div>
+        <div>
+          <div class="login-logo-lg">Dee Pee<br>Inks</div>
+          <div class="login-sub">Printing & Industrial Ink Manufacturer</div>
+        </div>
+        <div class="login-tagline">Precision inks.<br><em>Trusted</em> by industry.</div>
+      </div>
+      <div class="login-right">
+        <div class="login-title">Welcome back</div>
+        <div class="login-desc">Enter your registered mobile number. We'll send a one-time password — no password to remember.</div>
+        <div class="form-lbl">Mobile Number</div>
+        <div style="display:flex;gap:8px;">
+          <div style="padding:11px 12px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:14px;font-weight:600;white-space:nowrap;">🇮🇳 +91</div>
+          <input class="form-field" style="flex:1;margin:0;" type="tel" value="98765 43210">
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin:6px 0 20px;">Used only for order updates. Never shared.</div>
+        <button class="btn-gold" onclick="go('pin')">Send OTP →</button>
+        <div style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+          <div style="flex:1;height:1px;background:var(--border2);"></div>
+          <div style="font-size:11px;color:var(--muted);">or verify OTP</div>
+          <div style="flex:1;height:1px;background:var(--border2);"></div>
+        </div>
+        <div class="form-lbl">Enter 6-digit OTP</div>
+        <div class="otp-row">
+          <input class="otp-b on" maxlength="1" value="4">
+          <input class="otp-b on" maxlength="1" value="8">
+          <input class="otp-b on" maxlength="1" value="2">
+          <input class="otp-b on" maxlength="1" value="9">
+          <input class="otp-b" maxlength="1" placeholder="·">
+          <input class="otp-b" maxlength="1" placeholder="·">
+        </div>
+        <button class="btn-gold">Verify & Continue →</button>
+        <button class="form-link">Resend OTP in 28s</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SET PIN -->
+  <div class="pg" id="pg-pin">
+    <div class="login-wrap" style="max-width:500px;margin:0 auto;display:block;">
+      <div style="background:var(--ink);border-radius:16px 16px 0 0;padding:28px 32px;text-align:center;">
+        <div style="font-family:var(--display);font-size:22px;font-weight:900;color:var(--gold);">Dee Pee Inks</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;">Set your secure PIN</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:0 0 16px 16px;padding:32px;text-align:center;">
+        <div style="font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px;">Choose a 4-digit PIN</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;">This replaces your OTP for all future logins.<br>Keep it private.</div>
+        <div class="pin-dots">
+          <div class="pdot on"></div><div class="pdot on"></div><div class="pdot on"></div><div class="pdot"></div>
+        </div>
+        <div class="numpad">
+          <button class="nk">1</button><button class="nk">2</button><button class="nk">3</button>
+          <button class="nk">4</button><button class="nk">5</button><button class="nk">6</button>
+          <button class="nk">7</button><button class="nk">8</button><button class="nk">9</button>
+          <button class="nk nk-empty"></button><button class="nk" onclick="go('dashboard')">0</button><button class="nk">⌫</button>
+        </div>
+        <div style="font-size:11px;color:var(--muted);">You can also enable fingerprint login after setup</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="pg on" id="pg-dashboard">
+    <div class="page-header">
+      <div><div class="ph-title">Dee Pee Inks — Customer Portal</div><div class="ph-sub">Welcome back, Rajan Enterprises</div></div>
+      <div class="ph-right">
+        <div class="ph-badge">GSTIN verified</div>
+        <button class="quick-btn" onclick="go('catalogue')">+ New Order</button>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="alert-box">
+        <span class="al-icon">⚠️</span>
+        <div class="al-text">Order <strong>#DPI-2047</strong> has been approved. A proforma invoice has been sent to your email. Payment due by <strong>24 Mar 2026</strong>.</div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card accent"><div class="stat-lbl">Active Orders</div><div class="stat-val">7</div><div class="stat-chg up">↑ 2 this week</div></div>
+        <div class="stat-card"><div class="stat-lbl">Pending Approval</div><div class="stat-val">2</div><div class="stat-chg warn">Awaiting review</div></div>
+        <div class="stat-card"><div class="stat-lbl">In Transit</div><div class="stat-val">3</div><div class="stat-chg">Shipments</div></div>
+        <div class="stat-card"><div class="stat-lbl">Total This Year</div><div class="stat-val" style="font-size:20px;">₹18.2L</div><div class="stat-chg up">↑ 12% vs last year</div></div>
+      </div>
+      <div class="section-title">Recent Orders <button class="see-all" onclick="go('orders')">View all →</button></div>
+      <table class="order-table">
+        <thead><tr><th>Order ID</th><th>Products</th><th>Date</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr onclick="go('tracking')"><td class="ot-id">#DPI-2051</td><td>ChromaBlack XL, IndustraBlue</td><td>19 Mar 2026</td><td>₹1,80,020</td><td><span class="sp sp-p">Pending Approval</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr onclick="go('tracking')"><td class="ot-id">#DPI-2047</td><td>ChromaBlack Pro XL</td><td>14 Mar 2026</td><td>₹1,22,500</td><td><span class="sp sp-t">In Transit</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr><td class="ot-id">#DPI-2041</td><td>IndustraBlue 4000</td><td>8 Mar 2026</td><td>₹64,000</td><td><span class="sp sp-a">Approved</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr><td class="ot-id">#DPI-2038</td><td>UV FlexCure Yellow, IndustraRed</td><td>1 Mar 2026</td><td>₹58,500</td><td><span class="sp sp-d">Delivered</span></td><td><button class="track-lnk">Details →</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CATALOGUE -->
+  <div class="pg" id="pg-catalogue">
+    <div class="page-header"><div><div class="ph-title">Product Catalogue</div><div class="ph-sub">Printing & Industrial Inks — Dee Pee Inks</div></div><div class="ph-right"><button class="quick-btn" onclick="go('cart')">View Cart (2)</button></div></div>
+    <div class="page-body">
+      <div class="cat-filters">
+        <div class="search-box">🔍 <span class="sb-ph">Search by name, code, or type…</span></div>
+        <div class="filter-chip on">All Products</div>
+        <div class="filter-chip">Printing Inks</div>
+        <div class="filter-chip">Industrial Inks</div>
+        <div class="filter-chip">In Stock Only</div>
+      </div>
+      <div class="prod-grid">
+        <div class="prod-card" onclick="go('product')">
+          <div class="pc-img" style="background:#F5F0E8;">🖤</div>
+          <div class="pc-body">
+            <div class="pc-name">ChromaBlack Pro XL</div>
+            <div class="pc-cat">Offset Printing Ink</div>
+            <div class="pc-price">₹2,450 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 5 L · 4 pack sizes</div>
+            <div class="pc-footer"><span class="in-stock">● In Stock</span><button class="add-btn" onclick="event.stopPropagation();">+</button></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#FFFFF0;">🟡</div>
+          <div class="pc-body">
+            <div class="pc-name">UV FlexCure Yellow</div>
+            <div class="pc-cat">UV-Cure Printing Ink</div>
+            <div class="pc-price">₹4,100 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 1 L · 3 pack sizes</div>
+            <div class="pc-footer"><span class="low-stock">● Low Stock</span><button class="add-btn">+</button></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#EFF8FF;">🔵</div>
+          <div class="pc-body">
+            <div class="pc-name">IndustraBlue 4000</div>
+            <div class="pc-cat">Industrial Coding Ink</div>
+            <div class="pc-price">₹3,200 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 10 L · 2 pack sizes</div>
+            <div class="pc-footer"><span class="in-stock">● In Stock</span><button class="add-btn">+</button></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#FFF0F0;">🔴</div>
+          <div class="pc-body">
+            <div class="pc-name">IndustraRed 7X</div>
+            <div class="pc-cat">Metal Marking Ink</div>
+            <div class="pc-price">₹3,800 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 5 L · 2 pack sizes</div>
+            <div class="pc-footer"><span class="low-stock">● Low Stock</span><button class="add-btn">+</button></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#F5F0FF;">⚪</div>
+          <div class="pc-body">
+            <div class="pc-name">GravureClear Base</div>
+            <div class="pc-cat">Gravure Printing Ink</div>
+            <div class="pc-price">₹1,950 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 20 L · 3 pack sizes</div>
+            <div class="pc-footer"><span class="in-stock">● In Stock</span><button class="add-btn">+</button></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#F0FFF4;">🟢</div>
+          <div class="pc-body">
+            <div class="pc-name">EcoFlex Green</div>
+            <div class="pc-cat">Flexographic Ink</div>
+            <div class="pc-price">₹2,800 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 5 L · 3 pack sizes</div>
+            <div class="pc-footer"><span class="in-stock">● In Stock</span><button class="add-btn">+</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAIL -->
+  <div class="pg" id="pg-product">
+    <div class="page-header"><div><div class="back-row" style="margin-bottom:4px;cursor:pointer;" onclick="go('catalogue')"><span style="font-size:13px;color:rgba(255,255,255,0.5);">← Products</span></div><div class="ph-title">ChromaBlack Pro XL</div></div><div class="ph-right"><button class="quick-btn" onclick="go('cart')">Cart (2)</button></div></div>
+    <div class="page-body">
+      <div class="pd-layout">
+        <div>
+          <div class="pd-img-box">🖤</div>
+          <div class="pd-specs">
+            <div class="spec-row"><span class="spec-key">SKU</span><span class="spec-val">INK-CBP-XL</span></div>
+            <div class="spec-row"><span class="spec-key">Type</span><span class="spec-val">Offset Printing Ink</span></div>
+            <div class="spec-row"><span class="spec-key">Base</span><span class="spec-val">Carbon-based formula</span></div>
+            <div class="spec-row"><span class="spec-key">Dry time</span><span class="spec-val">Fast-dry · &lt;30 min</span></div>
+            <div class="spec-row"><span class="spec-key">Substrate</span><span class="spec-val">Paper, cardboard</span></div>
+            <div class="spec-row"><span class="spec-key">Stock</span><span class="spec-val" style="color:var(--green);font-weight:700;">240 L available</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="pd-name">ChromaBlack Pro XL</div>
+          <div class="pd-sub">Offset Printing · Dense carbon-based · High opacity</div>
+          <div class="tier-box">
+            <div class="tier-title">Bulk Pricing Tiers</div>
+            <div class="tier-row-d">
+              <div class="tier-col"><div class="tier-range">1 – 10 L</div><div class="tier-price">₹2,450</div><div class="tier-disc">Standard</div></div>
+              <div class="tier-col"><div class="tier-range">11 – 50 L</div><div class="tier-price">₹2,254</div><div class="tier-disc">8% off</div></div>
+              <div class="tier-col best"><div class="tier-range">51 L +</div><div class="tier-price">₹2,083</div><div class="tier-disc">★ Best · 15% off</div></div>
+            </div>
+          </div>
+          <div class="form-lbl">Pack Size</div>
+          <div class="size-row" style="margin-bottom:16px;">
+            <div class="sz">500 ml</div><div class="sz">1 L</div><div class="sz on">5 L drum</div><div class="sz">20 L drum</div>
+          </div>
+          <div class="qty-row">
+            <span class="qty-lbl">Quantity (drums)</span>
+            <div class="qty-ctrl"><button class="qb">−</button><span class="qn">10</span><button class="qb">+</button></div>
+          </div>
+          <div class="disc-banner">✓ 50 L total — 15% bulk discount applied → <strong>₹1,04,167</strong></div>
+          <button class="btn-add" onclick="go('cart')">Add to Cart →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART -->
+  <div class="pg" id="pg-cart">
+    <div class="page-header"><div><div class="ph-title">Your Cart</div><div class="ph-sub">2 products · Review before placing order</div></div></div>
+    <div class="page-body">
+      <div class="cart-layout">
+        <div>
+          <div class="cart-items">
+            <div class="cart-item">
+              <div class="ci-img">🖤</div>
+              <div class="ci-info">
+                <div class="ci-name">ChromaBlack Pro XL</div>
+                <div class="ci-spec">5 L drum × 10 · 15% bulk discount applied</div>
+                <div class="ci-foot"><div class="ci-qty"><button class="cqb">−</button><span class="cqn">10</span><button class="cqb">+</button></div><span class="ci-price">₹1,04,167</span></div>
+              </div>
+            </div>
+            <div class="cart-item">
+              <div class="ci-img">🔵</div>
+              <div class="ci-info">
+                <div class="ci-name">IndustraBlue 4000</div>
+                <div class="ci-spec">20 L drum × 1 · Standard rate</div>
+                <div class="ci-foot"><div class="ci-qty"><button class="cqb">−</button><span class="cqn">1</span><button class="cqb">+</button></div><span class="ci-price">₹64,000</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px;">
+            <div class="form-lbl">Delivery Address</div>
+            <select class="form-field">
+              <option>Plot 12, SIDCO Industrial Estate, Ambattur, Chennai — 600098</option>
+              <option>+ Add new address</option>
+            </select>
+            <div class="form-lbl">Purchase Order / Reference No. (optional)</div>
+            <input class="form-field" placeholder="e.g. PO-2024-0091" value="PO-2026-0047">
+            <div class="form-lbl">Special Instructions</div>
+            <input class="form-field" placeholder="Any delivery or handling notes…">
+          </div>
+        </div>
+        <div>
+          <div class="cart-summary-box">
+            <div class="cs-title">Order Summary</div>
+            <div class="cs-row"><span class="cs-key">ChromaBlack Pro XL</span><span class="cs-val">₹1,04,167</span></div>
+            <div class="cs-row"><span class="cs-key">IndustraBlue 4000</span><span class="cs-val">₹64,000</span></div>
+            <hr class="cs-divider">
+            <div class="cs-row"><span class="cs-key">Subtotal</span><span class="cs-val">₹1,68,167</span></div>
+            <div class="cs-row"><span class="cs-key">Bulk discount</span><span class="cs-val" style="color:#6EE7A0;">− ₹18,417</span></div>
+            <div class="cs-row"><span class="cs-key">GST 18%</span><span class="cs-val">₹30,270</span></div>
+            <hr class="cs-divider">
+            <div class="cs-total-row"><span class="cs-total-lbl">Total</span><span class="cs-total-amt">₹1,80,020</span></div>
+            <div class="cs-note">Subject to company approval before dispatch. Proforma invoice sent on approval.</div>
+            <button class="place-btn" onclick="go('confirm')">Place Order →</button>
+            <div class="addr-box"><div class="addr-lbl">Delivering to</div><div class="addr-val">Plot 12, SIDCO Industrial Estate,<br>Ambattur, Chennai — 600098</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM -->
+  <div class="pg" id="pg-confirm">
+    <div class="page-header"><div><div class="ph-title">Order Confirmed</div><div class="ph-sub">Dee Pee Inks — #DPI-2051</div></div></div>
+    <div class="page-body">
+      <div class="confirm-hero">
+        <div class="confirm-icon">✓</div>
+        <div class="confirm-title">Order Successfully Placed!</div>
+        <div class="confirm-sub">Order #DPI-2051 is now pending approval from Dee Pee Inks. You'll receive an email notification once it's reviewed.</div>
+      </div>
+      <div class="confirm-grid">
+        <div class="confirm-card">
+          <div class="cc-title">Order Details</div>
+          <div class="cc-row"><span class="cc-key">Order ID</span><span class="cc-val">#DPI-2051</span></div>
+          <div class="cc-row"><span class="cc-key">Date</span><span class="cc-val">19 Mar 2026</span></div>
+          <div class="cc-row"><span class="cc-key">Products</span><span class="cc-val">2 items</span></div>
+          <div class="cc-row"><span class="cc-key">Total</span><span class="cc-val" style="font-family:var(--display);font-size:15px;font-weight:700;">₹1,80,020</span></div>
+          <div class="cc-row"><span class="cc-key">Status</span><span class="sp sp-p">Pending Approval</span></div>
+        </div>
+        <div class="confirm-card">
+          <div class="cc-title">Delivery</div>
+          <div class="cc-row"><span class="cc-key">Address</span><span class="cc-val">SIDCO, Chennai</span></div>
+          <div class="cc-row"><span class="cc-key">PO Reference</span><span class="cc-val">PO-2026-0047</span></div>
+          <div class="cc-row"><span class="cc-key">Est. Dispatch</span><span class="cc-val">After payment</span></div>
+          <div class="cc-row"><span class="cc-key">Notification</span><span class="cc-val">Email + SMS</span></div>
+        </div>
+      </div>
+      <div class="confirm-btns">
+        <button class="btn-dark" onclick="go('tracking')">Track This Order →</button>
+        <button class="btn-outline" onclick="go('orders')">View All Orders</button>
+        <button class="btn-outline" onclick="go('catalogue')">Place Another Order</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDERS -->
+  <div class="pg" id="pg-orders">
+    <div class="page-header"><div><div class="ph-title">My Orders</div><div class="ph-sub">Rajan Enterprises — All orders, latest first</div></div></div>
+    <div class="page-body">
+      <div class="orders-tabs">
+        <button class="otab on">All Orders</button>
+        <button class="otab">Active</button>
+        <button class="otab">In Transit</button>
+        <button class="otab">Completed</button>
+      </div>
+      <table class="orders-table">
+        <thead><tr><th>Order ID</th><th>Products</th><th>Placed</th><th>Amount</th><th>Payment</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr onclick="go('tracking')"><td class="ot-id">#DPI-2051</td><td>ChromaBlack XL · IndustraBlue</td><td>19 Mar 2026</td><td>₹1,80,020</td><td><span class="sp sp-p">Pending</span></td><td><span class="sp sp-p">Pending Approval</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr onclick="go('tracking')"><td class="ot-id">#DPI-2047</td><td>ChromaBlack Pro XL</td><td>14 Mar 2026</td><td>₹1,22,500</td><td><span class="sp sp-a">Confirmed</span></td><td><span class="sp sp-t">In Transit</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr><td class="ot-id">#DPI-2041</td><td>IndustraBlue 4000</td><td>8 Mar 2026</td><td>₹64,000</td><td><span class="sp sp-a">Confirmed</span></td><td><span class="sp sp-a">Approved</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr><td class="ot-id">#DPI-2038</td><td>UV FlexCure · IndustraRed 7X</td><td>1 Mar 2026</td><td>₹58,500</td><td><span class="sp sp-a">Confirmed</span></td><td><span class="sp sp-d">Delivered</span></td><td><button class="track-lnk">Details</button></td></tr>
+          <tr><td class="ot-id">#DPI-2031</td><td>GravureClear Base</td><td>18 Feb 2026</td><td>₹39,000</td><td><span class="sp sp-a">Confirmed</span></td><td><span class="sp sp-d">Delivered</span></td><td><button class="track-lnk">Details</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TRACKING -->
+  <div class="pg" id="pg-tracking">
+    <div class="page-header"><div><div class="ph-title">#DPI-2047 — Order Tracking</div><div class="ph-sub">ChromaBlack Pro XL · 50 L · Dee Pee Inks</div></div><div class="ph-right"><button class="quick-btn" onclick="go('orders')">← All Orders</button></div></div>
+    <div class="page-body">
+      <div class="track-layout">
+        <div>
+          <div class="section-title">Shipment Timeline</div>
+          <div class="milestone-wrap">
+            <div class="ms ms-done"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Order Placed</div><div class="ms-sub">14 Mar 2026 · 10:22 AM</div></div></div>
+            <div class="ms ms-done"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Approved by Dee Pee Inks</div><div class="ms-sub">14 Mar 2026 · 2:45 PM · Proforma invoice sent</div></div></div>
+            <div class="ms ms-done"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Payment Confirmed</div><div class="ms-sub">15 Mar 2026 · 9:00 AM · Bank transfer</div></div></div>
+            <div class="ms ms-done"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Packed & Dispatched</div><div class="ms-sub">15 Mar 2026 · 11:15 AM · Bluedart #BD9847123</div></div></div>
+            <div class="ms ms-active"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">In Transit — Now</div><div class="ms-sub">Bangalore Hub · ETA 18 Mar 2026</div></div></div>
+            <div class="ms ms-todo"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Out for Delivery</div><div class="ms-sub">—</div></div></div>
+            <div class="ms ms-todo"><div class="ms-col"><div class="ms-dot"></div></div><div class="ms-content"><div class="ms-lbl">Delivered</div><div class="ms-sub">—</div></div></div>
+          </div>
+        </div>
+        <div class="track-cards">
+          <div class="tcard">
+            <div class="tc-title">Order Summary</div>
+            <div class="tc-row"><span class="tc-key">Product</span><span class="tc-val">ChromaBlack Pro XL</span></div>
+            <div class="tc-row"><span class="tc-key">Volume</span><span class="tc-val">50 L (5 L × 10)</span></div>
+            <div class="tc-row"><span class="tc-key">Amount</span><span class="tc-val" style="font-family:var(--display);font-weight:700;">₹1,22,500</span></div>
+          </div>
+          <div class="tcard">
+            <div class="tc-title">Payment</div>
+            <div class="tc-row"><span class="tc-key">Method</span><span class="tc-val">Bank Transfer</span></div>
+            <div class="tc-row"><span class="tc-key">Status</span><span class="sp sp-a">✓ Confirmed</span></div>
+            <div class="tc-row"><span class="tc-key">Invoice</span><span class="dl-link">Download PDF ↓</span></div>
+          </div>
+          <div class="tcard">
+            <div class="tc-title">Logistics</div>
+            <div class="tc-row"><span class="tc-key">Carrier</span><span class="tc-val">Bluedart Express</span></div>
+            <div class="tc-row"><span class="tc-key">AWB No.</span><span class="tc-val">BD9847123</span></div>
+            <div class="tc-row"><span class="tc-key">ETA</span><span class="tc-val">18 Mar 2026</span></div>
+            <div class="tc-row"><span class="tc-key">Deliver to</span><span class="tc-val">SIDCO, Chennai</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div class="pg" id="pg-adash">
+    <div class="admin-bar"><div><div class="ab-logo">Dee Pee Inks — Admin</div><div class="ab-role">Product Manager · Suresh Kumar</div></div><div class="ph-badge" style="border-color:rgba(201,168,76,0.4);">Admin Panel</div></div>
+    <div class="admin-body">
+      <div class="adm-stat-grid">
+        <div class="adm-sc"><div class="adm-lbl">Total Products</div><div class="adm-val">24</div><div class="adm-chg">6 added this month</div></div>
+        <div class="adm-sc"><div class="adm-lbl">Pending Orders</div><div class="adm-val" style="color:#C84B31;">3</div><div class="adm-chg" style="color:#C84B31;">Need approval</div></div>
+        <div class="adm-sc"><div class="adm-lbl">Active Listings</div><div class="adm-val">21</div><div class="adm-chg">3 drafts</div></div>
+        <div class="adm-sc"><div class="adm-lbl">Low Stock</div><div class="adm-val" style="color:#C17900;">3</div><div class="adm-chg" style="color:#C17900;">⚠ Needs restock</div></div>
+      </div>
+      <div class="alert-box"><span class="al-icon">⚠️</span><div class="al-text"><strong>3 products are low on stock:</strong> UV FlexCure Yellow, IndustraRed 7X, GravureClear Base. Update stock or hide from catalogue.</div></div>
+      <div class="section-title">Quick Actions</div>
+      <div class="qa-grid">
+        <div class="qa-card" onclick="go('aadd')"><div class="qa-icon">➕</div><div class="qa-lbl">Add Product</div><div class="qa-sub">List a new ink</div></div>
+        <div class="qa-card" onclick="go('aprod')"><div class="qa-icon">📋</div><div class="qa-lbl">Manage Products</div><div class="qa-sub">Edit, hide, delete</div></div>
+        <div class="qa-card" onclick="go('aorders')"><div class="qa-icon">📦</div><div class="qa-lbl">Approve Orders <span class="nav-badge" style="font-size:10px;margin-left:4px;">3</span></div><div class="qa-sub">Review pending</div></div>
+        <div class="qa-card"><div class="qa-icon">📊</div><div class="qa-lbl">Stock Levels</div><div class="qa-sub">Update availability</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PRODUCTS -->
+  <div class="pg" id="pg-aprod">
+    <div class="admin-bar"><div><div class="ab-logo">Dee Pee Inks — Products</div><div class="ab-role">24 total · 21 active · 3 low stock</div></div><div class="ph-right"><button class="quick-btn" onclick="go('aadd')">+ Add New Product</button></div></div>
+    <div class="admin-body">
+      <div class="cat-filters" style="margin-bottom:16px;">
+        <div class="search-box">🔍 <span class="sb-ph">Search products…</span></div>
+        <div class="filter-chip on">All (24)</div>
+        <div class="filter-chip">Printing (14)</div>
+        <div class="filter-chip">Industrial (10)</div>
+        <div class="filter-chip" style="color:#C84B31;border-color:#C84B31;">Low Stock (3)</div>
+        <div class="filter-chip">Drafts (3)</div>
+      </div>
+      <div class="prod-mgmt-grid">
+        <div class="pm-card"><div class="pm-img" style="background:#F5F0E8;">🖤</div><div class="pm-body"><div class="pm-name">ChromaBlack Pro XL</div><div class="pm-cat">Offset Printing · 4 sizes</div><div class="pm-row"><span class="pm-price">₹2,450/L</span><span class="in-stock">Active</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 240 L · MOQ: 5 L</div><div class="pm-actions"><button class="pm-btn pm-edit" onclick="go('aadd')">Edit</button><button class="pm-btn pm-hide">Hide</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#FFFFF0;">🟡</div><div class="pm-body"><div class="pm-name">UV FlexCure Yellow</div><div class="pm-cat">UV-Cure Printing · 3 sizes</div><div class="pm-row"><span class="pm-price">₹4,100/L</span><span class="low-stock">Low Stock</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 8 L · MOQ: 1 L</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-low">Restock</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#EFF8FF;">🔵</div><div class="pm-body"><div class="pm-name">IndustraBlue 4000</div><div class="pm-cat">Industrial Coding · 2 sizes</div><div class="pm-row"><span class="pm-price">₹3,200/L</span><span class="in-stock">Active</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 185 L · MOQ: 10 L</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-hide">Hide</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#FFF0F0;">🔴</div><div class="pm-body"><div class="pm-name">IndustraRed 7X</div><div class="pm-cat">Metal Marking · 2 sizes</div><div class="pm-row"><span class="pm-price">₹3,800/L</span><span class="low-stock">Low Stock</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 12 L · MOQ: 5 L</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-low">Restock</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#F5F0FF;">⚪</div><div class="pm-body"><div class="pm-name">GravureClear Base</div><div class="pm-cat">Gravure Printing · 3 sizes</div><div class="pm-row"><span class="pm-price">₹1,950/L</span><span style="font-size:9px;font-weight:700;color:var(--muted);background:#F3F4F6;padding:3px 8px;border-radius:100px;">Draft</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: Not set</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-pub">Publish</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#F0FFF4;">🟢</div><div class="pm-body"><div class="pm-name">EcoFlex Green</div><div class="pm-cat">Flexographic · 3 sizes</div><div class="pm-row"><span class="pm-price">₹2,800/L</span><span class="in-stock">Active</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 96 L · MOQ: 5 L</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-hide">Hide</button></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN ADD PRODUCT -->
+  <div class="pg" id="pg-aadd">
+    <div class="admin-bar"><div><div class="ab-logo">Add New Product</div><div class="ab-role">Dee Pee Inks — Product Manager</div></div><div class="ph-right"><button class="quick-btn" onclick="go('aprod')">← Back to Products</button></div></div>
+    <div class="admin-body">
+      <div class="add-form">
+        <div class="af-title">Product Information</div>
+        <div class="upload-box"><div class="ub-icon">📷</div><div class="ub-lbl">Click to upload product photo</div><div class="ub-sub">JPG or PNG · Max 5 MB · Recommended 800×800px</div></div>
+        <div class="af-grid">
+          <div><div class="af-lbl">Product Name *</div><input class="af-field" value="ChromaBlack Pro XL"></div>
+          <div><div class="af-lbl">SKU / Product Code</div><input class="af-field" value="INK-CBP-XL"></div>
+          <div><div class="af-lbl">Category *</div><select class="af-field"><option>Offset Printing Ink</option><option>UV-Cure Printing Ink</option><option>Industrial Coding Ink</option><option>Metal Marking Ink</option></select></div>
+          <div><div class="af-lbl">Base Price (per litre) *</div><input class="af-field" value="₹2,450"></div>
+          <div><div class="af-lbl">MOQ (litres) *</div><input class="af-field" value="5"></div>
+          <div><div class="af-lbl">Current Stock (litres)</div><input class="af-field" value="240"></div>
+        </div>
+        <div class="af-lbl" style="margin-bottom:8px;">Short Description</div>
+        <textarea class="af-field" rows="2" style="margin-bottom:14px;">Dense carbon-based offset printing ink. High opacity, fast-dry formula.</textarea>
+        <div class="af-lbl" style="margin-bottom:8px;">Bulk Pricing Tiers</div>
+        <div style="background:#F8F7F2;border-radius:8px;padding:12px;margin-bottom:14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;margin-bottom:6px;"><span style="font-size:10px;font-weight:600;color:var(--muted);">From (L)</span><span style="font-size:10px;font-weight:600;color:var(--muted);">To (L)</span><span style="font-size:10px;font-weight:600;color:var(--muted);">Discount %</span><span></span></div>
+          <div class="tier-grid"><input class="tier-in" value="1"><input class="tier-in" value="10"><input class="tier-in" value="0%"><button class="tdel">×</button></div>
+          <div class="tier-grid"><input class="tier-in" value="11"><input class="tier-in" value="50"><input class="tier-in" value="8%"><button class="tdel">×</button></div>
+          <div class="tier-grid"><input class="tier-in" value="51"><input class="tier-in" value="∞"><input class="tier-in" value="15%"><button class="tdel">×</button></div>
+          <button style="font-size:11px;font-weight:700;color:var(--gold);background:none;border:none;cursor:pointer;margin-top:4px;">+ Add Tier</button>
+        </div>
+        <div class="toggle-row"><div><div class="tgl-lbl">Visible to customers</div><div class="tgl-sub">Show this product in the portal</div></div><div class="tgl"></div></div>
+        <div class="toggle-row"><div><div class="tgl-lbl">Allow ordering</div><div class="tgl-sub">Customers can place orders</div></div><div class="tgl"></div></div>
+        <div class="toggle-row" style="border:none;"><div><div class="tgl-lbl">Featured product</div><div class="tgl-sub">Highlight on customer dashboard</div></div><div class="tgl tgl-off"></div></div>
+        <div class="save-row">
+          <button class="btn-draft">Save as Draft</button>
+          <button class="btn-save" onclick="go('aprod')">Publish Product →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN APPROVE ORDERS -->
+  <div class="pg" id="pg-aorders">
+    <div class="admin-bar"><div><div class="ab-logo">Order Approvals</div><div class="ab-role">3 orders pending · Dee Pee Inks Sales Team</div></div></div>
+    <div class="admin-body">
+      <div class="orders-tabs" style="max-width:400px;"><button class="otab on">Pending (3)</button><button class="otab">Approved</button><button class="otab">All Orders</button></div>
+      <div class="orders-approve">
+        <div class="oa-card">
+          <div class="oa-top"><div><div class="oa-id">#DPI-2051 · 19 Mar 2026</div><div class="oa-company">Rajan Enterprises · Chennai · GSTIN: 33AABCR1234F1Z5</div></div><span class="sp sp-p">Pending Approval</span></div>
+          <div class="oa-mid"><span class="oa-products">ChromaBlack Pro XL 50L · IndustraBlue 4000 20L · SIDCO, Chennai</span><span class="oa-amt">₹1,80,020</span></div>
+          <div class="oa-bot"><button class="btn-approve">✓ Approve</button><button class="btn-revise">Request Change</button><button class="btn-reject">✗ Reject</button><span class="ml-auto" style="font-size:11px;color:var(--muted);">Proforma auto-generated on approval</span></div>
+        </div>
+        <div class="oa-card">
+          <div class="oa-top"><div><div class="oa-id">#DPI-2050 · 18 Mar 2026</div><div class="oa-company">PrintMaster Co. · Coimbatore · GSTIN: 33ABCDE5678F1Z2</div></div><span class="sp sp-p">Pending Approval</span></div>
+          <div class="oa-mid"><span class="oa-products">IndustraRed 7X · 10 L · Peelamedu, Coimbatore</span><span class="oa-amt">₹38,000</span></div>
+          <div class="oa-bot"><button class="btn-approve">✓ Approve</button><button class="btn-revise">Request Change</button><button class="btn-reject">✗ Reject</button><span class="ml-auto" style="font-size:11px;color:var(--muted);">Proforma auto-generated on approval</span></div>
+        </div>
+        <div class="oa-card">
+          <div class="oa-top"><div><div class="oa-id">#DPI-2048 · 17 Mar 2026</div><div class="oa-company">SwiftPack Industries · Madurai · GSTIN: 33FGHIJ9012K1Z8</div></div><span class="sp sp-p">Pending Approval</span></div>
+          <div class="oa-mid"><span class="oa-products">UV FlexCure Yellow 5L · GravureClear Base 20L · Madurai</span><span class="oa-amt">₹59,500</span></div>
+          <div class="oa-bot"><button class="btn-approve">✓ Approve</button><button class="btn-revise">Request Change</button><button class="btn-reject">✗ Reject</button><span class="ml-auto" style="font-size:11px;color:var(--muted);">Proforma auto-generated on approval</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function go(id) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+id+"'")) b.classList.add('on');
+  });
+  window.scrollTo(0, 0);
+}
+</script>

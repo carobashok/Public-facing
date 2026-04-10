@@ -8,7 +8,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --navy: #0D2B5E; --blue: #1A6FC4; --light-blue: #EAF1FB;
+    --navy: #0C2340; --blue: #0C2340; --light-blue: #FFF8E7;
+    --accent: #F5A800; --accent-dark: #D4900A;
     --white: #FFFFFF; --gray-50: #F8FAFC; --gray-100: #F1F5F9;
     --gray-200: #E2E8F0; --gray-400: #94A3B8; --gray-600: #475569;
     --gray-800: #1E293B; --success: #22C55E; --warning: #F59E0B;
@@ -21,17 +22,18 @@
   .sidebar { width:var(--sidebar-w); background:var(--navy); display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:100; }
   .sidebar-brand { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,0.08); }
   .brand-name { font-size:15px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; }
+  .brand-accent { color:var(--accent); }
   .brand-sub { font-size:10px; color:rgba(255,255,255,0.4); letter-spacing:0.5px; margin-top:2px; }
-  .sidebar-section { padding:16px 12px 4px; font-size:9px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+  .sidebar-section { padding:16px 12px 4px; font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); opacity:0.8; }
   .nav-item { display:flex; align-items:center; gap:10px; padding:10px 16px; margin:2px 8px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:500; color:rgba(255,255,255,0.6); transition:all 0.15s; border:none; background:none; width:calc(100% - 16px); text-align:left; }
   .nav-item:hover { background:rgba(255,255,255,0.08); color:#fff; }
-  .nav-item.active { background:var(--blue); color:#fff; }
+  .nav-item.active { background:var(--accent); color:var(--navy); font-weight:700; }
   .nav-icon { width:18px; height:18px; flex-shrink:0; }
-  .sidebar-footer { margin-top:auto; padding:16px; border-top:1px solid rgba(255,255,255,0.08); font-size:10px; color:rgba(255,255,255,0.25); text-align:center; }
+  .sidebar-footer { margin-top:auto; padding:16px; border-top:2px solid var(--accent); font-size:10px; color:rgba(255,255,255,0.4); text-align:center; }
 
   /* MAIN */
   .main { margin-left:var(--sidebar-w); flex:1; display:flex; flex-direction:column; }
-  .topbar { background:var(--white); border-bottom:1px solid var(--gray-200); padding:0 32px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
+  .topbar { background:var(--white); border-bottom:2px solid var(--accent); padding:0 32px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
   .page-title { font-size:16px; font-weight:600; color:var(--navy); }
   .topbar-right { display:flex; align-items:center; gap:12px; }
   .content { padding:28px 32px; flex:1; }
@@ -40,9 +42,9 @@
 
   /* BUTTONS */
   .btn { padding:8px 18px; border-radius:8px; font-size:13px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; border:none; transition:all 0.15s; }
-  .btn-primary { background:var(--blue); color:white; }
-  .btn-primary:hover { background:var(--navy); }
-  .btn-outline { background:transparent; color:var(--blue); border:1.5px solid var(--blue); }
+  .btn-primary { background:var(--accent); color:var(--navy); font-weight:700; }
+  .btn-primary:hover { background:var(--accent-dark); }
+  .btn-outline { background:transparent; color:var(--navy); border:1.5px solid var(--navy); }
   .btn-outline:hover { background:var(--light-blue); }
   .btn-sm { padding:5px 12px; font-size:12px; }
   .btn-ghost { background:var(--gray-100); color:var(--gray-600); border:none; }
@@ -52,21 +54,24 @@
   .btn-warning-soft { background:#FEF3C7; color:#D97706; border:none; }
 
   /* STATS */
-  .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
-  .stat-card { background:var(--white); border-radius:12px; padding:20px; border:1px solid var(--gray-200); display:flex; align-items:center; gap:16px; }
-  .stat-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .stat-icon.blue { background:var(--light-blue); }
-  .stat-icon.green { background:#DCFCE7; }
-  .stat-icon.orange { background:#FEF3C7; }
-  .stat-icon.purple { background:#EDE9FE; }
-  .stat-icon.red { background:#FEE2E2; }
-  .stat-value { font-size:24px; font-weight:700; color:var(--navy); line-height:1; }
+  .stats-row { display:grid; gap:16px; margin-bottom:24px; }
+  .stats-row:not(.stats-4):not(.stats-5):not(.stats-6) { grid-template-columns:repeat(4,1fr); }
+  .stat-card { background:var(--white); border-radius:12px; padding:18px 20px; border:1px solid var(--gray-200); }
+  .stat-card:has(.stat-icon) { display:flex; align-items:center; gap:16px; }
+  .stat-card-flex { display:flex; align-items:center; gap:16px; }
+  .stat-icon { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; }
+  .stat-icon.blue, .stat-icon.si-blue { background:var(--light-blue); }
+  .stat-icon.green, .stat-icon.si-green { background:#DCFCE7; }
+  .stat-icon.orange, .stat-icon.si-orange { background:#FEF3C7; }
+  .stat-icon.purple, .stat-icon.si-purple { background:#EDE9FE; }
+  .stat-icon.red, .stat-icon.si-red { background:#FEE2E2; }
+  .stat-value { font-size:22px; font-weight:700; color:var(--navy); line-height:1; margin-top:8px; }
   .stat-label { font-size:11px; color:var(--gray-400); margin-top:3px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; }
 
   /* CARD */
   .card { background:var(--white); border-radius:12px; border:1px solid var(--gray-200); overflow:hidden; }
   .card-header { padding:18px 24px; border-bottom:1px solid var(--gray-100); display:flex; align-items:center; justify-content:space-between; }
-  .card-title { font-size:14px; font-weight:600; color:var(--navy); }
+  .card-title { font-size:14px; font-weight:700; color:var(--navy); }
 
   /* TABLE */
   .table-wrap { overflow-x:auto; }
@@ -133,7 +138,7 @@
   /* TABS */
   .tab-bar { display:flex; border-bottom:2px solid var(--gray-100); margin-bottom:20px; }
   .tab-btn { padding:10px 20px; font-size:13px; font-weight:600; color:var(--gray-400); border:none; background:none; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all 0.15s; font-family:'DM Sans',sans-serif; }
-  .tab-btn.active { color:var(--blue); border-bottom-color:var(--blue); }
+  .tab-btn.active { color:var(--navy); border-bottom-color:var(--accent); font-weight:700; }
   .tab-panel { display:none; }
   .tab-panel.active { display:block; }
 
@@ -218,38 +223,11 @@
   /* NOT SUBMITTED CHIPS */
   .site-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
   .site-chip { padding:4px 12px; background:#FEE2E2; border-radius:20px; font-size:12px; font-weight:600; color:#DC2626; }
-  :root {
-    --navy: #0D2B5E; --blue: #1A6FC4; --light-blue: #EAF1FB;
-    --white: #FFFFFF; --gray-50: #F8FAFC; --gray-100: #F1F5F9;
-    --gray-200: #E2E8F0; --gray-400: #94A3B8; --gray-600: #475569;
-    --gray-800: #1E293B; --green: #16A34A; --orange: #D97706;
-    --danger: #EF4444; --sidebar-w: 240px;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'DM Sans',sans-serif; background:var(--gray-50); color:var(--gray-800); display:flex; min-height:100vh; }
-
-  /* SIDEBAR */
-  .sidebar { width:var(--sidebar-w); background:var(--navy); display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:100; }
-  .sidebar-brand { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,0.08); }
-  .brand-name { font-size:15px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; }
-  .brand-sub { font-size:10px; color:rgba(255,255,255,0.4); letter-spacing:0.5px; margin-top:2px; }
-  .sidebar-section { padding:16px 12px 4px; font-size:9px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.3); }
-  .nav-item { display:flex; align-items:center; gap:10px; padding:10px 16px; margin:2px 8px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:500; color:rgba(255,255,255,0.6); transition:all 0.15s; border:none; background:none; width:calc(100% - 16px); text-align:left; }
-  .nav-item:hover { background:rgba(255,255,255,0.08); color:#fff; }
-  .nav-item.active { background:var(--blue); color:#fff; }
-  .nav-icon { width:18px; height:18px; flex-shrink:0; }
-  .sidebar-footer { margin-top:auto; padding:16px; border-top:1px solid rgba(255,255,255,0.08); font-size:10px; color:rgba(255,255,255,0.25); text-align:center; }
-
-  /* MAIN */
-  .main { margin-left:var(--sidebar-w); flex:1; display:flex; flex-direction:column; }
-  .topbar { background:var(--white); border-bottom:1px solid var(--gray-200); padding:0 28px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
-  .page-title { font-size:16px; font-weight:600; color:var(--navy); }
-  .content { padding:24px 28px; flex:1; }
 
   /* LEVEL TABS */
   .level-tabs { display:flex; gap:0; background:var(--white); border:1px solid var(--gray-200); border-radius:10px; padding:4px; margin-bottom:24px; width:fit-content; }
   .level-tab { padding:8px 24px; border-radius:7px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:none; font-family:'DM Sans',sans-serif; color:var(--gray-400); transition:all 0.15s; }
-  .level-tab.active { background:var(--navy); color:white; }
+  .level-tab.active { background:var(--accent); color:var(--navy); font-weight:700; }
   .level-tab:hover:not(.active) { color:var(--navy); }
 
   .dash-level { display:none; }
@@ -263,21 +241,16 @@
   .date-badge { padding:6px 14px; background:var(--light-blue); border-radius:8px; font-size:12px; font-weight:600; color:var(--navy); }
 
   /* STATS */
-  .stats-row { display:grid; gap:14px; margin-bottom:20px; }
   .stats-4 { grid-template-columns:repeat(4,1fr); }
   .stats-5 { grid-template-columns:repeat(5,1fr); }
   .stats-6 { grid-template-columns:repeat(6,1fr); }
-  .stat-card { background:var(--white); border-radius:12px; padding:18px 20px; border:1px solid var(--gray-200); }
   .stat-top { display:flex; align-items:flex-start; justify-content:space-between; }
-  .stat-icon { width:38px; height:38px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; }
   .si-blue { background:var(--light-blue); }
   .si-green { background:#DCFCE7; }
   .si-orange { background:#FEF3C7; }
   .si-purple { background:#EDE9FE; }
   .si-red { background:#FEE2E2; }
   .si-teal { background:#CCFBF1; }
-  .stat-value { font-size:22px; font-weight:700; color:var(--navy); line-height:1; margin-top:10px; }
-  .stat-label { font-size:11px; color:var(--gray-400); margin-top:3px; font-weight:500; }
   .stat-trend { font-size:11px; font-weight:600; margin-top:4px; }
   .trend-up { color:var(--green); }
   .trend-down { color:var(--danger); }
@@ -317,7 +290,7 @@
   .prog-label { display:flex; justify-content:space-between; font-size:11px; color:var(--gray-400); margin-bottom:4px; }
   .prog-bar { height:6px; background:var(--gray-100); border-radius:10px; overflow:hidden; }
   .prog-fill { height:100%; border-radius:10px; }
-  .pf-blue { background:var(--blue); }
+  .pf-blue { background:var(--accent); }
   .pf-green { background:var(--green); }
   .pf-orange { background:var(--orange); }
   .pf-red { background:var(--danger); }
@@ -363,7 +336,7 @@
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-brand">
-    <div class="brand-name">Keller India</div>
+    <div class="brand-name"><span style="color:var(--accent);">K</span>ELLER INDIA</div>
     <div class="brand-sub">Operations Management System</div>
   </div>
   <div class="sidebar-section">Masters</div>
@@ -384,6 +357,10 @@
     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
     DPR Entry
   </button>
+  <button class="nav-item" onclick="showPage('land',this)">
+    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+    Land Handover
+  </button>
   <div class="sidebar-section">Analytics</div>
   <button class="nav-item" onclick="showPage('dashboard',this)">
     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
@@ -397,7 +374,7 @@
     <div class="page-title" id="topbar-title">Project Master</div>
     <div class="topbar-right">
       <span style="font-size:12px;color:var(--gray-400);">Keller Ground Engineering India</span>
-      <div style="width:32px;height:32px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;">KI</div>
+      <div style="width:32px;height:32px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:12px;font-weight:700;">KI</div>
     </div>
   </div>
 
@@ -718,7 +695,7 @@
       <!-- KPI Row -->
       <div class="kpi-row">
         <div class="kpi-box"><div class="kpi-label">Total Active Projects</div><div class="kpi-value">4</div><div class="kpi-sub">Across 3 regions</div></div>
-        <div class="kpi-box" style="background:var(--blue);"><div class="kpi-label">Total Piles Completed</div><div class="kpi-value">4,238</div><div class="kpi-sub">of 7,450 scope</div></div>
+        <div class="kpi-box" style="background:#1A4A7A;"><div class="kpi-label">Total Piles Completed</div><div class="kpi-value">4,238</div><div class="kpi-sub">of 7,450 scope</div></div>
         <div class="kpi-box" style="background:#0E7490;"><div class="kpi-label">Total Running Metres</div><div class="kpi-value">1,12,840</div><div class="kpi-sub">Linear metres drilled</div></div>
         <div class="kpi-box" style="background:#065F46;"><div class="kpi-label">Overall Completion</div><div class="kpi-value">56.9%</div><div class="kpi-sub">On track ↑</div></div>
       </div>
@@ -889,7 +866,7 @@
       <!-- Project KPI strip -->
       <div class="kpi-row">
         <div class="kpi-box"><div class="kpi-label">Today's Production</div><div class="kpi-value">12</div><div class="kpi-sub">Piles completed</div></div>
-        <div class="kpi-box" style="background:var(--blue);"><div class="kpi-label">Total Completed</div><div class="kpi-value">2,023</div><div class="kpi-sub">of 2,200 scope</div></div>
+        <div class="kpi-box" style="background:#1A4A7A;"><div class="kpi-label">Total Completed</div><div class="kpi-value">2,023</div><div class="kpi-sub">of 2,200 scope</div></div>
         <div class="kpi-box" style="background:#0E7490;"><div class="kpi-label">Running Metres</div><div class="kpi-value">56,385</div><div class="kpi-sub">Total drilled</div></div>
         <div class="kpi-box" style="background:#065F46;"><div class="kpi-label">% Completion</div><div class="kpi-value">91.9%</div><div class="kpi-sub">On track</div></div>
       </div>
@@ -963,10 +940,177 @@
       </div>
     </div>
 
-  </div>
-</div>
 
+    </div>
+    <!-- ══ LAND HANDOVER PAGE ══ -->
+    <div class="page" id="page-land">
 
+      <div class="stats-row stats-4" style="margin-bottom:20px;">
+        <div class="stat-card"><div class="stat-top"><div><div class="stat-label">Total Areas Planned</div><div class="stat-value">14</div></div><div class="stat-icon si-blue">🗺️</div></div><div class="stat-trend trend-flat">Across all projects</div></div>
+        <div class="stat-card"><div class="stat-top"><div><div class="stat-label">Areas Handed Over</div><div class="stat-value">9</div></div><div class="stat-icon si-green">✅</div></div><div class="stat-trend trend-up">64% of planned</div></div>
+        <div class="stat-card"><div class="stat-top"><div><div class="stat-label">Pending Handover</div><div class="stat-value">5</div></div><div class="stat-icon si-orange">⏳</div></div><div class="stat-trend trend-down">2 overdue</div></div>
+        <div class="stat-card"><div class="stat-top"><div><div class="stat-label">Piles Unlocked</div><div class="stat-value">2,102</div></div><div class="stat-icon si-purple">🔓</div></div><div class="stat-trend trend-flat">of 2,200 total</div></div>
+      </div>
+
+      <!-- Tabs: Plan vs Actual -->
+      <div class="tab-bar">
+        <button class="tab-btn active" id="land-tab1-btn" onclick="switchLandTab(1)">📋 Handover Plan (from Client)</button>
+        <button class="tab-btn" id="land-tab2-btn" onclick="switchLandTab(2)">✅ Actual Handover Entry</button>
+        <button class="tab-btn" id="land-tab3-btn" onclick="switchLandTab(3)">📊 Plan vs Actual</button>
+      </div>
+
+      <!-- TAB 1: HANDOVER PLAN -->
+      <div class="tab-panel active" id="land-tab1">
+        <div class="filter-bar">
+          <select class="filter-select"><option>PRJ-001 — RIL-DMD</option><option>PRJ-002 — ONGC Jetty</option><option>PRJ-003 — Adani Port</option><option>PRJ-004 — Chennai Metro</option></select>
+          <select class="filter-select"><option value="">All Status</option><option>Pending</option><option>Handed Over</option><option>Overdue</option></select>
+          <button class="btn btn-primary" onclick="document.getElementById('modal-land-plan').classList.add('open')">+ Add Handover Plan</button>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Client Land Handover Plan — RIL-DMD</span><span style="font-size:12px;color:var(--gray-400);">8 areas</span></div>
+          <div class="table-wrap">
+            <table id="tbl-land">
+              <thead><tr><th>Area / Structure</th><th>No. of Piles</th><th>Running Mtrs</th><th>Planned Date</th><th>Actual Date</th><th>Delay (Days)</th><th>Piles Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Product Silo Area</strong></td><td>425</td><td>12,750</td>
+                  <td>01 Sep 2025</td><td style="color:var(--green);font-weight:600;">01 Sep 2025</td>
+                  <td style="color:var(--green);font-weight:700;">0</td>
+                  <td><span class="badge badge-done">Unlocked ✓</span></td>
+                  <td><button class="btn btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Oxidation Reactor A</strong></td><td>276</td><td>7,590</td>
+                  <td>01 Oct 2025</td><td style="color:var(--green);font-weight:600;">01 Oct 2025</td>
+                  <td style="color:var(--green);font-weight:700;">0</td>
+                  <td><span class="badge badge-done">Unlocked ✓</span></td>
+                  <td><button class="btn btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Oxidation Reactor B</strong></td><td>268</td><td>7,370</td>
+                  <td>15 Oct 2025</td><td style="color:var(--orange);font-weight:600;">28 Oct 2025</td>
+                  <td style="color:var(--orange);font-weight:700;">13</td>
+                  <td><span class="badge badge-done">Unlocked ✓</span></td>
+                  <td><button class="btn btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Solvent Recovery</strong></td><td>208</td><td>5,720</td>
+                  <td>01 Nov 2025</td><td style="color:var(--green);font-weight:600;">05 Nov 2025</td>
+                  <td style="color:var(--orange);font-weight:700;">4</td>
+                  <td><span class="badge badge-done">Unlocked ✓</span></td>
+                  <td><button class="btn btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td><strong>PTA Separation</strong></td><td>194</td><td>5,335</td>
+                  <td>01 Dec 2025</td><td style="color:var(--danger);font-weight:600;">22 Dec 2025</td>
+                  <td style="color:var(--danger);font-weight:700;">21</td>
+                  <td><span class="badge badge-done">Unlocked ✓</span></td>
+                  <td><button class="btn btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Catalyst Make-up</strong></td><td>65</td><td>1,787</td>
+                  <td>15 Jan 2026</td><td style="color:var(--green);font-weight:600;">18 Jan 2026</td>
+                  <td style="color:var(--orange);font-weight:700;">3</td>
+                  <td><span class="badge badge-done">Unlocked ✓</span></td>
+                  <td><button class="btn btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Pipe Rack R002</strong></td><td>133</td><td>3,657</td>
+                  <td>01 Feb 2026</td><td style="color:var(--green);font-weight:600;">01 Feb 2026</td>
+                  <td style="color:var(--green);font-weight:700;">0</td>
+                  <td><span class="badge badge-done">Unlocked ✓</span></td>
+                  <td><button class="btn btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr style="background:#FEF3C7;">
+                  <td><strong>Pipe Rack R004</strong></td><td>133</td><td>3,657</td>
+                  <td>01 Mar 2026</td><td style="color:var(--danger);font-weight:600;">Not Yet</td>
+                  <td style="color:var(--danger);font-weight:700;">39+ ⚠️</td>
+                  <td><span class="badge badge-behind">Locked 🔒</span></td>
+                  <td><button class="btn btn-primary btn-sm" onclick="openActualHandover('Pipe Rack R004')">Record Handover</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: ACTUAL HANDOVER ENTRY -->
+      <div class="tab-panel" id="land-tab2">
+        <div style="max-width:580px;">
+          <div style="background:var(--light-blue);border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:12px;color:var(--navy);">
+            <strong>📌 Note:</strong> When the client hands over a land area, record it here. This will <strong>unlock the piles</strong> in that area for DPR entry. Piles remain locked until actual handover is recorded.
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Record Actual Land Handover</span></div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="form-group"><label>Project *</label><select class="mobile-input" style="padding:9px 12px;font-size:13px;"><option>PRJ-001 — RIL-DMD</option><option>PRJ-002 — ONGC Jetty</option></select></div>
+                <div class="form-group"><label>Structure / Area *</label>
+                  <select style="padding:9px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;" id="area-select">
+                    <option value="">Select area</option>
+                    <option>Pipe Rack R004 — 133 piles 🔒 Pending</option>
+                    <option>Pipe Rack R005 — 121 piles 🔒 Pending</option>
+                    <option>X7-650 Area — 24 piles 🔒 Pending</option>
+                  </select>
+                </div>
+                <div class="form-group"><label>Actual Handover Date *</label><input type="date" value="2026-04-09"></div>
+                <div class="form-group"><label>Condition of Land</label>
+                  <select style="padding:9px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;">
+                    <option>Clear — Ready for piling</option>
+                    <option>Partial — Some obstruction</option>
+                    <option>With Constraints — Specify in remarks</option>
+                  </select>
+                </div>
+                <div class="form-group"><label>Handed Over By (Client Rep)</label><input type="text" placeholder="Client representative name"></div>
+                <div class="form-group"><label>Received By (Keller)</label><input type="text" placeholder="Keller site engineer" value="Ramesh Kumar"></div>
+                <div class="form-group full"><label>Remarks / Observations</label><textarea placeholder="Any conditions, constraints or observations about the handed over area..."></textarea></div>
+              </div>
+              <div style="margin-top:16px;padding:14px;background:#DCFCE7;border-radius:10px;font-size:12px;color:#14532D;">
+                <strong>✅ On saving this record:</strong><br>
+                All <strong>133 piles</strong> in <em>Pipe Rack R004</em> will be <strong>unlocked</strong> and available for DPR entry immediately.
+              </div>
+              <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:10px;">
+                <button class="btn btn-ghost">Cancel</button>
+                <button class="btn btn-primary" onclick="recordHandover()">✓ Record Handover &amp; Unlock Piles</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: PLAN vs ACTUAL -->
+      <div class="tab-panel" id="land-tab3">
+        <div class="filter-bar">
+          <select class="filter-select"><option>PRJ-001 — RIL-DMD</option><option>PRJ-002 — ONGC Jetty</option></select>
+        </div>
+        <div class="chart-grid cg-2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="chart-card" style="background:white;border-radius:12px;border:1px solid var(--gray-200);padding:20px;">
+            <div class="chart-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+              <div><div class="chart-title" style="font-size:13px;font-weight:700;color:var(--navy);">Planned vs Actual Handover — Cumulative Piles</div>
+              <div style="font-size:11px;color:var(--gray-400);">Month-wise cumulative piles available for piling</div></div>
+            </div>
+            <canvas id="c-land-trend" style="max-height:220px;"></canvas>
+          </div>
+          <div class="chart-card" style="background:white;border-radius:12px;border:1px solid var(--gray-200);padding:20px;">
+            <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;">Delay Summary by Structure</div>
+            <div style="font-size:11px;color:var(--gray-400);margin-bottom:16px;">Days delayed in handover per area</div>
+            <canvas id="c-land-delay" style="max-height:220px;"></canvas>
+          </div>
+        </div>
+        <div style="margin-top:16px;background:white;border-radius:12px;border:1px solid var(--gray-200);padding:20px;">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;">Impact Analysis</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-bottom:16px;">Estimated production lost due to delayed handover</div>
+          <table class="mini-table">
+            <thead><tr><th>Structure</th><th>Planned Handover</th><th>Actual Handover</th><th>Delay (Days)</th><th>Piles Affected</th><th>Est. Production Lost</th><th>Claim Eligible</th></tr></thead>
+            <tbody>
+              <tr><td>Oxidation Reactor B</td><td>15 Oct 2025</td><td>28 Oct 2025</td><td style="color:var(--orange);font-weight:700;">13</td><td>268</td><td>~52 piles</td><td><span class="badge badge-on">Yes</span></td></tr>
+              <tr><td>PTA Separation</td><td>01 Dec 2025</td><td>22 Dec 2025</td><td style="color:var(--danger);font-weight:700;">21</td><td>194</td><td>~84 piles</td><td><span class="badge badge-on">Yes</span></td></tr>
+              <tr><td>Pipe Rack R004</td><td>01 Mar 2026</td><td>Not yet</td><td style="color:var(--danger);font-weight:700;">39+</td><td>133</td><td>~156 piles</td><td><span class="badge badge-on">Yes</span></td></tr>
+              <tr style="background:var(--gray-50);font-weight:700;"><td colspan="4">Total Impact</td><td>595</td><td>~292 piles</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
   </div><!-- /content -->
@@ -982,7 +1126,7 @@
       <div class="tab-bar">
         <button class="tab-btn active" onclick="switchModalTab(this,'pm-tab1')">① Basic Details</button>
         <button class="tab-btn" onclick="switchModalTab(this,'pm-tab2')">② Pile Setup</button>
-        <button class="tab-btn" onclick="switchModalTab(this,'pm-tab3')">③ Monthly Targets</button>
+        <button class="tab-btn" onclick="switchModalTab(this,'pm-tab3')">③ Land &amp; Targets</button>
       </div>
       <div class="tab-panel active" id="pm-tab1">
         <div class="form-grid">
@@ -1022,15 +1166,65 @@
         </div>
       </div>
       <div class="tab-panel" id="pm-tab3">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <div><div style="font-size:13px;font-weight:600;color:var(--navy);">Month-wise Production Targets</div><div style="font-size:11px;color:var(--gray-400);margin-top:2px;">Used for Planned vs Actual tracking in dashboard</div></div>
-          <button class="btn btn-ghost btn-sm" onclick="autoDistribute()">Auto Distribute</button>
+
+        <!-- SECTION A: LAND HANDOVER PLAN -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--navy);">Section A — Client Land Handover Plan</div>
+            <div style="font-size:11px;color:var(--gray-400);margin-top:2px;">Enter the client's plan for handing over each structure / area</div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="addLandRow()">+ Add Area</button>
         </div>
-        <table class="milestone-table"><thead><tr><th>Month</th><th>Target Piles</th><th>Target Running Mtrs</th><th>Cumulative Piles</th><th>Cumulative Mtrs</th></tr></thead>
-        <tbody id="ms-body"><tr><td class="month-label" colspan="5" style="color:var(--gray-400);text-align:center;padding:20px;">Set Start & End dates in Tab 1 to generate months</td></tr></tbody></table>
-        <div style="margin-top:12px;padding:12px;background:var(--gray-50);border-radius:8px;display:flex;justify-content:flex-end;gap:24px;">
-          <div style="text-align:right;"><div style="font-size:10px;color:var(--gray-400);text-transform:uppercase;">Total Piles</div><div style="font-size:18px;font-weight:700;color:var(--navy);" id="tot-p">0</div></div>
-          <div style="text-align:right;"><div style="font-size:10px;color:var(--gray-400);text-transform:uppercase;">Total Mtrs</div><div style="font-size:18px;font-weight:700;color:var(--navy);" id="tot-m">0</div></div>
+        <table class="pile-type-table" style="margin-bottom:20px;">
+          <thead><tr><th>Structure / Area</th><th>No. of Piles</th><th>Running Mtrs</th><th>Planned Handover Date</th><th>Remarks</th><th></th></tr></thead>
+          <tbody id="land-plan-body">
+            <tr>
+              <td><input type="text" placeholder="e.g. Oxidation Reactor A" style="width:160px;"></td>
+              <td><input type="number" placeholder="276" style="width:70px;"></td>
+              <td><input type="number" placeholder="7590" style="width:80px;"></td>
+              <td><input type="date" style="width:140px;"></td>
+              <td><input type="text" placeholder="Notes" style="width:120px;"></td>
+              <td><button class="btn btn-danger-soft btn-sm" onclick="this.closest('tr').remove()">✕</button></td>
+            </tr>
+            <tr>
+              <td><input type="text" placeholder="e.g. Product Silo" style="width:160px;"></td>
+              <td><input type="number" placeholder="425" style="width:70px;"></td>
+              <td><input type="number" placeholder="12750" style="width:80px;"></td>
+              <td><input type="date" style="width:140px;"></td>
+              <td><input type="text" placeholder="Notes" style="width:120px;"></td>
+              <td><button class="btn btn-danger-soft btn-sm" onclick="this.closest('tr').remove()">✕</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- SECTION B: MONTHLY TARGETS -->
+        <div style="border-top:1px solid var(--gray-200);padding-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--navy);">Section B — Monthly Production Targets</div>
+              <div style="font-size:11px;color:var(--gray-400);margin-top:2px;">Based on land availability — targets must not exceed cumulative land available</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="autoDistribute()">Auto Distribute</button>
+          </div>
+          <table class="milestone-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Land Handover (Piles)</th>
+                <th>Cumulative Available</th>
+                <th>Target Piles</th>
+                <th>Target Running Mtrs</th>
+                <th>Cumul. Target</th>
+              </tr>
+            </thead>
+            <tbody id="ms-body">
+              <tr><td class="month-label" colspan="6" style="color:var(--gray-400);text-align:center;padding:20px;">Set Start &amp; End dates in Tab 1 to generate months</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:12px;padding:12px;background:var(--gray-50);border-radius:8px;display:flex;justify-content:flex-end;gap:24px;">
+            <div style="text-align:right;"><div style="font-size:10px;color:var(--gray-400);text-transform:uppercase;">Total Target Piles</div><div style="font-size:18px;font-weight:700;color:var(--navy);" id="tot-p">0</div></div>
+            <div style="text-align:right;"><div style="font-size:10px;color:var(--gray-400);text-transform:uppercase;">Total Target Mtrs</div><div style="font-size:18px;font-weight:700;color:var(--navy);" id="tot-m">0</div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1142,6 +1336,32 @@
   </div>
 </div>
 
+
+<!-- ADD LAND HANDOVER PLAN MODAL -->
+<div class="modal-overlay" id="modal-land-plan">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title">Add Land Handover Plan</span><button class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">×</button></div>
+    <div class="modal-body">
+      <div style="background:var(--light-blue);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--navy);">
+        Enter the client's plan for handing over this area. This sets the expected date — actual handover is recorded separately.
+      </div>
+      <div class="form-grid">
+        <div class="form-group"><label>Project *</label><select><option>PRJ-001 — RIL-DMD</option><option>PRJ-002 — ONGC Jetty</option><option>PRJ-003 — Adani Port</option><option>PRJ-004 — Chennai Metro</option></select></div>
+        <div class="form-group"><label>Structure / Area Name *</label><input type="text" placeholder="e.g. Oxidation Reactor C"></div>
+        <div class="form-group"><label>No. of Piles</label><input type="number" placeholder="e.g. 276"></div>
+        <div class="form-group"><label>Running Metres</label><input type="number" placeholder="e.g. 7590"></div>
+        <div class="form-group"><label>Planned Handover Date *</label><input type="date"></div>
+        <div class="form-group"><label>Priority</label><select><option>Normal</option><option>High</option><option>Critical</option></select></div>
+        <div class="form-group full"><label>Remarks</label><textarea placeholder="Any conditions or notes from client..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="this.closest('.modal-overlay').classList.remove('open')">Cancel</button>
+      <button class="btn btn-primary" onclick="showToast('✓ Handover plan saved!');this.closest('.modal-overlay').classList.remove('open')">Save Plan</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1151,18 +1371,38 @@
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-'+key).classList.add('active');
     el.classList.add('active');
-    const titles = { projects:'Project Master', equipment:'Equipment Master', subcontractor:'Subcontractor Master', dpr:'DPR Entry', dashboard:'Analytics Dashboard' };
+    const titles = { projects:'Project Master', equipment:'Equipment Master', subcontractor:'Subcontractor Master', dpr:'DPR Entry', land:'Land Handover', dashboard:'Analytics Dashboard' };
     document.getElementById('topbar-title').textContent = titles[key] || key;
     if (key === 'dashboard' && !chartsInitialized) {
       chartsInitialized = true;
       initDashboardCharts();
     }
+    // Ensure land page tabs are properly initialised
+    if (key === 'land') {
+      ['land-tab1','land-tab2','land-tab3'].forEach((id,i) => {
+        const el2 = document.getElementById(id);
+        const btn = document.getElementById(id+'-btn');
+        if(el2) el2.classList.toggle('active', i===0);
+        if(btn) btn.classList.toggle('active', i===0);
+      });
+    }
+    // Ensure DPR page tabs are properly initialised
+    if (key === 'dpr') {
+      ['dpr-tab1','dpr-tab2'].forEach((id,i) => {
+        const el2 = document.getElementById(id);
+        const btn = document.getElementById(id+'-btn');
+        if(el2) el2.classList.toggle('active', i===0);
+        if(btn) btn.classList.toggle('active', i===0);
+      });
+    }
   }
 
   function switchDPRTab(n) {
     [1,2].forEach(i => {
-      document.getElementById('dpr-tab'+i).classList.toggle('active', i===n);
-      document.getElementById('dpr-tab'+i+'-btn').classList.toggle('active', i===n);
+      const el = document.getElementById('dpr-tab'+i);
+      const btn = document.getElementById('dpr-tab'+i+'-btn');
+      if(el) el.classList.toggle('active', i===n);
+      if(btn) btn.classList.toggle('active', i===n);
     });
   }
 
@@ -1203,26 +1443,47 @@
     tbody.innerHTML = '';
     months.forEach((m, i) => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td class="month-label">${mNames[m.getMonth()]} ${m.getFullYear()}</td><td><input type="number" placeholder="0" style="width:90px;" oninput="recalcMS()"></td><td><input type="number" placeholder="0" style="width:100px;" oninput="recalcMS()"></td><td style="font-family:'DM Mono';font-size:12px;padding:8px 14px;" id="cp-${i}">0</td><td style="font-family:'DM Mono';font-size:12px;padding:8px 14px;" id="cm-${i}">0</td>`;
+      tr.innerHTML = `
+        <td class="month-label">${mNames[m.getMonth()]} ${m.getFullYear()}</td>
+        <td><input type="number" placeholder="0" style="width:80px;" oninput="recalcMS()" title="Piles client plans to hand over this month"></td>
+        <td style="font-family:'DM Mono';font-size:12px;padding:8px 14px;color:var(--blue);font-weight:700;" id="ca-${i}">0</td>
+        <td><input type="number" placeholder="0" style="width:80px;" oninput="recalcMS(${i})" id="tp-${i}"></td>
+        <td><input type="number" placeholder="0" style="width:90px;" oninput="recalcMS(${i})"></td>
+        <td style="font-family:'DM Mono';font-size:12px;padding:8px 14px;" id="ct-${i}">0</td>`;
       tbody.appendChild(tr);
     });
   }
 
   function recalcMS() {
-    let cp=0, cm=0;
+    let cumAvail=0, cumTarget=0, cumMtrs=0;
     document.querySelectorAll('#ms-body tr').forEach((row, i) => {
       const ins = row.querySelectorAll('input');
-      if (ins.length >= 2) {
-        cp += parseFloat(ins[0].value)||0;
-        cm += parseFloat(ins[1].value)||0;
-        const cpEl = document.getElementById('cp-'+i);
-        const cmEl = document.getElementById('cm-'+i);
-        if(cpEl) cpEl.textContent = cp.toLocaleString();
-        if(cmEl) cmEl.textContent = cm.toLocaleString();
+      if (ins.length >= 3) {
+        const landPiles = parseFloat(ins[0].value)||0;
+        const targetPiles = parseFloat(ins[1].value)||0;
+        const targetMtrs = parseFloat(ins[2].value)||0;
+        cumAvail += landPiles;
+        cumTarget += targetPiles;
+        cumMtrs += targetMtrs;
+        const caEl = document.getElementById('ca-'+i);
+        const ctEl = document.getElementById('ct-'+i);
+        const tpEl = document.getElementById('tp-'+i);
+        if(caEl) caEl.textContent = cumAvail.toLocaleString();
+        if(ctEl) ctEl.textContent = cumTarget.toLocaleString();
+        // warn if target exceeds available
+        if(tpEl) {
+          if(targetPiles > cumAvail) {
+            tpEl.style.borderColor = 'var(--danger)';
+            tpEl.title = 'Warning: Target exceeds land available!';
+          } else {
+            tpEl.style.borderColor = '';
+            tpEl.title = '';
+          }
+        }
       }
     });
-    document.getElementById('tot-p').textContent = cp.toLocaleString();
-    document.getElementById('tot-m').textContent = cm.toLocaleString();
+    document.getElementById('tot-p').textContent = cumTarget.toLocaleString();
+    document.getElementById('tot-m').textContent = cumMtrs.toLocaleString();
   }
 
   function autoDistribute() {
@@ -1233,9 +1494,12 @@
     const n = rows.length;
     rows.forEach((row, i) => {
       const ins = row.querySelectorAll('input');
-      if (ins.length >= 2) {
+      if (ins.length >= 3) {
+        // Auto distribute land handover equally
         ins[0].value = i === n-1 ? tp - Math.round(tp/n)*(n-1) : Math.round(tp/n);
-        ins[1].value = i === n-1 ? tm - Math.round(tm/n)*(n-1) : Math.round(tm/n);
+        // Production target same as land handover (can be adjusted manually)
+        ins[1].value = i === n-1 ? tp - Math.round(tp/n)*(n-1) : Math.round(tp/n);
+        ins[2].value = i === n-1 ? tm - Math.round(tm/n)*(n-1) : Math.round(tm/n);
       }
     });
     recalcMS();
@@ -1279,6 +1543,19 @@
   function submitDPR() {
     showToast('✓ DPR submitted successfully!');
     switchDPRTab(1);
+  }
+
+  function addLandRow() {
+    const tbody = document.getElementById('land-plan-body');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" placeholder="Structure name" style="width:160px;"></td>
+      <td><input type="number" placeholder="0" style="width:70px;"></td>
+      <td><input type="number" placeholder="0" style="width:80px;"></td>
+      <td><input type="date" style="width:140px;"></td>
+      <td><input type="text" placeholder="Notes" style="width:120px;"></td>
+      <td><button class="btn btn-danger-soft btn-sm" onclick="this.closest('tr').remove()">✕</button></td>`;
+    tbody.appendChild(tr);
   }
 
   function filterTable(id, q) {
@@ -1455,6 +1732,55 @@
     if (!val) return;
     document.getElementById('proj-sel').value = val;
     showLevel('project', document.querySelectorAll('.level-tab')[2]);
+  }
+
+
+  function switchLandTab(n) {
+    [1,2,3].forEach(i => {
+      document.getElementById('land-tab'+i).classList.toggle('active', i===n);
+      document.getElementById('land-tab'+i+'-btn').classList.toggle('active', i===n);
+    });
+    if (n === 3 && !window.landChartsInit) {
+      window.landChartsInit = true;
+      initLandCharts();
+    }
+  }
+
+  function openActualHandover(area) {
+    switchLandTab(2);
+    document.getElementById('area-select').value = area;
+  }
+
+  function recordHandover() {
+    showToast('✓ Handover recorded! Piles unlocked successfully.');
+    switchLandTab(1);
+  }
+
+  function initLandCharts() {
+    // Land trend chart
+    const ctx1 = document.getElementById('c-land-trend');
+    if (ctx1) new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: ['Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
+        datasets: [
+          { label: 'Planned Available', data: [200,700,1200,1700,2100,2200,2200,2200], borderColor:'#94A3B8', borderDash:[6,4], tension:0.3, fill:false, pointRadius:3 },
+          { label: 'Actual Available', data: [200,700,1100,1600,2000,2102,2102,2102], borderColor:'#1A6FC4', backgroundColor:'rgba(26,111,196,0.08)', fill:true, tension:0.3, pointBackgroundColor:'#1A6FC4', pointRadius:4 }
+        ]
+      },
+      options: { responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:true, labels:{ boxWidth:12, font:{size:11} } } }, scales:{ x:{ grid:{ display:false } }, y:{ grid:{ color:'#F1F5F9' } } } }
+    });
+
+    // Delay bar chart
+    const ctx2 = document.getElementById('c-land-delay');
+    if (ctx2) new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Prod. Silo','Oxid. A','Oxid. B','Solvent','PTA Sep','Catalyst','Pipe R002','Pipe R004'],
+        datasets: [{ data: [0,0,13,4,21,3,0,39], backgroundColor: d => d.raw > 20 ? '#EF4444' : d.raw > 5 ? '#F59E0B' : '#22C55E', borderRadius: 5 }]
+      },
+      options: { responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ grid:{ display:false }, ticks:{ font:{size:10} } }, y:{ grid:{ color:'#F1F5F9' }, title:{ display:true, text:'Delay (Days)', font:{size:11} } } } }
+    });
   }
 
 </script>

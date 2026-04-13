@@ -1,1001 +1,849 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CarobTechnologies — Intelligent Analytics & AI-Powered Business Systems</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap');
 
-:root {
-  --navy:        #07111F;
-  --navy-mid:    #0D1E33;
-  --navy-light:  #152A45;
-  --blue:        #1A4A8A;
-  --blue-bright: #1F60B0;
-  --accent:      #3D8EE8;
-  --accent-soft: #6BAEF0;
-  --white:       #FFFFFF;
-  --off-white:   #F2F6FC;
-  --muted:       #7A95B4;
-  --border:      rgba(61,142,232,0.15);
-  --gold:        #B8955A;
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0A0A0F;
+  --ink2:#1C1C2E;
+  --gold:#C9A84C;
+  --gold2:#E8C97A;
+  --cream:#F5F0E8;
+  --cream2:#FAF7F2;
+  --muted:#8A8A9A;
+  --border:rgba(201,168,76,0.2);
+  --border2:rgba(10,10,15,0.1);
+  --red:#C84B31;
+  --green:#2A7A4B;
+  --blue:#1A4B8C;
+  --display:'Playfair Display',serif;
+  --body:'DM Sans',sans-serif;
 }
 
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--white);
-  color: var(--navy);
-  overflow-x: hidden;
-  cursor: none;
-}
-
-/* CUSTOM CURSOR */
-.cursor {
-  position: fixed; width: 10px; height: 10px;
-  background: var(--accent); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
-  mix-blend-mode: normal;
-}
-.cursor-ring {
-  position: fixed; width: 36px; height: 36px;
-  border: 1.5px solid rgba(61,142,232,0.5); border-radius: 50%;
-  pointer-events: none; z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.12s ease, width 0.25s, height 0.25s, border-color 0.2s;
-}
-body:hover .cursor { opacity: 1; }
+body{font-family:var(--body);background:#ECEEF0;display:flex;justify-content:center;padding:20px 12px 40px;min-height:100vh}
+.root{display:flex;gap:20px;max-width:1200px;width:100%;align-items:flex-start}
 
 /* NAV */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 64px; height: 76px;
-  background: rgba(7,17,31,0.97);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-}
+.sidenav{width:180px;flex-shrink:0;background:#fff;border-radius:16px;border:1px solid var(--border2);overflow:hidden;position:sticky;top:20px}
+.nav-brand{background:var(--ink);padding:20px 16px}
+.nav-logo{font-family:var(--display);font-size:16px;font-weight:900;color:var(--gold);letter-spacing:-0.3px;line-height:1.2}
+.nav-tagline{font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+.nav-section{padding:8px}
+.nav-label{font-size:9px;font-weight:500;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:10px 8px 6px}
+.nav-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:8px;border:none;background:none;font-family:var(--body);font-size:12px;font-weight:500;color:#444;cursor:pointer;text-align:left;transition:all .15s}
+.nav-btn:hover{background:var(--cream2)}
+.nav-btn.on{background:var(--ink);color:#fff}
+.nav-btn.on .nav-dot{background:var(--gold)}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:#ccc;flex-shrink:0}
+.nav-divider{height:1px;background:var(--border2);margin:4px 8px}
+.nav-badge{margin-left:auto;font-size:9px;font-weight:700;background:var(--red);color:#fff;padding:2px 6px;border-radius:100px}
+.nav-badge-g{background:var(--gold);color:var(--ink)}
 
-.logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px; font-weight: 700;
-  color: var(--white); letter-spacing: 0.5px;
-  display: flex; align-items: center; gap: 10px;
-}
-.logo-mark {
-  width: 32px; height: 32px; border-radius: 6px;
-  background: linear-gradient(135deg, var(--blue-bright), var(--accent));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 800; color: white;
-  font-family: 'DM Sans', sans-serif; letter-spacing: -0.5px;
-}
-.logo span { color: var(--accent-soft); }
+/* MAIN */
+.main{flex:1;min-width:0;display:flex;flex-direction:column;gap:0}
+.pg{display:none;flex-direction:column;gap:0}
+.pg.on{display:flex}
 
-.nav-links { display: flex; gap: 40px; list-style: none; }
-.nav-links a {
-  color: rgba(255,255,255,0.6); text-decoration: none;
-  font-size: 13.5px; font-weight: 500; letter-spacing: 0.2px;
-  transition: color 0.2s; position: relative; padding-bottom: 2px;
-}
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 1px;
-  background: var(--accent); transform: scaleX(0); transform-origin: left;
-  transition: transform 0.25s;
-}
-.nav-links a:hover { color: var(--white); }
-.nav-links a:hover::after { transform: scaleX(1); }
+/* ── SCREEN: LOGIN ── */
+.login-wrap{min-height:600px;display:flex}
+.login-left{width:52%;background:var(--ink);padding:48px 44px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;border-radius:16px 0 0 16px}
+.login-bg-circle{position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid var(--border);top:-80px;right:-80px}
+.login-bg-circle2{position:absolute;width:200px;height:200px;border-radius:50%;border:1px solid var(--border);bottom:-40px;left:-40px}
+.login-logo-lg{font-family:var(--display);font-size:34px;font-weight:900;color:var(--gold);letter-spacing:-1px;line-height:1}
+.login-sub{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-top:6px}
+.login-tagline{font-size:22px;font-family:var(--display);color:#fff;font-weight:400;line-height:1.4;margin-top:auto}
+.login-tagline em{color:var(--gold);font-style:normal}
+.login-right{flex:1;background:var(--cream2);padding:48px 40px;border-radius:0 16px 16px 0;display:flex;flex-direction:column;justify-content:center}
+.login-title{font-family:var(--display);font-size:26px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.login-desc{font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+.form-lbl{font-size:11px;font-weight:500;color:#555;letter-spacing:.3px;margin-bottom:5px}
+.form-field{width:100%;padding:11px 14px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:14px;color:var(--ink);font-family:var(--body);outline:none;margin-bottom:16px;transition:border-color .2s}
+.form-field:focus{border-color:var(--gold)}
+.otp-row{display:flex;gap:8px;margin-bottom:20px}
+.otp-b{flex:1;height:52px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;text-align:center;font-size:20px;font-weight:700;color:var(--ink);font-family:var(--display);outline:none}
+.otp-b.on{border-color:var(--gold);background:#FFFDF7}
+.btn-gold{width:100%;padding:13px;background:var(--ink);color:var(--gold);border:none;border-radius:8px;font-family:var(--display);font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.5px;transition:all .2s}
+.btn-gold:hover{background:var(--gold);color:var(--ink)}
+.form-link{font-size:12px;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--body);margin-top:12px;display:block;text-align:center}
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:24px 0}
+.pdot{width:20px;height:20px;border-radius:50%;border:2px solid #CCC;background:#fff}
+.pdot.on{background:var(--ink);border-color:var(--ink)}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:240px;margin:0 auto 20px}
+.nk{padding:14px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:18px;font-weight:600;color:var(--ink);cursor:pointer;text-align:center;font-family:var(--display);transition:all .15s}
+.nk:hover{background:var(--ink);color:var(--gold)}
+.nk-empty{border:none;background:none}
 
-.nav-cta {
-  background: var(--blue-bright); color: var(--white);
-  border: none; padding: 11px 24px; border-radius: 5px;
-  font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
-  cursor: none; transition: all 0.2s; letter-spacing: 0.3px;
-}
-.nav-cta:hover { background: var(--accent); box-shadow: 0 6px 20px rgba(61,142,232,0.35); }
+/* ── SHARED HEADER ── */
+.page-header{background:var(--ink);padding:20px 28px;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between}
+.ph-title{font-family:var(--display);font-size:20px;font-weight:700;color:#fff}
+.ph-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px}
+.ph-right{display:flex;align-items:center;gap:10px}
+.ph-badge{padding:5px 12px;border-radius:100px;background:rgba(201,168,76,0.15);border:1px solid var(--border);font-size:11px;color:var(--gold);font-weight:500}
+.page-body{background:#fff;border-radius:0 0 16px 16px;padding:24px 28px}
 
-/* ═══════════════════════════════ HERO ═══════════════════════════════ */
-#hero {
-  min-height: 100vh;
-  background: var(--navy);
-  display: flex; align-items: center;
-  position: relative; overflow: hidden;
-  padding: 140px 64px 100px;
-}
+/* ── SCREEN: DASHBOARD ── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-card{background:var(--cream2);border-radius:12px;padding:18px;border:1px solid var(--border2)}
+.stat-card.accent{background:var(--ink);border-color:var(--ink)}
+.stat-lbl{font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.stat-card.accent .stat-lbl{color:rgba(255,255,255,0.45)}
+.stat-val{font-family:var(--display);font-size:26px;font-weight:700;color:var(--ink)}
+.stat-card.accent .stat-val{color:var(--gold)}
+.stat-chg{font-size:11px;color:var(--muted);margin-top:4px}
+.stat-chg.up{color:var(--green)}
+.stat-chg.warn{color:#C84B31}
+.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.section-title{font-family:var(--display);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.see-all{font-size:11px;font-weight:500;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--body)}
+.order-table{width:100%;border-collapse:collapse}
+.order-table th{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border2)}
+.order-table td{font-size:12px;color:var(--ink);padding:10px 12px;border-bottom:1px solid #F5F5F5}
+.order-table tr:last-child td{border:none}
+.order-table tr:hover td{background:var(--cream2)}
+.sp{display:inline-block;padding:3px 9px;border-radius:100px;font-size:10px;font-weight:700}
+.sp-p{background:#FFF7E6;color:#C17900}
+.sp-a{background:#E8F5EE;color:#1A6B3A}
+.sp-t{background:#E8F0FB;color:#1A3F8C}
+.sp-d{background:#F0ECFB;color:#4A2B8C}
+.sp-r{background:#FEF0EE;color:#A83020}
+.quick-btn{padding:10px 16px;background:var(--ink);color:var(--gold);border:none;border-radius:8px;font-family:var(--display);font-weight:700;font-size:12px;cursor:pointer;letter-spacing:.3px;white-space:nowrap}
+.alert-box{background:#FFFBF0;border:1px solid #F0D88A;border-radius:10px;padding:12px 16px;display:flex;gap:10px;margin-bottom:14px}
+.al-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.al-text{font-size:12px;color:#8A6500;line-height:1.6}
 
-/* animated grid */
-.hero-grid {
-  position: absolute; inset: 0; opacity: 0.055;
-  background-image:
-    linear-gradient(rgba(61,142,232,1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(61,142,232,1) 1px, transparent 1px);
-  background-size: 72px 72px;
-  animation: gridDrift 30s linear infinite;
-}
-@keyframes gridDrift {
-  0% { background-position: 0 0; }
-  100% { background-position: 72px 72px; }
-}
+/* ── SCREEN: CATALOGUE ── */
+.cat-filters{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--cream2);border:1px solid var(--border2);border-radius:8px;padding:9px 14px;flex:1}
+.sb-ph{font-size:13px;color:var(--muted)}
+.filter-chip{padding:7px 14px;border-radius:100px;font-size:11px;font-weight:500;border:1.5px solid var(--border2);background:#fff;color:#555;cursor:pointer}
+.filter-chip.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.prod-card{background:var(--cream2);border-radius:12px;border:1px solid var(--border2);overflow:hidden;cursor:pointer;transition:transform .2s}
+.prod-card:hover{transform:translateY(-2px)}
+.pc-img{height:110px;display:flex;align-items:center;justify-content:center;font-size:42px;border-bottom:1px solid var(--border2)}
+.pc-body{padding:14px}
+.pc-name{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.pc-cat{font-size:10px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.pc-price{font-family:var(--display);font-size:18px;font-weight:700;color:var(--ink)}
+.pc-unit{font-size:10px;color:var(--muted)}
+.pc-moq{font-size:10px;color:var(--muted);margin-top:2px}
+.pc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.in-stock{font-size:9px;font-weight:700;color:var(--green);background:#E8F5EE;padding:3px 8px;border-radius:100px}
+.low-stock{font-size:9px;font-weight:700;color:#C17900;background:#FFF7E6;padding:3px 8px;border-radius:100px}
+.add-btn{width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--gold);border:none;font-size:20px;font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.add-btn:hover{background:var(--gold);color:var(--ink)}
 
-/* radial glows */
-.glow-1 {
-  position: absolute; top: -20%; right: -10%;
-  width: 800px; height: 800px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(31,96,176,0.22) 0%, transparent 65%);
-  pointer-events: none;
-}
-.glow-2 {
-  position: absolute; bottom: -20%; left: 5%;
-  width: 600px; height: 600px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(61,142,232,0.1) 0%, transparent 65%);
-  pointer-events: none;
-}
+/* ── SCREEN: PRODUCT DETAIL ── */
+.pd-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:24px}
+.pd-img-box{background:var(--cream2);border-radius:12px;height:240px;display:flex;align-items:center;justify-content:center;font-size:80px;border:1px solid var(--border2)}
+.pd-specs{background:var(--cream2);border-radius:10px;padding:14px;margin-top:14px}
+.spec-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border2);font-size:12px}
+.spec-row:last-child{border:none}
+.spec-key{color:var(--muted)}
+.spec-val{color:var(--ink);font-weight:500}
+.pd-name{font-family:var(--display);font-size:24px;font-weight:900;color:var(--ink);line-height:1.2;margin-bottom:4px}
+.pd-sub{font-size:12px;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+.tier-box{background:var(--ink);border-radius:10px;padding:14px;margin-bottom:16px}
+.tier-title{font-size:10px;font-weight:500;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.tier-row-d{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.tier-col{text-align:center;padding:10px 6px;border-radius:8px;background:rgba(255,255,255,0.06)}
+.tier-col.best{background:rgba(201,168,76,0.2);border:1px solid var(--border)}
+.tier-range{font-size:10px;color:rgba(255,255,255,0.45)}
+.tier-price{font-family:var(--display);font-size:16px;font-weight:700;color:#fff;margin:3px 0}
+.tier-col.best .tier-price{color:var(--gold)}
+.tier-disc{font-size:9px;color:rgba(255,255,255,0.4);font-weight:600}
+.tier-col.best .tier-disc{color:var(--gold2)}
+.size-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.sz{padding:7px 14px;border-radius:7px;border:1.5px solid var(--border2);font-size:12px;font-weight:500;color:#444;cursor:pointer;background:#fff;transition:all .15s}
+.sz.on{border-color:var(--ink);background:var(--ink);color:var(--gold)}
+.qty-row{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.qty-lbl{font-size:12px;font-weight:500;color:var(--muted)}
+.qty-ctrl{display:flex;align-items:center;gap:12px}
+.qb{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--display)}
+.qn{font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);min-width:32px;text-align:center}
+.disc-banner{background:#E8F5EE;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--green);font-weight:500;margin-bottom:16px}
+.btn-add{width:100%;padding:14px;background:var(--ink);color:var(--gold);border:none;border-radius:9px;font-family:var(--display);font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.5px;transition:all .2s}
+.btn-add:hover{background:var(--gold);color:var(--ink)}
 
-/* floating data nodes animation */
-.nodes {
-  position: absolute; right: 64px; top: 50%; transform: translateY(-50%);
-  width: 420px; height: 380px; pointer-events: none;
-}
-.node {
-  position: absolute; border-radius: 50%;
-  border: 1px solid rgba(61,142,232,0.35);
-  animation: pulse 3s ease-in-out infinite;
-}
-.node-1 { width: 120px; height: 120px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0s; }
-.node-2 { width: 220px; height: 220px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0.4s; opacity: 0.6; }
-.node-3 { width: 320px; height: 320px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0.8s; opacity: 0.3; }
-.node-center {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 56px; height: 56px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue-bright), var(--accent));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; box-shadow: 0 0 40px rgba(61,142,232,0.5);
-}
-.orbit-dot {
-  position: absolute; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--accent); box-shadow: 0 0 12px rgba(61,142,232,0.8);
-}
-.orbit-dot-1 { top: 14px; left: 50%; transform: translateX(-50%); animation: orbit1 8s linear infinite; }
-.orbit-dot-2 { bottom: 10px; right: 20px; animation: orbit2 12s linear infinite; }
-.orbit-dot-3 { top: 50%; left: 10px; transform: translateY(-50%); animation: orbit1 10s linear infinite reverse; }
+/* ── SCREEN: CART ── */
+.cart-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+.cart-items{display:flex;flex-direction:column;gap:12px}
+.cart-item{background:var(--cream2);border-radius:10px;padding:14px;display:flex;gap:12px;border:1px solid var(--border2)}
+.ci-img{width:56px;height:56px;border-radius:8px;background:#fff;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.ci-info{flex:1}
+.ci-name{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink)}
+.ci-spec{font-size:11px;color:var(--muted);margin:2px 0 8px}
+.ci-foot{display:flex;align-items:center;justify-content:space-between}
+.ci-qty{display:flex;align-items:center;gap:8px}
+.cqb{width:26px;height:26px;border-radius:6px;border:1.5px solid var(--border2);background:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cqn{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink)}
+.ci-price{font-family:var(--display);font-size:16px;font-weight:700;color:var(--ink)}
+.cart-summary-box{background:var(--ink);border-radius:12px;padding:20px}
+.cs-title{font-family:var(--display);font-size:16px;font-weight:700;color:#fff;margin-bottom:16px}
+.cs-row{display:flex;justify-content:space-between;margin-bottom:10px;font-size:12px}
+.cs-key{color:rgba(255,255,255,0.5)}
+.cs-val{color:#fff;font-weight:500}
+.cs-divider{border:none;border-top:1px solid rgba(255,255,255,0.1);margin:12px 0}
+.cs-total-row{display:flex;justify-content:space-between;align-items:baseline}
+.cs-total-lbl{font-size:13px;color:rgba(255,255,255,0.6);font-weight:600}
+.cs-total-amt{font-family:var(--display);font-size:26px;font-weight:900;color:var(--gold)}
+.cs-note{font-size:10px;color:rgba(255,255,255,0.3);margin-top:6px;margin-bottom:16px;line-height:1.5}
+.place-btn{width:100%;padding:14px;background:var(--gold);color:var(--ink);border:none;border-radius:9px;font-family:var(--display);font-weight:900;font-size:15px;cursor:pointer;letter-spacing:.5px;transition:all .2s}
+.place-btn:hover{background:var(--gold2)}
+.addr-box{background:rgba(255,255,255,0.06);border-radius:8px;padding:12px;margin-top:12px}
+.addr-lbl{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px}
+.addr-val{font-size:12px;color:#fff;line-height:1.5}
 
-@keyframes pulse {
-  0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
-  50% { transform: translate(-50%,-50%) scale(1.04); opacity: 0.8; }
-}
-@keyframes orbit1 {
-  0% { transform: rotate(0deg) translateX(110px) rotate(0deg); }
-  100% { transform: rotate(360deg) translateX(110px) rotate(-360deg); }
-}
-@keyframes orbit2 {
-  0% { transform: rotate(0deg) translateX(160px) rotate(0deg); }
-  100% { transform: rotate(360deg) translateX(160px) rotate(-360deg); }
-}
+/* ── SCREEN: ORDER CONFIRM ── */
+.confirm-hero{background:var(--green);border-radius:12px;padding:32px;text-align:center;margin-bottom:20px}
+.confirm-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px}
+.confirm-title{font-family:var(--display);font-size:24px;font-weight:900;color:#fff;margin-bottom:4px}
+.confirm-sub{font-size:13px;color:rgba(255,255,255,0.7)}
+.confirm-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.confirm-card{background:var(--cream2);border-radius:10px;padding:16px;border:1px solid var(--border2)}
+.cc-title{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.cc-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}
+.cc-key{color:var(--muted)}
+.cc-val{color:var(--ink);font-weight:500}
+.confirm-btns{display:flex;gap:10px;margin-top:16px}
+.btn-dark{flex:1;padding:12px;background:var(--ink);color:var(--gold);border:none;border-radius:8px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer}
+.btn-outline{flex:1;padding:12px;background:#fff;color:var(--ink);border:1.5px solid var(--border2);border-radius:8px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer}
 
-.hero-content { position: relative; max-width: 640px; z-index: 2; }
+/* ── SCREEN: MY ORDERS ── */
+.orders-tabs{display:flex;gap:0;background:var(--cream2);border-radius:8px;padding:3px;margin-bottom:18px;border:1px solid var(--border2)}
+.otab{flex:1;text-align:center;padding:7px;font-size:11px;font-weight:600;border-radius:6px;cursor:pointer;color:var(--muted);background:none;border:none;font-family:var(--body)}
+.otab.on{background:var(--ink);color:var(--gold)}
+.orders-table{width:100%;border-collapse:collapse}
+.orders-table th{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;padding:8px 14px;text-align:left;border-bottom:1px solid var(--border2)}
+.orders-table td{font-size:12px;color:var(--ink);padding:12px 14px;border-bottom:1px solid #F5F5F5}
+.orders-table tr:hover td{background:var(--cream2);cursor:pointer}
+.orders-table tr:last-child td{border:none}
+.ot-id{font-family:var(--display);font-weight:700}
+.track-lnk{font-size:11px;font-weight:700;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--body)}
 
-.hero-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(61,142,232,0.1); border: 1px solid rgba(61,142,232,0.28);
-  color: var(--accent-soft); padding: 6px 16px; border-radius: 30px;
-  font-size: 11.5px; font-weight: 600; letter-spacing: 1.2px;
-  text-transform: uppercase; margin-bottom: 36px;
-  animation: fadeUp 0.9s ease both;
-}
-.pill-dot {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-  animation: blink 2s ease infinite;
-}
-@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+/* ── SCREEN: TRACKING ── */
+.track-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.milestone-wrap{display:flex;flex-direction:column;gap:0}
+.ms{display:flex;gap:14px;align-items:flex-start}
+.ms-col{display:flex;flex-direction:column;align-items:center}
+.ms-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.ms-line{width:2px;flex:1;min-height:32px}
+.ms-done .ms-dot{background:var(--ink)}
+.ms-done .ms-line{background:var(--ink)}
+.ms-active .ms-dot{background:var(--gold);border:3px solid #FFF7E0;outline:2.5px solid var(--gold)}
+.ms-active .ms-line{background:var(--border2)}
+.ms-todo .ms-dot{background:#D1D5DB}
+.ms-todo .ms-line{background:#F0F0F0}
+.ms-lbl{font-family:var(--display);font-size:13px;font-weight:700;color:var(--ink);padding-bottom:3px}
+.ms-sub{font-size:11px;color:var(--muted)}
+.ms-active .ms-lbl{color:var(--gold)}
+.ms-todo .ms-lbl{color:var(--muted);font-family:var(--body)}
+.ms-content{padding-bottom:20px}
+.track-cards{display:flex;flex-direction:column;gap:12px}
+.tcard{background:var(--cream2);border-radius:10px;padding:14px;border:1px solid var(--border2)}
+.tc-title{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.tc-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}
+.tc-key{color:var(--muted)}
+.tc-val{color:var(--ink);font-weight:500}
+.dl-link{font-size:12px;font-weight:700;color:var(--gold);cursor:pointer}
 
-.hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(44px, 5.5vw, 72px); font-weight: 700;
-  color: var(--white); line-height: 1.08; margin-bottom: 28px;
-  animation: fadeUp 0.9s ease 0.12s both;
-}
-.hero-title em { color: var(--accent-soft); font-style: italic; }
+/* ── ADMIN SCREENS ── */
+.admin-bar{background:#2D1B69;border-radius:12px 12px 0 0;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.ab-logo{font-family:var(--display);font-size:18px;font-weight:900;color:var(--gold)}
+.ab-role{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.admin-body{background:#fff;border-radius:0 0 12px 12px;padding:22px 24px}
 
-.hero-tagline {
-  font-size: 18px; font-weight: 300;
-  color: rgba(255,255,255,0.6); line-height: 1.75;
-  margin-bottom: 16px; max-width: 540px;
-  animation: fadeUp 0.9s ease 0.22s both;
-}
-.hero-tagline strong {
-  color: rgba(255,255,255,0.9); font-weight: 500;
-  border-bottom: 1px solid rgba(61,142,232,0.5);
-}
+.adm-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.adm-sc{background:var(--cream2);border-radius:10px;padding:14px;border:1px solid var(--border2)}
+.adm-lbl{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.3px;text-transform:uppercase;margin-bottom:4px}
+.adm-val{font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink)}
+.adm-chg{font-size:10px;color:var(--muted);margin-top:2px}
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.qa-card{background:var(--cream2);border-radius:10px;padding:14px;cursor:pointer;border:1px solid var(--border2);transition:all .15s}
+.qa-card:hover{border-color:var(--gold);background:#FFFDF7}
+.qa-icon{font-size:20px;margin-bottom:6px}
+.qa-lbl{font-size:12px;font-weight:700;color:var(--ink);font-family:var(--display)}
+.qa-sub{font-size:10px;color:var(--muted);margin-top:2px}
 
-.hero-quote {
-  font-size: 14px; color: var(--accent-soft);
-  font-style: italic; margin-bottom: 48px;
-  opacity: 0.85; padding-left: 16px;
-  border-left: 2px solid var(--accent);
-  animation: fadeUp 0.9s ease 0.3s both;
-}
+.prod-mgmt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.pm-card{background:var(--cream2);border-radius:10px;border:1px solid var(--border2);overflow:hidden}
+.pm-img{height:80px;display:flex;align-items:center;justify-content:center;font-size:32px;border-bottom:1px solid var(--border2)}
+.pm-body{padding:12px}
+.pm-name{font-family:var(--display);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.pm-cat{font-size:10px;color:var(--muted);margin-bottom:6px}
+.pm-row{display:flex;justify-content:space-between;align-items:center}
+.pm-price{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink)}
+.pm-actions{display:flex;gap:5px;margin-top:8px}
+.pm-btn{padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:var(--body)}
+.pm-edit{background:var(--ink);color:var(--gold)}
+.pm-hide{background:#F3F4F6;color:#555;border:1px solid #E5E7EB}
+.pm-pub{background:#E8F5EE;color:var(--green);border:1px solid #BBF7D0}
+.pm-low{background:#FFF7E6;color:#C17900;border:1px solid #FDE68A}
 
-.hero-actions {
-  display: flex; gap: 16px; flex-wrap: wrap;
-  animation: fadeUp 0.9s ease 0.38s both;
-}
+.add-form{background:var(--cream2);border-radius:12px;padding:20px;border:1px solid var(--border2)}
+.af-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border2)}
+.af-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.af-lbl{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:4px;letter-spacing:.3px}
+.af-field{width:100%;padding:9px 12px;border-radius:7px;border:1.5px solid var(--border2);background:#fff;font-size:13px;color:var(--ink);font-family:var(--body);outline:none}
+.af-field:focus{border-color:var(--gold)}
+.tier-grid{display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;margin-bottom:8px;align-items:center}
+.tier-in{padding:8px 10px;border-radius:6px;border:1.5px solid var(--border2);background:#fff;font-size:12px;color:var(--ink);font-family:var(--body);width:100%}
+.tdel{width:24px;height:24px;border-radius:6px;background:#FEF2F2;border:none;color:#991B1B;cursor:pointer;font-size:14px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border2)}
+.tgl-lbl{font-size:12px;font-weight:500;color:var(--ink)}
+.tgl-sub{font-size:10px;color:var(--muted)}
+.tgl{width:38px;height:22px;border-radius:100px;background:var(--ink);position:relative;cursor:pointer}
+.tgl-off{background:#D1D5DB}
+.tgl::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;right:3px}
+.tgl-off::after{right:auto;left:3px}
+.save-row{display:flex;gap:10px;margin-top:16px}
+.btn-save{flex:1;padding:11px;background:var(--ink);color:var(--gold);border:none;border-radius:8px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer}
+.btn-draft{padding:11px 18px;background:#fff;color:var(--ink);border:1.5px solid var(--border2);border-radius:8px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer}
+.upload-box{border:2px dashed var(--border);border-radius:10px;padding:18px;text-align:center;background:#FFFDF7;cursor:pointer;margin-bottom:14px}
+.ub-icon{font-size:24px;margin-bottom:4px}
+.ub-lbl{font-size:12px;font-weight:600;color:var(--gold)}
+.ub-sub{font-size:10px;color:var(--muted);margin-top:2px}
 
-.btn-primary {
-  background: var(--blue-bright); color: var(--white);
-  border: none; padding: 15px 34px; border-radius: 5px;
-  font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 600;
-  cursor: none; transition: all 0.25s; letter-spacing: 0.3px;
-}
-.btn-primary:hover {
-  background: var(--accent); transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(61,142,232,0.4);
-}
-.btn-outline {
-  background: transparent; color: var(--white);
-  border: 1px solid rgba(255,255,255,0.25); padding: 15px 34px; border-radius: 5px;
-  font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 400;
-  cursor: none; transition: all 0.25s;
-}
-.btn-outline:hover { border-color: var(--accent-soft); color: var(--accent-soft); }
-
-/* ═══════════════════════════════ WHAT WE DO ═══════════════════════════════ */
-#what {
-  background: var(--navy-mid);
-  padding: 110px 64px;
-  position: relative; overflow: hidden;
-}
-#what::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-
-.what-header { text-align: center; margin-bottom: 72px; }
-.section-tag {
-  font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
-  text-transform: uppercase; color: var(--accent);
-  margin-bottom: 14px; display: block;
-}
-.section-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(34px, 3.5vw, 52px); font-weight: 700;
-  line-height: 1.12; margin-bottom: 18px;
-}
-.section-title.light { color: var(--white); }
-.section-title.dark { color: var(--navy); }
-.section-sub {
-  font-size: 17px; color: var(--muted); line-height: 1.75;
-  max-width: 580px; font-weight: 300; margin: 0 auto;
-}
-
-.what-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  background: var(--border);
-}
-
-.what-item {
-  background: var(--navy-mid);
-  padding: 52px 48px;
-  position: relative; overflow: hidden;
-  transition: background 0.3s;
-}
-.what-item:hover { background: var(--navy-light); }
-
-.what-item::after {
-  content: attr(data-num);
-  position: absolute; bottom: -10px; right: 20px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 100px; font-weight: 700;
-  color: rgba(61,142,232,0.06); line-height: 1;
-  pointer-events: none;
-}
-
-.what-icon {
-  width: 56px; height: 56px; border-radius: 10px; margin-bottom: 28px;
-  background: linear-gradient(135deg, rgba(31,96,176,0.4), rgba(61,142,232,0.2));
-  border: 1px solid rgba(61,142,232,0.25);
-  display: flex; align-items: center; justify-content: center; font-size: 24px;
-}
-.what-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 14px;
-}
-.what-desc { font-size: 15px; color: var(--muted); line-height: 1.75; font-weight: 300; }
-.what-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  margin-top: 20px; font-size: 13px; font-weight: 600;
-  color: var(--accent); text-decoration: none; letter-spacing: 0.3px;
-  transition: gap 0.2s;
-}
-.what-link:hover { gap: 10px; }
-
-/* ═══════════════════════════════ SERVICES ═══════════════════════════════ */
-#services { background: var(--off-white); padding: 110px 64px; }
-
-.services-header { margin-bottom: 64px; }
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.svc-card {
-  background: var(--white);
-  border: 1px solid #DDE7F3;
-  border-radius: 10px; padding: 44px 38px;
-  transition: all 0.3s; position: relative; overflow: hidden;
-}
-.svc-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--blue-bright), var(--accent));
-  transform: scaleX(0); transform-origin: left; transition: transform 0.35s;
-}
-.svc-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 56px rgba(10,30,60,0.1);
-  border-color: rgba(61,142,232,0.3);
-}
-.svc-card:hover::before { transform: scaleX(1); }
-
-.svc-icon {
-  width: 54px; height: 54px; border-radius: 10px; margin-bottom: 26px;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-bright) 100%);
-  display: flex; align-items: center; justify-content: center; font-size: 22px;
-}
-.svc-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 600; color: var(--navy); margin-bottom: 12px;
-}
-.svc-desc { font-size: 14.5px; color: #4A6080; line-height: 1.75; font-weight: 300; }
-.svc-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.svc-tag {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
-  color: var(--blue-bright); background: rgba(31,96,176,0.08);
-  border: 1px solid rgba(31,96,176,0.15);
-  padding: 4px 10px; border-radius: 20px;
-}
-
-/* ═══════════════════════════════ HOW IT WORKS ═══════════════════════════════ */
-#how {
-  background: var(--navy);
-  padding: 110px 64px;
-  position: relative; overflow: hidden;
-}
-#how::before {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-
-.how-header { text-align: center; margin-bottom: 80px; }
-
-.how-steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  position: relative;
-}
-.how-steps::before {
-  content: '';
-  position: absolute; top: 44px; left: 12%; right: 12%; height: 1px;
-  background: linear-gradient(90deg, var(--accent), rgba(61,142,232,0.2), var(--accent));
-}
-
-.step {
-  display: flex; flex-direction: column; align-items: center;
-  text-align: center; padding: 0 24px; position: relative;
-}
-
-.step-num {
-  width: 88px; height: 88px; border-radius: 50%; margin-bottom: 28px;
-  background: var(--navy-light);
-  border: 1px solid rgba(61,142,232,0.3);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; z-index: 2;
-  transition: all 0.3s;
-}
-.step:hover .step-num {
-  background: linear-gradient(135deg, var(--blue), var(--accent));
-  border-color: transparent;
-  box-shadow: 0 0 40px rgba(61,142,232,0.4);
-}
-.step-num span {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px; font-weight: 700; color: var(--accent);
-  transition: color 0.3s;
-}
-.step:hover .step-num span { color: var(--white); }
-
-.step-title {
-  font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 10px;
-}
-.step-desc { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
-
-/* ═══════════════════════════════ ABOUT ═══════════════════════════════ */
-#about {
-  background: var(--white);
-  padding: 110px 64px;
-  display: grid; grid-template-columns: 5fr 7fr;
-  gap: 100px; align-items: center;
-}
-
-.about-left { position: relative; }
-
-.about-visual-block {
-  position: relative; height: 500px;
-}
-.avb-bg {
-  position: absolute; top: 0; left: 0; right: 50px; bottom: 50px;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-  border-radius: 10px; overflow: hidden;
-}
-.avb-bg::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(61,142,232,0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(61,142,232,0.15) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-.avb-lines {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.avb-circle {
-  position: absolute; border-radius: 50%;
-  border: 1px solid rgba(61,142,232,0.25);
-}
-.avb-c1 { width: 140px; height: 140px; }
-.avb-c2 { width: 240px; height: 240px; }
-.avb-c3 { width: 340px; height: 340px; }
-
-.avb-float {
-  position: absolute; bottom: 0; right: 0; width: 240px;
-  background: var(--white); border-radius: 10px; padding: 28px;
-  box-shadow: 0 20px 60px rgba(10,30,60,0.15);
-  border: 1px solid #DDE7F3;
-}
-.avb-float-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-.avb-float-value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 40px; font-weight: 700; color: var(--blue-bright); line-height: 1;
-}
-.avb-float-sub { font-size: 13px; color: #4A6080; margin-top: 6px; }
-
-.about-right .section-sub { margin-bottom: 40px; text-align: left; max-width: none; color: #4A6080; }
-
-.pillars { display: flex; flex-direction: column; gap: 18px; }
-.pillar {
-  display: flex; align-items: flex-start; gap: 18px;
-  padding: 20px 22px; border-radius: 8px;
-  background: var(--off-white); border: 1px solid #E4EDF8;
-  transition: border-color 0.25s, box-shadow 0.25s;
-}
-.pillar:hover { border-color: rgba(61,142,232,0.35); box-shadow: 0 4px 20px rgba(61,142,232,0.08); }
-.pillar-icon { font-size: 22px; margin-top: 2px; flex-shrink: 0; }
-.pillar-body strong { display: block; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
-.pillar-body p { font-size: 13.5px; color: #4A6080; line-height: 1.65; font-weight: 300; }
-
-/* ═══════════════════════════════ WHY US ═══════════════════════════════ */
-#why {
-  background: var(--navy-mid);
-  padding: 110px 64px;
-  position: relative; overflow: hidden;
-}
-
-.why-header { margin-bottom: 64px; }
-
-.why-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border);
-}
-.why-item {
-  background: var(--navy-mid);
-  padding: 44px 36px;
-  transition: background 0.3s;
-}
-.why-item:hover { background: var(--navy-light); }
-
-.why-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 56px; font-weight: 700;
-  color: rgba(61,142,232,0.18);
-  display: block; margin-bottom: 20px; line-height: 1;
-}
-.why-title { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
-.why-desc { font-size: 14px; color: var(--muted); line-height: 1.75; font-weight: 300; }
-
-/* ═══════════════════════════════ CONTACT ═══════════════════════════════ */
-#contact { background: var(--off-white); padding: 110px 64px; }
-
-.contact-inner {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
-}
-
-.contact-left .section-sub { text-align: left; max-width: none; color: #4A6080; margin-bottom: 44px; }
-
-.contact-details { display: flex; flex-direction: column; gap: 16px; }
-.c-row {
-  display: flex; align-items: center; gap: 16px;
-  background: var(--white); border: 1px solid #DDE7F3;
-  border-radius: 8px; padding: 18px 20px;
-  transition: border-color 0.25s;
-}
-.c-row:hover { border-color: rgba(61,142,232,0.35); }
-.c-icon {
-  width: 42px; height: 42px; border-radius: 8px; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--blue), var(--blue-bright));
-  display: flex; align-items: center; justify-content: center; font-size: 17px;
-}
-.c-row strong { display: block; font-size: 12px; font-weight: 600; color: var(--navy); letter-spacing: 0.3px; text-transform: uppercase; }
-.c-row span { font-size: 14px; color: #4A6080; font-weight: 300; }
-
-.contact-form { display: flex; flex-direction: column; gap: 18px; }
-.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.f-group { display: flex; flex-direction: column; gap: 8px; }
-.f-group label { font-size: 12.5px; font-weight: 600; color: var(--navy); letter-spacing: 0.4px; text-transform: uppercase; }
-.f-group input,
-.f-group textarea,
-.f-group select {
-  padding: 13px 16px;
-  border: 1px solid #D4DFF0; border-radius: 6px;
-  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--navy);
-  background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; outline: none;
-}
-.f-group input:focus,
-.f-group textarea:focus,
-.f-group select:focus {
-  border-color: var(--blue-bright);
-  box-shadow: 0 0 0 3px rgba(31,96,176,0.1);
-}
-.f-group textarea { resize: vertical; min-height: 130px; }
-
-.btn-submit {
-  background: var(--blue-bright); color: var(--white);
-  border: none; padding: 17px;
-  border-radius: 6px; width: 100%;
-  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
-  cursor: none; transition: all 0.25s; letter-spacing: 0.4px;
-}
-.btn-submit:hover {
-  background: var(--accent);
-  box-shadow: 0 10px 30px rgba(61,142,232,0.35);
-  transform: translateY(-2px);
-}
-
-/* ═══════════════════════════════ FOOTER ═══════════════════════════════ */
-footer {
-  background: var(--navy);
-  padding: 48px 64px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-top: 1px solid var(--border);
-}
-.footer-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px; font-weight: 700; color: var(--white);
-  display: flex; align-items: center; gap: 10px;
-}
-.footer-logo-mark {
-  width: 28px; height: 28px; border-radius: 5px;
-  background: linear-gradient(135deg, var(--blue-bright), var(--accent));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 800; color: white;
-  font-family: 'DM Sans', sans-serif;
-}
-.footer-logo span { color: var(--accent-soft); }
-.footer-copy { font-size: 13px; color: var(--muted); }
-.footer-links { display: flex; gap: 28px; }
-.footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--accent-soft); }
-
-/* ═══════════════════════════════ ANIMATIONS ═══════════════════════════════ */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.reveal {
-  opacity: 0; transform: translateY(32px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
-/* scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--navy); }
-::-webkit-scrollbar-thumb { background: var(--blue-bright); border-radius: 3px; }
+.orders-approve{display:flex;flex-direction:column;gap:10px}
+.oa-card{background:var(--cream2);border-radius:10px;border:1px solid var(--border2);overflow:hidden}
+.oa-top{padding:12px 16px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:flex-start}
+.oa-id{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink)}
+.oa-company{font-size:11px;color:var(--muted);margin-top:1px}
+.oa-mid{padding:10px 16px;font-size:12px;color:var(--ink);border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center}
+.oa-products{color:var(--muted)}
+.oa-amt{font-family:var(--display);font-size:15px;font-weight:700;color:var(--ink)}
+.oa-bot{padding:10px 16px;display:flex;gap:8px;align-items:center}
+.btn-approve{padding:7px 14px;background:#E8F5EE;color:var(--green);border:1px solid #BBF7D0;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--body)}
+.btn-reject{padding:7px 14px;background:#FEF2F2;color:#991B1B;border:1px solid #FECACA;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--body)}
+.btn-revise{padding:7px 14px;background:#FFF7E6;color:#C17900;border:1px solid #FDE68A;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--body)}
+.ml-auto{margin-left:auto}
 </style>
-</head>
-<body>
 
-<!-- CURSOR -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<div class="root">
 
-<!-- NAV -->
-<nav>
-  <div class="logo">
-    <div class="logo-mark">CT</div>
-    Carob<span>Technologies</span>
+<!-- SIDENAV -->
+<div class="sidenav">
+  <div class="nav-brand">
+    <div class="nav-logo">Dee Pee<br>Inks</div>
+    <div class="nav-tagline">B2B Portal</div>
   </div>
-  <ul class="nav-links">
-    <li><a href="#what">What We Do</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Start a Conversation</button>
-</nav>
-
-<!-- ═══════════════ HERO ═══════════════ -->
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="glow-1"></div>
-  <div class="glow-2"></div>
-
-  <div class="hero-content">
-    <div class="hero-pill"><span class="pill-dot"></span> AI-Powered Analytics &amp; Intelligent Systems</div>
-    <h1 class="hero-title">
-      Turn Your Business Data<br>into <em>Intelligent</em> Decisions.
-    </h1>
-    <p class="hero-tagline">
-      We build <strong>intelligent data systems</strong> that capture, process, and analyze business data automatically — so your team spends less time pulling reports and more time acting on insight.
-    </p>
-    <p class="hero-quote">"Analytics is not just a service we offer — it is how we understand every business we work with."</p>
-    <div class="hero-actions">
-      <button class="btn-primary" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Our Services</button>
-      <button class="btn-outline" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See How It Works</button>
-    </div>
+  <div class="nav-section">
+    <div class="nav-label">Customer</div>
+    <button class="nav-btn on" onclick="go('dashboard')"><div class="nav-dot"></div>Dashboard</button>
+    <button class="nav-btn" onclick="go('catalogue')"><div class="nav-dot"></div>Products</button>
+    <button class="nav-btn" onclick="go('product')"><div class="nav-dot"></div>Product Detail</button>
+    <button class="nav-btn" onclick="go('cart')"><div class="nav-dot"></div>Cart</button>
+    <button class="nav-btn" onclick="go('confirm')"><div class="nav-dot"></div>Order Placed</button>
+    <button class="nav-btn" onclick="go('orders')"><div class="nav-dot"></div>My Orders</button>
+    <button class="nav-btn" onclick="go('tracking')"><div class="nav-dot"></div>Tracking</button>
   </div>
-
-  <!-- animated node diagram -->
-  <div class="nodes">
-    <div class="node node-1"></div>
-    <div class="node node-2"></div>
-    <div class="node node-3"></div>
-    <div class="node-center">📡</div>
-    <div class="orbit-dot orbit-dot-1"></div>
-    <div class="orbit-dot orbit-dot-2"></div>
-    <div class="orbit-dot orbit-dot-3"></div>
+  <div class="nav-divider"></div>
+  <div class="nav-section">
+    <div class="nav-label">Admin</div>
+    <button class="nav-btn" onclick="go('adash')"><div class="nav-dot"></div>Admin Home</button>
+    <button class="nav-btn" onclick="go('aprod')"><div class="nav-dot"></div>Manage Products</button>
+    <button class="nav-btn" onclick="go('aadd')"><div class="nav-dot"></div>Add Product</button>
+    <button class="nav-btn" onclick="go('aorders')"><div class="nav-dot"></div>Approve Orders <span class="nav-badge">3</span></button>
   </div>
-</section>
-
-<!-- ═══════════════ WHAT WE DO ═══════════════ -->
-<section id="what">
-  <div class="what-header reveal">
-    <span class="section-tag">Our Focus</span>
-    <h2 class="section-title light">Two Pillars. One Goal: Clarity.</h2>
-    <p class="section-sub">We combine the power of AI-driven analytics with purpose-built business applications — so insight and action are never separated.</p>
+  <div class="nav-divider"></div>
+  <div class="nav-section">
+    <div class="nav-label">Auth</div>
+    <button class="nav-btn" onclick="go('login')"><div class="nav-dot"></div>Login / OTP</button>
+    <button class="nav-btn" onclick="go('pin')"><div class="nav-dot"></div>Set PIN</button>
   </div>
+</div>
 
-  <div class="what-grid">
-    <div class="what-item reveal" data-num="01">
-      <div class="what-icon">🧠</div>
-      <div class="what-title">AI-Powered Analytics</div>
-      <p class="what-desc">We go beyond traditional BI. Our analytics practice uses artificial intelligence to surface patterns, predict outcomes, and generate insights that no dashboard alone can reveal. Your data works for you — automatically, continuously, and intelligently.</p>
-      <a class="what-link" href="#services">Learn more →</a>
-    </div>
-    <div class="what-item reveal reveal-delay-1" data-num="02">
-      <div class="what-icon">⚙️</div>
-      <div class="what-title">Intelligent Business Applications</div>
-      <p class="what-desc">We build custom applications specifically designed to feed your analytics pipeline — not generic software, but purposeful tools that capture the right data at the right moment and route it seamlessly into your intelligence layer.</p>
-      <a class="what-link" href="#services">Learn more →</a>
-    </div>
-  </div>
-</section>
+<!-- MAIN CONTENT -->
+<div class="main">
 
-<!-- ═══════════════ SERVICES ═══════════════ -->
-<section id="services">
-  <div class="services-header reveal">
-    <span class="section-tag">Services</span>
-    <h2 class="section-title dark">What We Deliver</h2>
-    <p class="section-sub" style="max-width:none; color:#4A6080;">From your raw business data to boardroom-ready insight — our services cover every layer of the analytics journey.</p>
-  </div>
-
-  <div class="services-grid">
-    <div class="svc-card reveal">
-      <div class="svc-icon">📊</div>
-      <div class="svc-title">Business Intelligence & Dashboards</div>
-      <p class="svc-desc">Real-time dashboards that give leadership a live, accurate view of performance, KPIs, and trends — built for the decisions that matter most.</p>
-      <div class="svc-tags"><span class="svc-tag">Power BI</span><span class="svc-tag">Tableau</span><span class="svc-tag">Custom Dash</span></div>
-    </div>
-
-    <div class="svc-card reveal reveal-delay-1">
-      <div class="svc-icon">🤖</div>
-      <div class="svc-title">AI & Predictive Analytics</div>
-      <p class="svc-desc">Machine learning models that forecast demand, flag risk, detect anomalies, and simulate scenarios — turning your historical data into forward-looking intelligence.</p>
-      <div class="svc-tags"><span class="svc-tag">ML Models</span><span class="svc-tag">Forecasting</span><span class="svc-tag">Anomaly Detection</span></div>
-    </div>
-
-    <div class="svc-card reveal reveal-delay-2">
-      <div class="svc-icon">🏗️</div>
-      <div class="svc-title">Analytics-Ready Applications</div>
-      <p class="svc-desc">Purpose-built applications that don't just run your business processes — they systematically capture the data your analytics engine needs to deliver insight.</p>
-      <div class="svc-tags"><span class="svc-tag">Custom Apps</span><span class="svc-tag">Data Capture</span><span class="svc-tag">API Integration</span></div>
-    </div>
-
-    <div class="svc-card reveal">
-      <div class="svc-icon">📈</div>
-      <div class="svc-title">Financial & Operational Analytics</div>
-      <p class="svc-desc">Deep-dive analysis of your P&L, cost structures, operational throughput, and process efficiency — with clear diagnostics and actionable recommendations.</p>
-      <div class="svc-tags"><span class="svc-tag">Finance</span><span class="svc-tag">Operations</span><span class="svc-tag">Cost Analysis</span></div>
-    </div>
-
-    <div class="svc-card reveal reveal-delay-1">
-      <div class="svc-icon">🔄</div>
-      <div class="svc-title">Data Pipeline & Automation</div>
-      <p class="svc-desc">We design and build the data infrastructure that makes analytics possible — ETL pipelines, automated ingestion, data lakes, and warehouse architecture.</p>
-      <div class="svc-tags"><span class="svc-tag">ETL</span><span class="svc-tag">Automation</span><span class="svc-tag">Data Warehouse</span></div>
-    </div>
-
-    <div class="svc-card reveal reveal-delay-2">
-      <div class="svc-icon">🗂️</div>
-      <div class="svc-title">Data Strategy & Governance</div>
-      <p class="svc-desc">Build the right foundation — KPI frameworks, data ownership models, quality standards, and governance structures that keep your analytics trustworthy and scalable.</p>
-      <div class="svc-tags"><span class="svc-tag">Strategy</span><span class="svc-tag">Governance</span><span class="svc-tag">KPI Design</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
-<section id="how">
-  <div class="how-header reveal">
-    <span class="section-tag">Our Process</span>
-    <h2 class="section-title light">From Data to Decision — Systematically</h2>
-    <p class="section-sub">We follow a deliberate, structured path that turns raw business data into actionable intelligence — every time.</p>
-  </div>
-
-  <div class="how-steps">
-    <div class="step reveal">
-      <div class="step-num"><span>01</span></div>
-      <div class="step-title">Discover & Map</div>
-      <p class="step-desc">We audit your existing data landscape — sources, quality, gaps — and define what intelligence is possible.</p>
-    </div>
-    <div class="step reveal reveal-delay-1">
-      <div class="step-num"><span>02</span></div>
-      <div class="step-title">Build the Foundation</div>
-      <p class="step-desc">We design pipelines, applications, and infrastructure that systematically capture and organize your business data.</p>
-    </div>
-    <div class="step reveal reveal-delay-2">
-      <div class="step-num"><span>03</span></div>
-      <div class="step-title">Analyze & Model</div>
-      <p class="step-desc">AI and analytical models are applied — surfacing patterns, anomalies, predictions, and insights tailored to your context.</p>
-    </div>
-    <div class="step reveal reveal-delay-3">
-      <div class="step-num"><span>04</span></div>
-      <div class="step-title">Deliver Intelligence</div>
-      <p class="step-desc">Dashboards, reports, and recommendations land in the hands of your decision-makers — clear, timely, and actionable.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ ABOUT ═══════════════ -->
-<section id="about">
-  <div class="about-left reveal">
-    <div class="about-visual-block">
-      <div class="avb-bg">
-        <div class="avb-lines">
-          <div class="avb-circle avb-c1"></div>
-          <div class="avb-circle avb-c2"></div>
-          <div class="avb-circle avb-c3"></div>
+  <!-- LOGIN -->
+  <div class="pg" id="pg-login">
+    <div class="login-wrap">
+      <div class="login-left">
+        <div class="login-bg-circle"></div>
+        <div class="login-bg-circle2"></div>
+        <div>
+          <div class="login-logo-lg">Dee Pee<br>Inks</div>
+          <div class="login-sub">Printing & Industrial Ink Manufacturer</div>
         </div>
+        <div class="login-tagline">Precision inks.<br><em>Trusted</em> by industry.</div>
       </div>
-      <div class="avb-float">
-        <div class="avb-float-label">Our Core Belief</div>
-        <div class="avb-float-value">Data</div>
-        <div class="avb-float-sub">is the language every business speaks — we help you read it fluently.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="about-right reveal">
-    <span class="section-tag">About CarobTechnologies</span>
-    <h2 class="section-title dark">Analytics is Our Bread &amp; Butter.</h2>
-    <p class="section-sub">CarobTechnologies was founded on a singular conviction — that businesses which truly understand their data, understand their future. We are an analytical services and intelligent systems firm, building the tools and insight that give our clients that edge.</p>
-    <p class="section-sub" style="margin-top: 16px;">We are not a generic IT firm. We don't chase every technology trend. We are deeply focused: AI-powered analytics, and the intelligent applications that make great analytics possible.</p>
-
-    <div class="pillars" style="margin-top: 36px;">
-      <div class="pillar">
-        <div class="pillar-icon">🎯</div>
-        <div class="pillar-body">
-          <strong>Analytics-First, Always</strong>
-          <p>Every engagement — whether building an application or designing a dashboard — begins and ends with what the data will tell us.</p>
+      <div class="login-right">
+        <div class="login-title">Welcome back</div>
+        <div class="login-desc">Enter your registered mobile number. We'll send a one-time password — no password to remember.</div>
+        <div class="form-lbl">Mobile Number</div>
+        <div style="display:flex;gap:8px;">
+          <div style="padding:11px 12px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:14px;font-weight:600;white-space:nowrap;">🇮🇳 +91</div>
+          <input class="form-field" style="flex:1;margin:0;" type="tel" value="98765 43210">
         </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">🤝</div>
-        <div class="pillar-body">
-          <strong>Built for Mid-Market Businesses</strong>
-          <p>Enterprise-grade analytics intelligence, delivered at a scale and price point that works for growing businesses.</p>
+        <div style="font-size:10px;color:var(--muted);margin:6px 0 20px;">Used only for order updates. Never shared.</div>
+        <button class="btn-gold" onclick="go('pin')">Send OTP →</button>
+        <div style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+          <div style="flex:1;height:1px;background:var(--border2);"></div>
+          <div style="font-size:11px;color:var(--muted);">or verify OTP</div>
+          <div style="flex:1;height:1px;background:var(--border2);"></div>
         </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">🚀</div>
-        <div class="pillar-body">
-          <strong>Insight That Leads to Action</strong>
-          <p>We don't stop at reports. We frame every insight as a recommendation — because data without direction is just noise.</p>
+        <div class="form-lbl">Enter 6-digit OTP</div>
+        <div class="otp-row">
+          <input class="otp-b on" maxlength="1" value="4">
+          <input class="otp-b on" maxlength="1" value="8">
+          <input class="otp-b on" maxlength="1" value="2">
+          <input class="otp-b on" maxlength="1" value="9">
+          <input class="otp-b" maxlength="1" placeholder="·">
+          <input class="otp-b" maxlength="1" placeholder="·">
         </div>
+        <button class="btn-gold">Verify & Continue →</button>
+        <button class="form-link">Resend OTP in 28s</button>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ═══════════════ WHY US ═══════════════ -->
-<section id="why">
-  <div class="why-header reveal">
-    <span class="section-tag">Why CarobTechnologies</span>
-    <h2 class="section-title light">What Makes Us Different</h2>
-    <p class="section-sub">We are not a reporting team. We are an intelligence partner — combining analytical depth with AI capability and business acumen.</p>
-  </div>
-
-  <div class="why-grid">
-    <div class="why-item reveal">
-      <span class="why-num">01</span>
-      <div class="why-title">AI at the Core</div>
-      <p class="why-desc">We don't bolt AI on as an afterthought. It is built into every analytics solution we deliver — making your data smarter over time.</p>
-    </div>
-    <div class="why-item reveal reveal-delay-1">
-      <span class="why-num">02</span>
-      <div class="why-title">Apps Built for Analytics</div>
-      <p class="why-desc">Our applications are designed from the ground up to feed your analytics pipeline — not generic software that happens to produce data.</p>
-    </div>
-    <div class="why-item reveal reveal-delay-2">
-      <span class="why-num">03</span>
-      <div class="why-title">Business Context First</div>
-      <p class="why-desc">We think like business partners. Every number we surface connects to a decision your leadership team actually needs to make.</p>
-    </div>
-    <div class="why-item reveal reveal-delay-3">
-      <span class="why-num">04</span>
-      <div class="why-title">Long-Term Partnership</div>
-      <p class="why-desc">Analytics is not a one-time project. We build lasting relationships and evolve your intelligence capability as your business grows.</p>
+  <!-- SET PIN -->
+  <div class="pg" id="pg-pin">
+    <div class="login-wrap" style="max-width:500px;margin:0 auto;display:block;">
+      <div style="background:var(--ink);border-radius:16px 16px 0 0;padding:28px 32px;text-align:center;">
+        <div style="font-family:var(--display);font-size:22px;font-weight:900;color:var(--gold);">Dee Pee Inks</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;">Set your secure PIN</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:0 0 16px 16px;padding:32px;text-align:center;">
+        <div style="font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px;">Choose a 4-digit PIN</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;">This replaces your OTP for all future logins.<br>Keep it private.</div>
+        <div class="pin-dots">
+          <div class="pdot on"></div><div class="pdot on"></div><div class="pdot on"></div><div class="pdot"></div>
+        </div>
+        <div class="numpad">
+          <button class="nk">1</button><button class="nk">2</button><button class="nk">3</button>
+          <button class="nk">4</button><button class="nk">5</button><button class="nk">6</button>
+          <button class="nk">7</button><button class="nk">8</button><button class="nk">9</button>
+          <button class="nk nk-empty"></button><button class="nk" onclick="go('dashboard')">0</button><button class="nk">⌫</button>
+        </div>
+        <div style="font-size:11px;color:var(--muted);">You can also enable fingerprint login after setup</div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- ═══════════════ CONTACT ═══════════════ -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="contact-left reveal">
-      <span class="section-tag">Get In Touch</span>
-      <h2 class="section-title dark">Let's Talk About Your Data.</h2>
-      <p class="section-sub">Whether you have a specific project in mind or want to understand what AI-powered analytics could mean for your business — we would love to start that conversation.</p>
+  <!-- DASHBOARD -->
+  <div class="pg on" id="pg-dashboard">
+    <div class="page-header">
+      <div><div class="ph-title">Dee Pee Inks — Customer Portal</div><div class="ph-sub">Welcome back, Rajan Enterprises</div></div>
+      <div class="ph-right">
+        <div class="ph-badge">GSTIN verified</div>
+        <button class="quick-btn" onclick="go('catalogue')">+ New Order</button>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="alert-box">
+        <span class="al-icon">⚠️</span>
+        <div class="al-text">Order <strong>#DPI-2047</strong> has been approved. A proforma invoice has been sent to your email. Payment due by <strong>24 Mar 2026</strong>.</div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card accent"><div class="stat-lbl">Active Orders</div><div class="stat-val">7</div><div class="stat-chg up">↑ 2 this week</div></div>
+        <div class="stat-card"><div class="stat-lbl">Pending Approval</div><div class="stat-val">2</div><div class="stat-chg warn">Awaiting review</div></div>
+        <div class="stat-card"><div class="stat-lbl">In Transit</div><div class="stat-val">3</div><div class="stat-chg">Shipments</div></div>
+        <div class="stat-card"><div class="stat-lbl">Total This Year</div><div class="stat-val" style="font-size:20px;">₹18.2L</div><div class="stat-chg up">↑ 12% vs last year</div></div>
+      </div>
+      <div class="section-title">Recent Orders <button class="see-all" onclick="go('orders')">View all →</button></div>
+      <table class="order-table">
+        <thead><tr><th>Order ID</th><th>Products</th><th>Date</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr onclick="go('tracking')"><td class="ot-id">#DPI-2051</td><td>ChromaBlack XL, IndustraBlue</td><td>19 Mar 2026</td><td>₹1,80,020</td><td><span class="sp sp-p">Pending Approval</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr onclick="go('tracking')"><td class="ot-id">#DPI-2047</td><td>ChromaBlack Pro XL</td><td>14 Mar 2026</td><td>₹1,22,500</td><td><span class="sp sp-t">In Transit</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr><td class="ot-id">#DPI-2041</td><td>IndustraBlue 4000</td><td>8 Mar 2026</td><td>₹64,000</td><td><span class="sp sp-a">Approved</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr><td class="ot-id">#DPI-2038</td><td>UV FlexCure Yellow, IndustraRed</td><td>1 Mar 2026</td><td>₹58,500</td><td><span class="sp sp-d">Delivered</span></td><td><button class="track-lnk">Details →</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-      <div class="contact-details">
-        <div class="c-row">
-          <div class="c-icon">📧</div>
-          <div>
-            <strong>Email</strong>
-            <span>hello@carobtechnologies.com</span>
+  <!-- CATALOGUE -->
+  <div class="pg" id="pg-catalogue">
+    <div class="page-header"><div><div class="ph-title">Product Catalogue</div><div class="ph-sub">Printing & Industrial Inks — Dee Pee Inks</div></div><div class="ph-right"><button class="quick-btn" onclick="go('cart')">View Cart (2)</button></div></div>
+    <div class="page-body">
+      <div class="cat-filters">
+        <div class="search-box">🔍 <span class="sb-ph">Search by name, code, or type…</span></div>
+        <div class="filter-chip on">All Products</div>
+        <div class="filter-chip">Printing Inks</div>
+        <div class="filter-chip">Industrial Inks</div>
+        <div class="filter-chip">In Stock Only</div>
+      </div>
+      <div class="prod-grid">
+        <div class="prod-card" onclick="go('product')">
+          <div class="pc-img" style="background:#F5F0E8;">🖤</div>
+          <div class="pc-body">
+            <div class="pc-name">ChromaBlack Pro XL</div>
+            <div class="pc-cat">Offset Printing Ink</div>
+            <div class="pc-price">₹2,450 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 5 L · 4 pack sizes</div>
+            <div class="pc-footer"><span class="in-stock">● In Stock</span><button class="add-btn" onclick="event.stopPropagation();">+</button></div>
           </div>
         </div>
-        <div class="c-row">
-          <div class="c-icon">📍</div>
-          <div>
-            <strong>Headquarters</strong>
-            <span>Chennai, Tamil Nadu, India</span>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#FFFFF0;">🟡</div>
+          <div class="pc-body">
+            <div class="pc-name">UV FlexCure Yellow</div>
+            <div class="pc-cat">UV-Cure Printing Ink</div>
+            <div class="pc-price">₹4,100 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 1 L · 3 pack sizes</div>
+            <div class="pc-footer"><span class="low-stock">● Low Stock</span><button class="add-btn">+</button></div>
           </div>
         </div>
-        <div class="c-row">
-          <div class="c-icon">🌐</div>
-          <div>
-            <strong>Serving</strong>
-            <span>Clients across India &amp; globally</span>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#EFF8FF;">🔵</div>
+          <div class="pc-body">
+            <div class="pc-name">IndustraBlue 4000</div>
+            <div class="pc-cat">Industrial Coding Ink</div>
+            <div class="pc-price">₹3,200 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 10 L · 2 pack sizes</div>
+            <div class="pc-footer"><span class="in-stock">● In Stock</span><button class="add-btn">+</button></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#FFF0F0;">🔴</div>
+          <div class="pc-body">
+            <div class="pc-name">IndustraRed 7X</div>
+            <div class="pc-cat">Metal Marking Ink</div>
+            <div class="pc-price">₹3,800 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 5 L · 2 pack sizes</div>
+            <div class="pc-footer"><span class="low-stock">● Low Stock</span><button class="add-btn">+</button></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#F5F0FF;">⚪</div>
+          <div class="pc-body">
+            <div class="pc-name">GravureClear Base</div>
+            <div class="pc-cat">Gravure Printing Ink</div>
+            <div class="pc-price">₹1,950 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 20 L · 3 pack sizes</div>
+            <div class="pc-footer"><span class="in-stock">● In Stock</span><button class="add-btn">+</button></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img" style="background:#F0FFF4;">🟢</div>
+          <div class="pc-body">
+            <div class="pc-name">EcoFlex Green</div>
+            <div class="pc-cat">Flexographic Ink</div>
+            <div class="pc-price">₹2,800 <span class="pc-unit">/ litre</span></div>
+            <div class="pc-moq">MOQ: 5 L · 3 pack sizes</div>
+            <div class="pc-footer"><span class="in-stock">● In Stock</span><button class="add-btn">+</button></div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="contact-form reveal">
-      <div class="f-row">
-        <div class="f-group">
-          <label>First Name</label>
-          <input type="text" placeholder="Your first name">
+  <!-- PRODUCT DETAIL -->
+  <div class="pg" id="pg-product">
+    <div class="page-header"><div><div class="back-row" style="margin-bottom:4px;cursor:pointer;" onclick="go('catalogue')"><span style="font-size:13px;color:rgba(255,255,255,0.5);">← Products</span></div><div class="ph-title">ChromaBlack Pro XL</div></div><div class="ph-right"><button class="quick-btn" onclick="go('cart')">Cart (2)</button></div></div>
+    <div class="page-body">
+      <div class="pd-layout">
+        <div>
+          <div class="pd-img-box">🖤</div>
+          <div class="pd-specs">
+            <div class="spec-row"><span class="spec-key">SKU</span><span class="spec-val">INK-CBP-XL</span></div>
+            <div class="spec-row"><span class="spec-key">Type</span><span class="spec-val">Offset Printing Ink</span></div>
+            <div class="spec-row"><span class="spec-key">Base</span><span class="spec-val">Carbon-based formula</span></div>
+            <div class="spec-row"><span class="spec-key">Dry time</span><span class="spec-val">Fast-dry · &lt;30 min</span></div>
+            <div class="spec-row"><span class="spec-key">Substrate</span><span class="spec-val">Paper, cardboard</span></div>
+            <div class="spec-row"><span class="spec-key">Stock</span><span class="spec-val" style="color:var(--green);font-weight:700;">240 L available</span></div>
+          </div>
         </div>
-        <div class="f-group">
-          <label>Last Name</label>
-          <input type="text" placeholder="Your last name">
+        <div>
+          <div class="pd-name">ChromaBlack Pro XL</div>
+          <div class="pd-sub">Offset Printing · Dense carbon-based · High opacity</div>
+          <div class="tier-box">
+            <div class="tier-title">Bulk Pricing Tiers</div>
+            <div class="tier-row-d">
+              <div class="tier-col"><div class="tier-range">1 – 10 L</div><div class="tier-price">₹2,450</div><div class="tier-disc">Standard</div></div>
+              <div class="tier-col"><div class="tier-range">11 – 50 L</div><div class="tier-price">₹2,254</div><div class="tier-disc">8% off</div></div>
+              <div class="tier-col best"><div class="tier-range">51 L +</div><div class="tier-price">₹2,083</div><div class="tier-disc">★ Best · 15% off</div></div>
+            </div>
+          </div>
+          <div class="form-lbl">Pack Size</div>
+          <div class="size-row" style="margin-bottom:16px;">
+            <div class="sz">500 ml</div><div class="sz">1 L</div><div class="sz on">5 L drum</div><div class="sz">20 L drum</div>
+          </div>
+          <div class="qty-row">
+            <span class="qty-lbl">Quantity (drums)</span>
+            <div class="qty-ctrl"><button class="qb">−</button><span class="qn">10</span><button class="qb">+</button></div>
+          </div>
+          <div class="disc-banner">✓ 50 L total — 15% bulk discount applied → <strong>₹1,04,167</strong></div>
+          <button class="btn-add" onclick="go('cart')">Add to Cart →</button>
         </div>
       </div>
-      <div class="f-group">
-        <label>Work Email</label>
-        <input type="email" placeholder="you@company.com">
-      </div>
-      <div class="f-group">
-        <label>Company</label>
-        <input type="text" placeholder="Your company name">
-      </div>
-      <div class="f-group">
-        <label>What are you looking for?</label>
-        <select>
-          <option value="">Select a service area...</option>
-          <option>AI &amp; Predictive Analytics</option>
-          <option>Business Intelligence &amp; Dashboards</option>
-          <option>Analytics-Ready Application</option>
-          <option>Financial &amp; Operational Analytics</option>
-          <option>Data Pipeline &amp; Automation</option>
-          <option>Data Strategy &amp; Governance</option>
-          <option>Not sure — just want to explore</option>
-        </select>
-      </div>
-      <div class="f-group">
-        <label>Tell Us About Your Business</label>
-        <textarea placeholder="Describe what you're trying to understand or solve with your data..."></textarea>
-      </div>
-      <button class="btn-submit">Send Message →</button>
     </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">
-    <div class="footer-logo-mark">CT</div>
-    Carob<span>Technologies</span>
+  <!-- CART -->
+  <div class="pg" id="pg-cart">
+    <div class="page-header"><div><div class="ph-title">Your Cart</div><div class="ph-sub">2 products · Review before placing order</div></div></div>
+    <div class="page-body">
+      <div class="cart-layout">
+        <div>
+          <div class="cart-items">
+            <div class="cart-item">
+              <div class="ci-img">🖤</div>
+              <div class="ci-info">
+                <div class="ci-name">ChromaBlack Pro XL</div>
+                <div class="ci-spec">5 L drum × 10 · 15% bulk discount applied</div>
+                <div class="ci-foot"><div class="ci-qty"><button class="cqb">−</button><span class="cqn">10</span><button class="cqb">+</button></div><span class="ci-price">₹1,04,167</span></div>
+              </div>
+            </div>
+            <div class="cart-item">
+              <div class="ci-img">🔵</div>
+              <div class="ci-info">
+                <div class="ci-name">IndustraBlue 4000</div>
+                <div class="ci-spec">20 L drum × 1 · Standard rate</div>
+                <div class="ci-foot"><div class="ci-qty"><button class="cqb">−</button><span class="cqn">1</span><button class="cqb">+</button></div><span class="ci-price">₹64,000</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px;">
+            <div class="form-lbl">Delivery Address</div>
+            <select class="form-field">
+              <option>Plot 12, SIDCO Industrial Estate, Ambattur, Chennai — 600098</option>
+              <option>+ Add new address</option>
+            </select>
+            <div class="form-lbl">Purchase Order / Reference No. (optional)</div>
+            <input class="form-field" placeholder="e.g. PO-2024-0091" value="PO-2026-0047">
+            <div class="form-lbl">Special Instructions</div>
+            <input class="form-field" placeholder="Any delivery or handling notes…">
+          </div>
+        </div>
+        <div>
+          <div class="cart-summary-box">
+            <div class="cs-title">Order Summary</div>
+            <div class="cs-row"><span class="cs-key">ChromaBlack Pro XL</span><span class="cs-val">₹1,04,167</span></div>
+            <div class="cs-row"><span class="cs-key">IndustraBlue 4000</span><span class="cs-val">₹64,000</span></div>
+            <hr class="cs-divider">
+            <div class="cs-row"><span class="cs-key">Subtotal</span><span class="cs-val">₹1,68,167</span></div>
+            <div class="cs-row"><span class="cs-key">Bulk discount</span><span class="cs-val" style="color:#6EE7A0;">− ₹18,417</span></div>
+            <div class="cs-row"><span class="cs-key">GST 18%</span><span class="cs-val">₹30,270</span></div>
+            <hr class="cs-divider">
+            <div class="cs-total-row"><span class="cs-total-lbl">Total</span><span class="cs-total-amt">₹1,80,020</span></div>
+            <div class="cs-note">Subject to company approval before dispatch. Proforma invoice sent on approval.</div>
+            <button class="place-btn" onclick="go('confirm')">Place Order →</button>
+            <div class="addr-box"><div class="addr-lbl">Delivering to</div><div class="addr-val">Plot 12, SIDCO Industrial Estate,<br>Ambattur, Chennai — 600098</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="footer-copy">© 2025 CarobTechnologies Pvt. Ltd. · Chennai, India</div>
-  <div class="footer-links">
-    <a href="#what">What We Do</a>
-    <a href="#services">Services</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+
+  <!-- CONFIRM -->
+  <div class="pg" id="pg-confirm">
+    <div class="page-header"><div><div class="ph-title">Order Confirmed</div><div class="ph-sub">Dee Pee Inks — #DPI-2051</div></div></div>
+    <div class="page-body">
+      <div class="confirm-hero">
+        <div class="confirm-icon">✓</div>
+        <div class="confirm-title">Order Successfully Placed!</div>
+        <div class="confirm-sub">Order #DPI-2051 is now pending approval from Dee Pee Inks. You'll receive an email notification once it's reviewed.</div>
+      </div>
+      <div class="confirm-grid">
+        <div class="confirm-card">
+          <div class="cc-title">Order Details</div>
+          <div class="cc-row"><span class="cc-key">Order ID</span><span class="cc-val">#DPI-2051</span></div>
+          <div class="cc-row"><span class="cc-key">Date</span><span class="cc-val">19 Mar 2026</span></div>
+          <div class="cc-row"><span class="cc-key">Products</span><span class="cc-val">2 items</span></div>
+          <div class="cc-row"><span class="cc-key">Total</span><span class="cc-val" style="font-family:var(--display);font-size:15px;font-weight:700;">₹1,80,020</span></div>
+          <div class="cc-row"><span class="cc-key">Status</span><span class="sp sp-p">Pending Approval</span></div>
+        </div>
+        <div class="confirm-card">
+          <div class="cc-title">Delivery</div>
+          <div class="cc-row"><span class="cc-key">Address</span><span class="cc-val">SIDCO, Chennai</span></div>
+          <div class="cc-row"><span class="cc-key">PO Reference</span><span class="cc-val">PO-2026-0047</span></div>
+          <div class="cc-row"><span class="cc-key">Est. Dispatch</span><span class="cc-val">After payment</span></div>
+          <div class="cc-row"><span class="cc-key">Notification</span><span class="cc-val">Email + SMS</span></div>
+        </div>
+      </div>
+      <div class="confirm-btns">
+        <button class="btn-dark" onclick="go('tracking')">Track This Order →</button>
+        <button class="btn-outline" onclick="go('orders')">View All Orders</button>
+        <button class="btn-outline" onclick="go('catalogue')">Place Another Order</button>
+      </div>
+    </div>
   </div>
-</footer>
+
+  <!-- ORDERS -->
+  <div class="pg" id="pg-orders">
+    <div class="page-header"><div><div class="ph-title">My Orders</div><div class="ph-sub">Rajan Enterprises — All orders, latest first</div></div></div>
+    <div class="page-body">
+      <div class="orders-tabs">
+        <button class="otab on">All Orders</button>
+        <button class="otab">Active</button>
+        <button class="otab">In Transit</button>
+        <button class="otab">Completed</button>
+      </div>
+      <table class="orders-table">
+        <thead><tr><th>Order ID</th><th>Products</th><th>Placed</th><th>Amount</th><th>Payment</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr onclick="go('tracking')"><td class="ot-id">#DPI-2051</td><td>ChromaBlack XL · IndustraBlue</td><td>19 Mar 2026</td><td>₹1,80,020</td><td><span class="sp sp-p">Pending</span></td><td><span class="sp sp-p">Pending Approval</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr onclick="go('tracking')"><td class="ot-id">#DPI-2047</td><td>ChromaBlack Pro XL</td><td>14 Mar 2026</td><td>₹1,22,500</td><td><span class="sp sp-a">Confirmed</span></td><td><span class="sp sp-t">In Transit</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr><td class="ot-id">#DPI-2041</td><td>IndustraBlue 4000</td><td>8 Mar 2026</td><td>₹64,000</td><td><span class="sp sp-a">Confirmed</span></td><td><span class="sp sp-a">Approved</span></td><td><button class="track-lnk">Track →</button></td></tr>
+          <tr><td class="ot-id">#DPI-2038</td><td>UV FlexCure · IndustraRed 7X</td><td>1 Mar 2026</td><td>₹58,500</td><td><span class="sp sp-a">Confirmed</span></td><td><span class="sp sp-d">Delivered</span></td><td><button class="track-lnk">Details</button></td></tr>
+          <tr><td class="ot-id">#DPI-2031</td><td>GravureClear Base</td><td>18 Feb 2026</td><td>₹39,000</td><td><span class="sp sp-a">Confirmed</span></td><td><span class="sp sp-d">Delivered</span></td><td><button class="track-lnk">Details</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TRACKING -->
+  <div class="pg" id="pg-tracking">
+    <div class="page-header"><div><div class="ph-title">#DPI-2047 — Order Tracking</div><div class="ph-sub">ChromaBlack Pro XL · 50 L · Dee Pee Inks</div></div><div class="ph-right"><button class="quick-btn" onclick="go('orders')">← All Orders</button></div></div>
+    <div class="page-body">
+      <div class="track-layout">
+        <div>
+          <div class="section-title">Shipment Timeline</div>
+          <div class="milestone-wrap">
+            <div class="ms ms-done"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Order Placed</div><div class="ms-sub">14 Mar 2026 · 10:22 AM</div></div></div>
+            <div class="ms ms-done"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Approved by Dee Pee Inks</div><div class="ms-sub">14 Mar 2026 · 2:45 PM · Proforma invoice sent</div></div></div>
+            <div class="ms ms-done"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Payment Confirmed</div><div class="ms-sub">15 Mar 2026 · 9:00 AM · Bank transfer</div></div></div>
+            <div class="ms ms-done"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Packed & Dispatched</div><div class="ms-sub">15 Mar 2026 · 11:15 AM · Bluedart #BD9847123</div></div></div>
+            <div class="ms ms-active"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">In Transit — Now</div><div class="ms-sub">Bangalore Hub · ETA 18 Mar 2026</div></div></div>
+            <div class="ms ms-todo"><div class="ms-col"><div class="ms-dot"></div><div class="ms-line"></div></div><div class="ms-content"><div class="ms-lbl">Out for Delivery</div><div class="ms-sub">—</div></div></div>
+            <div class="ms ms-todo"><div class="ms-col"><div class="ms-dot"></div></div><div class="ms-content"><div class="ms-lbl">Delivered</div><div class="ms-sub">—</div></div></div>
+          </div>
+        </div>
+        <div class="track-cards">
+          <div class="tcard">
+            <div class="tc-title">Order Summary</div>
+            <div class="tc-row"><span class="tc-key">Product</span><span class="tc-val">ChromaBlack Pro XL</span></div>
+            <div class="tc-row"><span class="tc-key">Volume</span><span class="tc-val">50 L (5 L × 10)</span></div>
+            <div class="tc-row"><span class="tc-key">Amount</span><span class="tc-val" style="font-family:var(--display);font-weight:700;">₹1,22,500</span></div>
+          </div>
+          <div class="tcard">
+            <div class="tc-title">Payment</div>
+            <div class="tc-row"><span class="tc-key">Method</span><span class="tc-val">Bank Transfer</span></div>
+            <div class="tc-row"><span class="tc-key">Status</span><span class="sp sp-a">✓ Confirmed</span></div>
+            <div class="tc-row"><span class="tc-key">Invoice</span><span class="dl-link">Download PDF ↓</span></div>
+          </div>
+          <div class="tcard">
+            <div class="tc-title">Logistics</div>
+            <div class="tc-row"><span class="tc-key">Carrier</span><span class="tc-val">Bluedart Express</span></div>
+            <div class="tc-row"><span class="tc-key">AWB No.</span><span class="tc-val">BD9847123</span></div>
+            <div class="tc-row"><span class="tc-key">ETA</span><span class="tc-val">18 Mar 2026</span></div>
+            <div class="tc-row"><span class="tc-key">Deliver to</span><span class="tc-val">SIDCO, Chennai</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div class="pg" id="pg-adash">
+    <div class="admin-bar"><div><div class="ab-logo">Dee Pee Inks — Admin</div><div class="ab-role">Product Manager · Suresh Kumar</div></div><div class="ph-badge" style="border-color:rgba(201,168,76,0.4);">Admin Panel</div></div>
+    <div class="admin-body">
+      <div class="adm-stat-grid">
+        <div class="adm-sc"><div class="adm-lbl">Total Products</div><div class="adm-val">24</div><div class="adm-chg">6 added this month</div></div>
+        <div class="adm-sc"><div class="adm-lbl">Pending Orders</div><div class="adm-val" style="color:#C84B31;">3</div><div class="adm-chg" style="color:#C84B31;">Need approval</div></div>
+        <div class="adm-sc"><div class="adm-lbl">Active Listings</div><div class="adm-val">21</div><div class="adm-chg">3 drafts</div></div>
+        <div class="adm-sc"><div class="adm-lbl">Low Stock</div><div class="adm-val" style="color:#C17900;">3</div><div class="adm-chg" style="color:#C17900;">⚠ Needs restock</div></div>
+      </div>
+      <div class="alert-box"><span class="al-icon">⚠️</span><div class="al-text"><strong>3 products are low on stock:</strong> UV FlexCure Yellow, IndustraRed 7X, GravureClear Base. Update stock or hide from catalogue.</div></div>
+      <div class="section-title">Quick Actions</div>
+      <div class="qa-grid">
+        <div class="qa-card" onclick="go('aadd')"><div class="qa-icon">➕</div><div class="qa-lbl">Add Product</div><div class="qa-sub">List a new ink</div></div>
+        <div class="qa-card" onclick="go('aprod')"><div class="qa-icon">📋</div><div class="qa-lbl">Manage Products</div><div class="qa-sub">Edit, hide, delete</div></div>
+        <div class="qa-card" onclick="go('aorders')"><div class="qa-icon">📦</div><div class="qa-lbl">Approve Orders <span class="nav-badge" style="font-size:10px;margin-left:4px;">3</span></div><div class="qa-sub">Review pending</div></div>
+        <div class="qa-card"><div class="qa-icon">📊</div><div class="qa-lbl">Stock Levels</div><div class="qa-sub">Update availability</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PRODUCTS -->
+  <div class="pg" id="pg-aprod">
+    <div class="admin-bar"><div><div class="ab-logo">Dee Pee Inks — Products</div><div class="ab-role">24 total · 21 active · 3 low stock</div></div><div class="ph-right"><button class="quick-btn" onclick="go('aadd')">+ Add New Product</button></div></div>
+    <div class="admin-body">
+      <div class="cat-filters" style="margin-bottom:16px;">
+        <div class="search-box">🔍 <span class="sb-ph">Search products…</span></div>
+        <div class="filter-chip on">All (24)</div>
+        <div class="filter-chip">Printing (14)</div>
+        <div class="filter-chip">Industrial (10)</div>
+        <div class="filter-chip" style="color:#C84B31;border-color:#C84B31;">Low Stock (3)</div>
+        <div class="filter-chip">Drafts (3)</div>
+      </div>
+      <div class="prod-mgmt-grid">
+        <div class="pm-card"><div class="pm-img" style="background:#F5F0E8;">🖤</div><div class="pm-body"><div class="pm-name">ChromaBlack Pro XL</div><div class="pm-cat">Offset Printing · 4 sizes</div><div class="pm-row"><span class="pm-price">₹2,450/L</span><span class="in-stock">Active</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 240 L · MOQ: 5 L</div><div class="pm-actions"><button class="pm-btn pm-edit" onclick="go('aadd')">Edit</button><button class="pm-btn pm-hide">Hide</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#FFFFF0;">🟡</div><div class="pm-body"><div class="pm-name">UV FlexCure Yellow</div><div class="pm-cat">UV-Cure Printing · 3 sizes</div><div class="pm-row"><span class="pm-price">₹4,100/L</span><span class="low-stock">Low Stock</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 8 L · MOQ: 1 L</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-low">Restock</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#EFF8FF;">🔵</div><div class="pm-body"><div class="pm-name">IndustraBlue 4000</div><div class="pm-cat">Industrial Coding · 2 sizes</div><div class="pm-row"><span class="pm-price">₹3,200/L</span><span class="in-stock">Active</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 185 L · MOQ: 10 L</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-hide">Hide</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#FFF0F0;">🔴</div><div class="pm-body"><div class="pm-name">IndustraRed 7X</div><div class="pm-cat">Metal Marking · 2 sizes</div><div class="pm-row"><span class="pm-price">₹3,800/L</span><span class="low-stock">Low Stock</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 12 L · MOQ: 5 L</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-low">Restock</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#F5F0FF;">⚪</div><div class="pm-body"><div class="pm-name">GravureClear Base</div><div class="pm-cat">Gravure Printing · 3 sizes</div><div class="pm-row"><span class="pm-price">₹1,950/L</span><span style="font-size:9px;font-weight:700;color:var(--muted);background:#F3F4F6;padding:3px 8px;border-radius:100px;">Draft</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: Not set</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-pub">Publish</button></div></div></div>
+        <div class="pm-card"><div class="pm-img" style="background:#F0FFF4;">🟢</div><div class="pm-body"><div class="pm-name">EcoFlex Green</div><div class="pm-cat">Flexographic · 3 sizes</div><div class="pm-row"><span class="pm-price">₹2,800/L</span><span class="in-stock">Active</span></div><div class="pm-row" style="margin-top:4px;font-size:10px;color:var(--muted);">Stock: 96 L · MOQ: 5 L</div><div class="pm-actions"><button class="pm-btn pm-edit">Edit</button><button class="pm-btn pm-hide">Hide</button></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN ADD PRODUCT -->
+  <div class="pg" id="pg-aadd">
+    <div class="admin-bar"><div><div class="ab-logo">Add New Product</div><div class="ab-role">Dee Pee Inks — Product Manager</div></div><div class="ph-right"><button class="quick-btn" onclick="go('aprod')">← Back to Products</button></div></div>
+    <div class="admin-body">
+      <div class="add-form">
+        <div class="af-title">Product Information</div>
+        <div class="upload-box"><div class="ub-icon">📷</div><div class="ub-lbl">Click to upload product photo</div><div class="ub-sub">JPG or PNG · Max 5 MB · Recommended 800×800px</div></div>
+        <div class="af-grid">
+          <div><div class="af-lbl">Product Name *</div><input class="af-field" value="ChromaBlack Pro XL"></div>
+          <div><div class="af-lbl">SKU / Product Code</div><input class="af-field" value="INK-CBP-XL"></div>
+          <div><div class="af-lbl">Category *</div><select class="af-field"><option>Offset Printing Ink</option><option>UV-Cure Printing Ink</option><option>Industrial Coding Ink</option><option>Metal Marking Ink</option></select></div>
+          <div><div class="af-lbl">Base Price (per litre) *</div><input class="af-field" value="₹2,450"></div>
+          <div><div class="af-lbl">MOQ (litres) *</div><input class="af-field" value="5"></div>
+          <div><div class="af-lbl">Current Stock (litres)</div><input class="af-field" value="240"></div>
+        </div>
+        <div class="af-lbl" style="margin-bottom:8px;">Short Description</div>
+        <textarea class="af-field" rows="2" style="margin-bottom:14px;">Dense carbon-based offset printing ink. High opacity, fast-dry formula.</textarea>
+        <div class="af-lbl" style="margin-bottom:8px;">Bulk Pricing Tiers</div>
+        <div style="background:#F8F7F2;border-radius:8px;padding:12px;margin-bottom:14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;margin-bottom:6px;"><span style="font-size:10px;font-weight:600;color:var(--muted);">From (L)</span><span style="font-size:10px;font-weight:600;color:var(--muted);">To (L)</span><span style="font-size:10px;font-weight:600;color:var(--muted);">Discount %</span><span></span></div>
+          <div class="tier-grid"><input class="tier-in" value="1"><input class="tier-in" value="10"><input class="tier-in" value="0%"><button class="tdel">×</button></div>
+          <div class="tier-grid"><input class="tier-in" value="11"><input class="tier-in" value="50"><input class="tier-in" value="8%"><button class="tdel">×</button></div>
+          <div class="tier-grid"><input class="tier-in" value="51"><input class="tier-in" value="∞"><input class="tier-in" value="15%"><button class="tdel">×</button></div>
+          <button style="font-size:11px;font-weight:700;color:var(--gold);background:none;border:none;cursor:pointer;margin-top:4px;">+ Add Tier</button>
+        </div>
+        <div class="toggle-row"><div><div class="tgl-lbl">Visible to customers</div><div class="tgl-sub">Show this product in the portal</div></div><div class="tgl"></div></div>
+        <div class="toggle-row"><div><div class="tgl-lbl">Allow ordering</div><div class="tgl-sub">Customers can place orders</div></div><div class="tgl"></div></div>
+        <div class="toggle-row" style="border:none;"><div><div class="tgl-lbl">Featured product</div><div class="tgl-sub">Highlight on customer dashboard</div></div><div class="tgl tgl-off"></div></div>
+        <div class="save-row">
+          <button class="btn-draft">Save as Draft</button>
+          <button class="btn-save" onclick="go('aprod')">Publish Product →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN APPROVE ORDERS -->
+  <div class="pg" id="pg-aorders">
+    <div class="admin-bar"><div><div class="ab-logo">Order Approvals</div><div class="ab-role">3 orders pending · Dee Pee Inks Sales Team</div></div></div>
+    <div class="admin-body">
+      <div class="orders-tabs" style="max-width:400px;"><button class="otab on">Pending (3)</button><button class="otab">Approved</button><button class="otab">All Orders</button></div>
+      <div class="orders-approve">
+        <div class="oa-card">
+          <div class="oa-top"><div><div class="oa-id">#DPI-2051 · 19 Mar 2026</div><div class="oa-company">Rajan Enterprises · Chennai · GSTIN: 33AABCR1234F1Z5</div></div><span class="sp sp-p">Pending Approval</span></div>
+          <div class="oa-mid"><span class="oa-products">ChromaBlack Pro XL 50L · IndustraBlue 4000 20L · SIDCO, Chennai</span><span class="oa-amt">₹1,80,020</span></div>
+          <div class="oa-bot"><button class="btn-approve">✓ Approve</button><button class="btn-revise">Request Change</button><button class="btn-reject">✗ Reject</button><span class="ml-auto" style="font-size:11px;color:var(--muted);">Proforma auto-generated on approval</span></div>
+        </div>
+        <div class="oa-card">
+          <div class="oa-top"><div><div class="oa-id">#DPI-2050 · 18 Mar 2026</div><div class="oa-company">PrintMaster Co. · Coimbatore · GSTIN: 33ABCDE5678F1Z2</div></div><span class="sp sp-p">Pending Approval</span></div>
+          <div class="oa-mid"><span class="oa-products">IndustraRed 7X · 10 L · Peelamedu, Coimbatore</span><span class="oa-amt">₹38,000</span></div>
+          <div class="oa-bot"><button class="btn-approve">✓ Approve</button><button class="btn-revise">Request Change</button><button class="btn-reject">✗ Reject</button><span class="ml-auto" style="font-size:11px;color:var(--muted);">Proforma auto-generated on approval</span></div>
+        </div>
+        <div class="oa-card">
+          <div class="oa-top"><div><div class="oa-id">#DPI-2048 · 17 Mar 2026</div><div class="oa-company">SwiftPack Industries · Madurai · GSTIN: 33FGHIJ9012K1Z8</div></div><span class="sp sp-p">Pending Approval</span></div>
+          <div class="oa-mid"><span class="oa-products">UV FlexCure Yellow 5L · GravureClear Base 20L · Madurai</span><span class="oa-amt">₹59,500</span></div>
+          <div class="oa-bot"><button class="btn-approve">✓ Approve</button><button class="btn-revise">Request Change</button><button class="btn-reject">✗ Reject</button><span class="ml-auto" style="font-size:11px;color:var(--muted);">Proforma auto-generated on approval</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
 
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  function animateCursor() {
-    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-  document.querySelectorAll('button, a, .svc-card, .why-item, .pillar').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.width = '16px'; cursor.style.height = '16px';
-      ring.style.width = '52px'; ring.style.height = '52px';
-      ring.style.borderColor = 'rgba(61,142,232,0.7)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.width = '10px'; cursor.style.height = '10px';
-      ring.style.width = '36px'; ring.style.height = '36px';
-      ring.style.borderColor = 'rgba(61,142,232,0.5)';
-    });
+function go(id) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+id+"'")) b.classList.add('on');
   });
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => obs.observe(el));
-
-  // Nav scroll effect
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    nav.style.borderBottomColor = window.scrollY > 80
-      ? 'rgba(61,142,232,0.25)'
-      : 'rgba(61,142,232,0.15)';
-  });
+  window.scrollTo(0, 0);
+}
 </script>
-</body>
-</html>

@@ -604,10 +604,9 @@ footer {
 }
 
 .reveal {
-  opacity: 0; transform: translateY(32px);
+  opacity: 1; transform: none;
   transition: opacity 0.65s ease, transform 0.65s ease;
 }
-.reveal.visible { opacity: 1; transform: none; }
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
@@ -797,11 +796,8 @@ footer {
   <div class="about-right reveal">
     <span class="section-tag">About Carob Technologies</span>
     <h2 class="section-title dark">Analytics is Our Bread &amp; Butter.</h2>
-
-    <p class="section-sub">The name Carob was chosen deliberately — it is distinctive, easy to remember, and like the company itself, holds far more potential than it first appears.</p>
-
-    <p class="section-sub" style="margin-top: 16px;">Carob has been part of our founder's entrepreneurial journey since 2001. What started as Carob Software Solutions — a technology services firm — is now reborn as Carob Technologies, with a singular focus on AI-powered analytics and intelligent business systems. Same name. Sharper focus. A whole new era.</p>
-
+    <p style="font-size:13px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--blue-bright); margin-bottom:20px;">An AI and Analytics Company</p>
+    <p class="section-sub">Carob Technologies was founded on a singular conviction — that businesses which truly understand their data, understand their future. We are an analytical services and intelligent systems firm, building the tools and insight that give our clients that edge.</p>
     <p class="section-sub" style="margin-top: 16px;">We are not a generic IT firm. We don't chase every technology trend. We are deeply focused: AI-powered analytics, and the intelligent applications that make great analytics possible.</p>
 
     <div class="pillars" style="margin-top: 36px;">
@@ -875,7 +871,7 @@ footer {
           <div class="c-icon">📧</div>
           <div>
             <strong>Email</strong>
-            <span>hello@carobtechnologies.com</span>
+            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea828f868685aa898b9885889e8f8982848586858d838f99c4898587">[email&#160;protected]</a></span>
           </div>
         </div>
         <div class="c-row">
@@ -949,7 +945,7 @@ footer {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -1006,12 +1002,4 @@ footer {
   document.addEventListener('DOMContentLoaded', checkReveals);
 
   // Nav scroll effect
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    nav.style.borderBottomColor = window.scrollY > 80
-      ? 'rgba(61,142,232,0.25)'
-      : 'rgba(61,142,232,0.15)';
-  });
-</script>
-</body>
-</html>
+ 

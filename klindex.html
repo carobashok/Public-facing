@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Keller India — Operations System</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
 <style>
   :root {
     --navy: #0C2340; --blue: #0C2340; --light-blue: #FFF8E7;
@@ -1402,16 +1402,16 @@
 
       <!-- TAB 3: ESTIMATED VS ACTUAL -->
       <div class="tab-panel" id="boq-tab3">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
           <div class="chart-card" style="background:white;border-radius:12px;border:1px solid var(--gray-200);padding:20px;">
             <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;">Estimated vs Actual Cost — By BOQ Item</div>
-            <div style="font-size:11px;color:var(--gray-400);margin-bottom:16px;">Where are we over or under estimate?</div>
-            <canvas id="c-boq-compare" style="max-height:240px;"></canvas>
+            <div style="font-size:11px;color:var(--gray-400);margin-bottom:12px;">Where are we over or under estimate? Green = under budget, Red = over budget</div>
+            <canvas id="c-boq-compare" style="width:100%;height:260px;display:block;"></canvas>
           </div>
           <div class="chart-card" style="background:white;border-radius:12px;border:1px solid var(--gray-200);padding:20px;">
             <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;">Monthly Billing vs Cost Trend</div>
-            <div style="font-size:11px;color:var(--gray-400);margin-bottom:16px;">Client billing vs subcontractor cost month-wise</div>
-            <canvas id="c-billing-trend" style="max-height:240px;"></canvas>
+            <div style="font-size:11px;color:var(--gray-400);margin-bottom:12px;">Client billing vs subcontractor cost month-wise (Rs. Cr)</div>
+            <canvas id="c-billing-trend" style="width:100%;height:240px;display:block;"></canvas>
           </div>
         </div>
 
@@ -2736,35 +2736,174 @@
       if (el) el.classList.toggle('active', i === n);
       if (btn) btn.classList.toggle('active', i === n);
     }
+    if (n === 3) { initBOQCharts(); }
   }
 
   function initBOQCharts() {
-    var ctx1 = document.getElementById('c-boq-compare');
-    if (ctx1) new Chart(ctx1, {
-      type: 'bar',
-      data: {
-        labels: ['Piling 600mm','Piling 750mm','Piling 900mm','Concrete','Steel','Bentonite'],
-        datasets: [
-          { label: 'Estimated ( Cr)', data: [1.03, 7.39, 4.91, 4.68, 3.30, 0.50], backgroundColor: '#94A3B8', borderRadius: 4 },
-          { label: 'Actual ( Cr)', data: [0.96, 7.21, 5.00, 4.89, 3.32, 0.48], backgroundColor: '#F5A800', borderRadius: 4 }
-        ]
-      },
-      options: { responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:true, labels:{ boxWidth:12, font:{size:11} } } }, scales:{ x:{ grid:{ display:false }, ticks:{ font:{size:10} } }, y:{ grid:{ color:'#F1F5F9' }, ticks:{ font:{size:11} } } } }
-    });
-
-    var ctx2 = document.getElementById('c-billing-trend');
-    if (ctx2) new Chart(ctx2, {
-      type: 'line',
-      data: {
-        labels: ['Sep','Oct','Nov','Dec','Jan','Feb'],
-        datasets: [
-          { label: 'Client Billed ( Cr)', data: [0.13, 1.88, 2.83, 3.26, 3.42, 3.33], borderColor: '#0C2340', backgroundColor: 'rgba(12,35,64,0.08)', fill:true, tension: 0.4, pointBackgroundColor:'#0C2340', pointRadius:4 },
-          { label: 'Subcon Cost ( Cr)', data: [0.10, 1.48, 2.22, 2.58, 2.71, 2.63], borderColor: '#F5A800', backgroundColor: 'rgba(245,168,0,0.08)', fill:true, tension: 0.4, pointBackgroundColor:'#F5A800', pointRadius:4 }
-        ]
-      },
-      options: { responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:true, labels:{ boxWidth:12, font:{size:11} } } }, scales:{ x:{ grid:{ display:false } }, y:{ grid:{ color:'#F1F5F9' } } } }
-    });
+    drawBarChart();
+    drawLineChart();
   }
+
+  function drawBarChart() {
+    var canvas = document.getElementById('c-boq-compare');
+    if (!canvas) return;
+    var W = canvas.parentElement ? canvas.parentElement.clientWidth - 40 : 700;
+    if (W < 300) W = 700;
+    var H = 260;
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, W, H);
+
+    var labels = ['Piling 600mm','Piling 750mm','Piling 900mm','Concrete M30','Steel Fe500','Bentonite'];
+    var est    = [1.03, 7.39, 4.91, 4.68, 3.30, 0.50];
+    var actual = [0.96, 7.21, 5.00, 4.89, 3.32, 0.48];
+    var maxVal = 9.0;
+    var padL = 50; var padR = 20; var padT = 30; var padB = 55;
+    var chartW = W - padL - padR;
+    var chartH = H - padT - padB;
+    var n = labels.length;
+    var groupW = chartW / n;
+    var barW = Math.min(groupW * 0.3, 40);
+    var gap = 4;
+
+    // Grid lines and Y axis labels
+    ctx.strokeStyle = '#F1F5F9'; ctx.lineWidth = 1;
+    for (var g = 0; g <= 5; g++) {
+      var gy = padT + chartH - (g / 5) * chartH;
+      ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + chartW, gy); ctx.stroke();
+      ctx.fillStyle = '#94A3B8'; ctx.font = '10px Arial'; ctx.textAlign = 'right';
+      ctx.fillText((maxVal * g / 5).toFixed(1) + ' Cr', padL - 6, gy + 4);
+    }
+
+    // Bars + value labels
+    for (var i = 0; i < n; i++) {
+      var cx = padL + i * groupW + groupW / 2;
+      var bx1 = cx - barW - gap / 2;
+      var bx2 = cx + gap / 2;
+
+      // Estimated bar (navy)
+      var eh = (est[i] / maxVal) * chartH;
+      ctx.fillStyle = '#CBD5E1';
+      ctx.fillRect(bx1, padT + chartH - eh, barW, eh);
+      // Value on top
+      ctx.fillStyle = '#64748B'; ctx.font = 'bold 9px Arial'; ctx.textAlign = 'center';
+      ctx.fillText(est[i].toFixed(2), bx1 + barW/2, padT + chartH - eh - 4);
+
+      // Actual bar (green or red)
+      var ah = (actual[i] / maxVal) * chartH;
+      var isOver = actual[i] > est[i];
+      ctx.fillStyle = isOver ? '#EF4444' : '#16A34A';
+      ctx.fillRect(bx2, padT + chartH - ah, barW, ah);
+      ctx.fillStyle = isOver ? '#DC2626' : '#15803D'; ctx.font = 'bold 9px Arial'; ctx.textAlign = 'center';
+      ctx.fillText(actual[i].toFixed(2), bx2 + barW/2, padT + chartH - ah - 4);
+
+      // X label  two lines if needed
+      ctx.fillStyle = '#475569'; ctx.font = '10px Arial'; ctx.textAlign = 'center';
+      ctx.fillText(labels[i], cx, H - padB + 16);
+    }
+
+    // Legend at top right
+    var lx = W - 180; var ly = 10;
+    ctx.fillStyle = '#CBD5E1'; ctx.fillRect(lx, ly, 12, 12);
+    ctx.fillStyle = '#475569'; ctx.font = '10px Arial'; ctx.textAlign = 'left';
+    ctx.fillText('Estimated (Cr)', lx + 16, ly + 10);
+    ctx.fillStyle = '#16A34A'; ctx.fillRect(lx + 110, ly, 12, 12);
+    ctx.fillText('Actual', lx + 126, ly + 10);
+
+    // Baseline
+    ctx.strokeStyle = '#CBD5E1'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padL, padT + chartH); ctx.lineTo(padL + chartW, padT + chartH); ctx.stroke();
+    // Y axis
+    ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padT + chartH); ctx.stroke();
+  }
+
+  function drawLineChart() {
+    var canvas = document.getElementById('c-billing-trend');
+    if (!canvas) return;
+    var W = canvas.parentElement ? canvas.parentElement.clientWidth - 40 : 700;
+    if (W < 300) W = 700;
+    var H = 240;
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, W, H);
+
+    var months  = ['Sep 25','Oct 25','Nov 25','Dec 25','Jan 26','Feb 26'];
+    var billed  = [0.13, 1.88, 2.83, 3.26, 3.42, 3.33];
+    var subcon  = [0.10, 1.48, 2.22, 2.58, 2.71, 2.63];
+    var margin  = [0.03, 0.40, 0.61, 0.68, 0.71, 0.70];
+    var maxVal  = 4.0;
+    var padL = 55; var padR = 20; var padT = 30; var padB = 50;
+    var chartW = W - padL - padR;
+    var chartH = H - padT - padB;
+    var n = months.length;
+
+    // Grid + Y labels
+    ctx.strokeStyle = '#F1F5F9'; ctx.lineWidth = 1;
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + chartH - (g / 4) * chartH;
+      ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + chartW, gy); ctx.stroke();
+      ctx.fillStyle = '#94A3B8'; ctx.font = '10px Arial'; ctx.textAlign = 'right';
+      ctx.fillText('Rs.' + (maxVal * g / 4).toFixed(1) + 'Cr', padL - 6, gy + 4);
+    }
+
+    // X labels
+    for (var i = 0; i < n; i++) {
+      var px = padL + (i / (n - 1)) * chartW;
+      ctx.fillStyle = '#64748B'; ctx.font = '10px Arial'; ctx.textAlign = 'center';
+      ctx.fillText(months[i], px, H - padB + 16);
+    }
+
+    function drawFilledLine(data, color, fillColor) {
+      ctx.beginPath();
+      for (var i = 0; i < n; i++) {
+        var px = padL + (i / (n - 1)) * chartW;
+        var py = padT + chartH - (data[i] / maxVal) * chartH;
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
+      var lastPx = padL + chartW; var basePy = padT + chartH;
+      ctx.lineTo(lastPx, basePy); ctx.lineTo(padL, basePy);
+      ctx.closePath(); ctx.fillStyle = fillColor; ctx.fill();
+    }
+
+    function drawDots(data, color) {
+      for (var i = 0; i < n; i++) {
+        var px = padL + (i / (n - 1)) * chartW;
+        var py = padT + chartH - (data[i] / maxVal) * chartH;
+        ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2);
+        ctx.fillStyle = WHITE; ctx.fill();
+        ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#1E293B'; ctx.font = 'bold 9px Arial'; ctx.textAlign = 'center';
+        ctx.fillText(data[i].toFixed(2), px, py - 9);
+      }
+    }
+
+    drawFilledLine(subcon, '#F5A800', 'rgba(245,168,0,0.10)');
+    drawFilledLine(billed, '#0C2340', 'rgba(12,35,64,0.07)');
+    drawDots(subcon, '#F5A800');
+    drawDots(billed, '#0C2340');
+
+    // Legend top right
+    var lx = W - 280; var ly = 10;
+    ctx.strokeStyle = '#0C2340'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(lx, ly + 6); ctx.lineTo(lx + 20, ly + 6); ctx.stroke();
+    ctx.fillStyle = '#0C2340'; ctx.beginPath(); ctx.arc(lx + 10, ly + 6, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#334155'; ctx.font = '10px Arial'; ctx.textAlign = 'left';
+    ctx.fillText('Client Billed to Date', lx + 26, ly + 10);
+
+    ctx.strokeStyle = '#F5A800'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(lx + 145, ly + 6); ctx.lineTo(lx + 165, ly + 6); ctx.stroke();
+    ctx.fillStyle = '#F5A800'; ctx.beginPath(); ctx.arc(lx + 155, ly + 6, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#334155'; ctx.font = '10px Arial'; ctx.textAlign = 'left';
+    ctx.fillText('Subcon Cost', lx + 171, ly + 10);
+
+    // Axes
+    ctx.strokeStyle = '#E2E8F0'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padT + chartH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, padT + chartH); ctx.lineTo(padL + chartW, padT + chartH); ctx.stroke();
+  }
+
+  var WHITE = '#FFFFFF';
 
   function calcBidRow(input) {
     var row = input.closest('tr');
@@ -2963,8 +3102,8 @@
       '<td style="padding:8px 12px;font-weight:600;">' + (parseFloat(qty) || 0).toLocaleString('en-IN') + '</td>' +
       '<td style="padding:8px 12px;font-weight:600;">' + (parseFloat(rate) || 0).toLocaleString('en-IN') + '</td>' +
       '<td style="padding:8px 12px;font-weight:700;color:var(--navy);">Rs. ' + Math.round(value).toLocaleString('en-IN') + '</td>' +
-      '<td style="padding:8px 12px;color:var(--gray-400);">' + (bidRate || '—') + '</td>' +
-      '<td style="padding:8px 12px;font-weight:600;color:' + savingColor + ';">' + (bidRate ? savingText : '—') + '</td>' +
+      '<td style="padding:8px 12px;color:var(--gray-400);">' + (bidRate || '') + '</td>' +
+      '<td style="padding:8px 12px;font-weight:600;color:' + savingColor + ';">' + (bidRate ? savingText : '') + '</td>' +
       '<td style="padding:8px 4px;"><button class="btn btn-danger-soft btn-sm" onclick="this.parentElement.parentElement.remove()">x</button></td>';
     tbody.appendChild(tr);
 
